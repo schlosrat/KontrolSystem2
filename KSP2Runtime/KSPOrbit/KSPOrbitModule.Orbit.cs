@@ -17,7 +17,7 @@ namespace KontrolSystem.KSP.Runtime.KSPOrbit {
             [KSField(Description = "Universal time of the start of the orbit, in case it is an orbit-patch")]
             public double StartUt { get; }
 
-            [KSField(Description = "Universal time of the start of the orbit, in case it is an orbit-patch")]
+            [KSField(Description = "Universal time of the end of the orbit, in case it is an orbit-patch")]
             public double EndUt { get; }
 
             [KSField(Description = "Apoapsis of the orbit above sealevel of the `reference_body`. Is not defined for a hyperbolic orbit")]
