@@ -20,11 +20,18 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 this.part = part;
             }
 
+            [KSField] public VesselAdapter Vessel => vesselAdapter;
+
             [KSField] public string PartName => part.PartName;
 
-            [KSField] public Position GlobalPosition => part.SimulationObject.Position;
+            [KSField(Description = "Get position of the part in celestial frame of the main body.")]
+            public Vector3d Position =>
+                vesselAdapter.vessel.mainBody.coordinateSystem.ToLocalPosition(part.SimulationObject.Position);
 
-            [KSField] public RotationWrapper GlobalRotation => new RotationWrapper(part.SimulationObject.Rotation);
+            [KSField(Description = "Get coordinate independent position of the part.")] 
+            public Position GlobalPosition => part.SimulationObject.Position;
+
+            [KSField] public RotationWrapper GlobalRotation => new RotationWrapper(new Rotation(part.SimulationObject.transform.bodyFrame, ControlFacingRotation));
 
             [KSField] public bool IsEngine => part.IsPartEngine(out var _);
 
@@ -50,7 +57,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public Option<ModuleDockingNodeAdapter> DockingNode {
                 get {
                     if (part.IsPartDockingPort(out Data_DockingNode data)) {
-                        return new Option<ModuleDockingNodeAdapter>(new ModuleDockingNodeAdapter(part, data));
+                        return new Option<ModuleDockingNodeAdapter>(new ModuleDockingNodeAdapter(vesselAdapter, part, data));
                     }
 
                     return new Option<ModuleDockingNodeAdapter>();
@@ -65,6 +72,28 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     }
 
                     return new Option<ModuleEngineAdapter>();
+                }
+            }
+
+            [KSField]
+            public Option<ModuleControlSurfaceAdapter> ControlSurface {
+                get {
+                    if (part.TryGetModuleData<PartComponentModule_ControlSurface, Data_ControlSurface>(out var data)) {
+                        return new Option<ModuleControlSurfaceAdapter>(new ModuleControlSurfaceAdapter(part, data));
+                    }
+
+                    return new Option<ModuleControlSurfaceAdapter>();
+                }
+            }
+
+            [KSField]
+            public Option<ModuleCommandAdapter> CommandModule {
+                get {
+                    if (part.TryGetModuleData<PartComponentModule_Command, Data_Command>(out var data)) {
+                        return new Option<ModuleCommandAdapter>(new ModuleCommandAdapter(vesselAdapter, part, data));
+                    }
+
+                    return new Option<ModuleCommandAdapter>();
                 }
             }
 

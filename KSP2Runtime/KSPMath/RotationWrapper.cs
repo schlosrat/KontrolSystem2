@@ -17,15 +17,14 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
 
         public RotationWrapper(Vector vector) {
             this.vector = Vector.normalize(vector);
-            rotation = SimRotation.LookRotation(vector, new Vector(vector.coordinateSystem, Vector3d.up));
-
+            rotation = RotationFromVector(this.vector);
         }
 
         public Vector Vector {
-            get => vector;
+            get => new Vector(this.rotation.coordinateSystem, rotation.localRotation * Vector3d.forward);
             set {
                 vector = Vector.normalize(value);
-                rotation = SimRotation.LookRotation(vector, new Vector(vector.coordinateSystem, Vector3d.up));
+                rotation = RotationFromVector(this.vector);
             }
         }
 
@@ -125,6 +124,13 @@ namespace KontrolSystem.KSP.Runtime.KSPMath {
         public string ToString(ITransformFrame frame) {
             var euler = frame.ToLocalRotation(rotation).eulerAngles;
             return $"R({Math.Round(euler.x, 3)},{Math.Round(euler.y, 3)},{Math.Round(euler.z, 3)})";
+        }
+
+        private static SimRotation RotationFromVector(Vector vector) {
+            var up = new Vector(vector.coordinateSystem, Vector3d.up);
+            if (Math.Abs(Vector.dot(vector, up)) > 0.99)
+                return SimRotation.LookRotation(vector, new Vector(vector.coordinateSystem, Vector3d.right));
+            return SimRotation.LookRotation(vector, up);
         }
     }
 }

@@ -29,9 +29,13 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField] public bool IsOperational => dataEngine.IsOperational;
 
+            [KSField] public bool IsPropellantStarved => dataEngine.IsPropellantStarved;
+
             [KSField] public double CurrentThrottle => dataEngine.currentThrottle;
 
             [KSField] public double CurrentThrust => dataEngine.FinalThrustValue;
+
+            [KSField] public double RealIsp => dataEngine.RealISPValue;
 
             [KSField] public double ThrottleMin => dataEngine.ThrottleMin;
 

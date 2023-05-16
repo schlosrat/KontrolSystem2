@@ -11,6 +11,9 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
         [KSConstant("WHITE", Description = "Color red")]
         public static readonly RgbaColor WhiteColor = new RgbaColor(1.0, 1.0, 1.0);
 
+        [KSConstant("BLACK", Description = "Color black")]
+        public static readonly RgbaColor BlackColor = new RgbaColor(0.0, 0.0, 0.0);
+
         [KSConstant("RED", Description = "Color red")]
         public static readonly RgbaColor RedColor = new RgbaColor(1.0, 0.0, 0.0);
 
@@ -32,7 +35,7 @@ namespace KontrolSystem.KSP.Runtime.KSPConsole {
         [KSFunction(
             Description = "Create a new color from `red`, `green`, `blue` and `alpha` (0.0 - 1.0)."
         )]
-        public static RgbaColor Color(double red, double green, double blue, double alpha) =>
+        public static RgbaColor Color(double red, double green, double blue, double alpha = 1.0) =>
             new RgbaColor(red, green, blue, alpha);
     }
 }

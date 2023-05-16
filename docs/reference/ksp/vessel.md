@@ -93,6 +93,46 @@ autopilotmodeconstants.from_string ( value : string ) -> Option<ksp::vessel::Aut
 
 Parse from string
 
+### CommandControlState
+
+Current state of a command module
+
+#### Methods
+
+##### to_string
+
+```rust
+commandcontrolstate.to_string ( ) -> string
+```
+
+String representation of the number
+
+### CommandControlStateConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Disabled | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module disabled.
+FullyFunctional | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module is functional.
+Hibernating | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module is hibernating.
+NoCommNetConnection | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module has no comm net connection.
+None | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | 
+NotEnoughCrew | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module has not enough crew.
+NotEnoughResources | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | Command module has not resource crew.
+
+#### Methods
+
+##### from_string
+
+```rust
+commandcontrolstateconstants.from_string ( value : string ) -> Option<ksp::vessel::CommandControlState>
+```
+
+Parse from string
+
 ### DeltaVSituation
 
 Vessel situation for delta-v calculation
@@ -125,6 +165,45 @@ Vaccum | [ksp::vessel::DeltaVSituation](/reference/ksp/vessel.md#deltavsituation
 
 ```rust
 deltavsituationconstants.from_string ( value : string ) -> Option<ksp::vessel::DeltaVSituation>
+```
+
+Parse from string
+
+### DockingState
+
+Current state of a docking node
+
+#### Methods
+
+##### to_string
+
+```rust
+dockingstate.to_string ( ) -> string
+```
+
+String representation of the number
+
+### DockingStateConstants
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+Acquire_Dockee | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+Acquire_Docker | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+Disengaged | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+Docked | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+None | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+Ready | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+
+#### Methods
+
+##### from_string
+
+```rust
+dockingstateconstants.from_string ( value : string ) -> Option<ksp::vessel::DockingState>
 ```
 
 Parse from string
@@ -339,6 +418,70 @@ Name | Type | Read-only | Description
 enabled | bool | R/O | 
 resource_units | float | R/O | 
 
+### ModuleCommand
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+activation_stage | int | R/O | 
+air_intake | Option&lt;[ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)> | R/O | 
+command_module | Option&lt;[ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)> | R/O | 
+control_state | [ksp::vessel::CommandControlState](/reference/ksp/vessel.md#commandcontrolstate) | R/O | 
+control_surface | Option&lt;[ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)> | R/O | 
+decouple_stage | int | R/O | 
+decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
+deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
+docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
+engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
+fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
+global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
+global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
+is_decoupler | bool | R/O | 
+is_deployable | bool | R/O | 
+is_engine | bool | R/O | 
+is_fairing | bool | R/O | 
+is_launch_clamp | bool | R/O | 
+is_parachute | bool | R/O | 
+is_solar_panel | bool | R/O | 
+launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
+parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
+part_name | string | R/O | 
+position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
+resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
+solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
+vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
+
+#### Methods
+
+##### control_from_here
+
+```rust
+modulecommand.control_from_here ( ) -> Unit
+```
+
+
+
+### ModuleControlSurface
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+angle_of_attack | float | R/O | 
+authority_limiter | float | R/W | 
+drag | float | R/O | 
+enable_pitch | bool | R/W | 
+enable_roll | bool | R/W | 
+enable_yaw | bool | R/W | 
+invert_control | bool | R/W | 
+lift | float | R/O | 
+part_name | string | R/O | 
+
 ### ModuleDecoupler
 
 
@@ -392,8 +535,45 @@ moduledeployable.set_extended ( extend : bool ) -> Unit
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-docking_state | string | R/O | 
+activation_stage | int | R/O | 
+air_intake | Option&lt;[ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)> | R/O | 
+command_module | Option&lt;[ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)> | R/O | 
+control_surface | Option&lt;[ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)> | R/O | 
+decouple_stage | int | R/O | 
+decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
+deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
+docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
+docking_state | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
+fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
+global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
+global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
+is_decoupler | bool | R/O | 
+is_deployable | bool | R/O | 
 is_deployable_docking_port | bool | R/O | 
+is_engine | bool | R/O | 
+is_fairing | bool | R/O | 
+is_launch_clamp | bool | R/O | 
+is_parachute | bool | R/O | 
+is_solar_panel | bool | R/O | 
+launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
+node_types | string[] | R/O | 
+parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
+part_name | string | R/O | 
+position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
+resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
+solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
+vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
+
+#### Methods
+
+##### control_from_here
+
+```rust
+moduledockingnode.control_from_here ( ) -> Unit
+```
+
+
 
 ### ModuleEngine
 
@@ -410,6 +590,7 @@ engine_modes | [ksp::vessel::EngineMode](/reference/ksp/vessel.md#enginemode)[] 
 has_ignited | bool | R/O | 
 is_flameout | bool | R/O | 
 is_operational | bool | R/O | 
+is_propellant_starved | bool | R/O | 
 is_shutdown | bool | R/O | 
 is_staged | bool | R/O | 
 max_fuel_flow | float | R/O | 
@@ -417,6 +598,7 @@ max_thrust_output_atm | float | R/O |
 max_thrust_output_vac | float | R/O | 
 min_fuel_flow | float | R/O | 
 part_name | string | R/O | 
+real_isp | float | R/O | 
 throttle_min | float | R/O | 
 
 #### Methods
@@ -646,13 +828,15 @@ Name | Type | Read-only | Description
 --- | --- | --- | ---
 activation_stage | int | R/O | 
 air_intake | Option&lt;[ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)> | R/O | 
+command_module | Option&lt;[ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)> | R/O | 
+control_surface | Option&lt;[ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)> | R/O | 
 decouple_stage | int | R/O | 
 decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
 deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
 docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
 engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
 fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
-global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | 
+global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
@@ -664,8 +848,10 @@ is_solar_panel | bool | R/O |
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
 part_name | string | R/O | 
+position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
 resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
+vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
 
 ### StageDeltaV
 
@@ -761,8 +947,11 @@ staging.parts_in_stage ( stage : int ) -> ksp::vessel::Part[]
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-name | string | R/O | 
-orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | 
+body | Option&lt;[ksp::orbit::Body](/reference/ksp/orbit.md#body)> | R/O | Get the targeted celestial body, if target is a body. 
+docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | Get the targeted docking node, if target is a docking node. 
+name | string | R/O | Name of the vessel target. 
+orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | Orbit of the vessel target. 
+vessel | Option&lt;[ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel)> | R/O | Get the targeted vessel, if target is a vessel. 
 
 ### Vessel
 
@@ -773,64 +962,84 @@ Represents an in-game vessel, which might be a rocket, plane, rover ... or actua
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-actions | [ksp::vessel::ActionGroups](/reference/ksp/vessel.md#actiongroups) | R/O | 
-air_intakes | [ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)[] | R/O | 
+actions | [ksp::vessel::ActionGroups](/reference/ksp/vessel.md#actiongroups) | R/O | Collection of methods to trigger action groups. 
+air_intakes | [ksp::vessel::ModuleAirIntake](/reference/ksp/vessel.md#moduleairintake)[] | R/O | Get a list of all air intake parts of the vessel. 
 altitude_scenery | float | R/O | 
 altitude_sealevel | float | R/O | 
 altitude_terrain | float | R/O | 
-angular_momentum | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
-angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+angular_momentum | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the angular momentum of the vessel in the celestial frame of its main body. 
+angular_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the coordinate angular velocity in the celestial frame of its main body. 
 atmosphere_density | float | R/O | 
-autopilot | [ksp::vessel::Autopilot](/reference/ksp/vessel.md#autopilot) | R/O | 
-available_thrust | float | R/O | 
+autopilot | [ksp::vessel::Autopilot](/reference/ksp/vessel.md#autopilot) | R/O | Collection of methods to interact with the SAS system of the vessel. 
+available_thrust | float | R/O | Returns the maximum thrust of all engines in the current situation of the vessel. 
 body_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The body/rotating reference frame of the vessel. 
 celestial_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | The celestial/non-rotating reference frame of the vessel. 
 CoM | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Position of the center of mass of the vessel. 
+command_modules | [ksp::vessel::ModuleCommand](/reference/ksp/vessel.md#modulecommand)[] | R/O | Get a list of all command module parts of the vessel. 
 control_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the current control position. 
-control_status | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | 
-delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | R/O | 
-docking_nodes | [ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)[] | R/O | 
+control_status | [ksp::vessel::VesselControlState](/reference/ksp/vessel.md#vesselcontrolstate) | R/O | Current control status of the vessel. 
+control_surfaces | [ksp::vessel::ModuleControlSurface](/reference/ksp/vessel.md#modulecontrolsurface)[] | R/O | Get a list of all control service parts of the vessel. 
+delta_v | [ksp::vessel::VesselDeltaV](/reference/ksp/vessel.md#vesseldeltav) | R/O | Collection of methods to obtain delta-v information of the vessel. 
+docking_nodes | [ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)[] | R/O | Get a list of all docking node parts of the vessel. 
 dynamic_pressure_kpa | float | R/O | 
-east | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
-engines | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)[] | R/O | 
-facing | [ksp::math::Direction](/reference/ksp/math.md#direction) | R/O | 
-geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | R/O | 
-global_angular_momentum | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | R/O | 
-global_angular_velocity | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | R/O | 
+east | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon east vector in the celestial frame of the main body. 
+engines | [ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)[] | R/O | Get a list of all engine parts of the vessel. 
+facing | [ksp::math::Direction](/reference/ksp/math.md#direction) | R/O | Get the current facing direction of the vessel in the celestial frame of its main body. 
+geo_coordinates | [ksp::orbit::GeoCoordinates](/reference/ksp/orbit.md#geocoordinates) | R/O | Get the current geo-coordinate of the vessel. 
+global_angular_momentum | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | R/O | Get the coordinate system independent angular momentum of the vessel. 
+global_angular_velocity | [ksp::math::GlobalAngularVelocity](/reference/ksp/math.md#globalangularvelocity) | R/O | Get the coordinate system independent angular velocity of the vessel. 
 global_center_of_mass | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Coordinate independent position of the center of mass. 
-global_east | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
-global_facing | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
-global_north | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+global_east | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Get the coordinate system independent horizon north vector. 
+global_facing | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | Get the coordinate system independent facing direction of the vessel. 
+global_moment_of_inertia | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Get the coordinate system independent moment of inertial of the vessel 
+global_north | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Get the coordinate system independent horizon east vector. 
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Coordinate independent position of the vessel. 
-global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | 
+global_up | [ksp::math::GlobalVector](/reference/ksp/math.md#globalvector) | R/O | Get the coordinate system independent horizon up vector. 
 global_velocity | [ksp::math::GlobalVelocity](/reference/ksp/math.md#globalvelocity) | R/O | Get the coordinate independent velocity of the vessel. 
 heading | float | R/O | 
 horizon_frame | [ksp::math::TransformFrame](/reference/ksp/math.md#transformframe) | R/O | Reference frame for the horizon at the current position of the vessel. 
 horizontal_surface_speed | float | R/O | 
+id | string | R/O | Unique vessel id 
 is_active | bool | R/O | Check if the vessel is currently active. 
+is_controllable | bool | R/O | Check if the vessel is controllable. 
+is_flying | bool | R/O | Check if the vessel is flyging. 
 mach_number | float | R/O | 
 main_body | [ksp::orbit::Body](/reference/ksp/orbit.md#body) | R/O | The main body of the current SOI the vessel is in. 
-maneuver | [ksp::vessel::Maneuver](/reference/ksp/vessel.md#maneuver) | R/O |  
+maneuver | [ksp::vessel::Maneuver](/reference/ksp/vessel.md#maneuver) | R/O | Collection of methods to interact with the maneuver plan of the vessel. 
 mass | float | R/O | Total mass of the vessel. 
 name | string | R/O | The name of the vessel. 
-north | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
+north | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon north vector in the celestial frame of the main body. 
 offset_ground | float | R/O | 
 orbit | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit) | R/O | Current orbit or orbit patch of the vessel. 
-orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Orbital velocity of the vessel relative to the main body. 
-parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | R/O | 
-pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
-situation | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | 
-solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | R/O | 
+orbital_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Orbital velocity of the vessel relative to the main body. This is equivalent of expressing the `global_velocity` in the celestial frame of the main body. 
+parts | [ksp::vessel::Part](/reference/ksp/vessel.md#part)[] | R/O | Get a list of all vessel parts. 
+pitch_yaw_roll | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Returns the pitch, yaw/heading and roll of the vessel relative to the horizon. 
+position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Coordinate position of the vessel in the celestial frame of the main body. 
+situation | [ksp::vessel::VesselSituation](/reference/ksp/vessel.md#vesselsituation) | R/O | Get the current situation of the vessel. 
+solar_panels | [ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)[] | R/O | Get a list of all solar panel parts of the vessel. 
 sound_speed | float | R/O | 
-staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | R/O | 
+staging | [ksp::vessel::Staging](/reference/ksp/vessel.md#staging) | R/O | Collection of methods to obtain information about stages and trigger staging. 
 static_pressure_kpa | float | R/O | 
-surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Surface velocity of the vessel relative to the main body. 
-target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | R/W | 
-up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | 
-vertical_speed | float | R/O | 
+surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Surface velocity of the vessel relative to the main body. This is equivalent of expressing the `global_velocity` in the body frame of the main body. 
+target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | R/W | Get the currently selected target of the vessel, if there is one. 
+total_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the available torque of relative to its control frame. 
+up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon up vector in the celestial frame of the main body. 
+vertical_speed | float | R/O | Get the vertical speed of the vessel. 
 vertical_surface_speed | float | R/O | 
 
 #### Methods
+
+##### global_heading_direction
+
+```rust
+vessel.global_heading_direction ( degreesFromNorth : float,
+                                  pitchAboveHorizon : float,
+                                  roll : float ) -> ksp::math::GlobalDirection
+```
+
+Calculate a coordinate system independent direction based on
+heading, pitch an roll relative to the horizon.
+
 
 ##### heading_direction
 
@@ -840,6 +1049,17 @@ vessel.heading_direction ( degreesFromNorth : float,
                            roll : float ) -> ksp::math::Direction
 ```
 
+Calculate a direction in the celestial frame of the main body based on
+heading, pitch an roll relative to the horizon.
+
+
+##### make_active
+
+```rust
+vessel.make_active ( ) -> bool
+```
+
+Make this vessel the active vessel.
 
 
 ##### manage_rcs_translate
@@ -1082,7 +1302,9 @@ Parse from string
 Name | Type | Description
 --- | --- | ---
 AutopilotMode | ksp::vessel::AutopilotModeConstants | Vessel autopilot (SAS) mode
+CommandControlState | ksp::vessel::CommandControlStateConstants | Current state of a command module
 DeltaVSituation | ksp::vessel::DeltaVSituationConstants | Vessel situation for delta-v calculation
+DockingState | ksp::vessel::DockingStateConstants | Current state of a docking node
 EngineType | ksp::vessel::EngineTypeConstants | Engine types
 ParachuteDeployMode | ksp::vessel::ParachuteDeployModeConstants | Parachute deploy mode
 ParachuteDeployState | ksp::vessel::ParachuteDeployStateConstants | Parachute deploy state
@@ -1101,4 +1323,22 @@ pub sync fn active_vessel ( ) -> Result<ksp::vessel::Vessel, string>
 ```
 
 Try to get the currently active vessel. Will result in an error if there is none.
+
+
+### get_all_owned_vessels
+
+```rust
+pub sync fn get_all_owned_vessels ( ) -> ksp::vessel::Vessel[]
+```
+
+Get all vessels owned by the current player.
+
+
+### get_vessels_in_range
+
+```rust
+pub sync fn get_vessels_in_range ( ) -> ksp::vessel::Vessel[]
+```
+
+Get all vessels in range of the current view.
 

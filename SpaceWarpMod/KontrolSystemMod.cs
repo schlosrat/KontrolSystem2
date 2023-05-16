@@ -1,23 +1,28 @@
-﻿using System;
-using BepInEx;
-using KontrolSystem.KSP.Runtime.KSPUI;
-using KontrolSystem.SpaceWarpMod.UI;
-using KontrolSystem.TO2.Runtime;
+﻿using BepInEx;
+using KontrolSystem.KSP.Runtime.Core;
+using KontrolSystem.KSP.Runtime.KSPUI.Builtin;
 using KSP.Game;
+using KSP.UI.Binding;
 using SpaceWarp;
 using SpaceWarp.API.Assets;
 using SpaceWarp.API.Mods;
-using SpaceWarp.API.UI;
 using SpaceWarp.API.UI.Appbar;
 using UniLinq;
 using UnityEngine;
+using KontrolSystem.KSP.Runtime.KSPAddons;
 
 namespace KontrolSystem.SpaceWarpMod {
 
-    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.3.3.2")]
+    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.4.1.1")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
+    [BepInDependency(KSPAddonsModule.FlightPlanAdapter.ModGuid, BepInDependency.DependencyFlags.SoftDependency)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
+        public const string ModGuid = "com.github.untoldwind.KontrolSystem2";
+        public const string ModName = "KontrolSystem2";
+        public const string ModVersion = "0.4.1.1";
+
         private ModuleManagerWindow moduleManagerWindow;
+        private UIWindows uiWindows;
 
         public static KontrolSystemMod Instance { get; set; }
 
@@ -29,39 +34,34 @@ namespace KontrolSystem.SpaceWarpMod {
         }
 
         public override void OnInitialized() {
-
             Instance = this;
 
             LoggerAdapter.Instance.Backend = Logger;
             LoggerAdapter.Instance.Info("Initialize KontrolSystemMod");
 
+            uiWindows ??= gameObject.AddComponent<UIWindows>();
+            uiWindows.Initialize(ConfigAdapter.Instance);
 
-            UIFactory.Init(ConfigAdapter.Instance);
-            CommonStyles.Init(Skins.ConsoleSkin, Instantiate(Skins.ConsoleSkin));
-
-            moduleManagerWindow ??= gameObject.AddComponent<ModuleManagerWindow>();
+            var mainframe = gameObject.AddComponent<Mainframe>();
+            mainframe.Initialize(ConfigAdapter.Instance);
 
             Appbar.RegisterAppButton("Kontrol System 2", "BTN-KontrolSystem", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
                 toggle => {
-                    if (toggle) moduleManagerWindow.Open();
-                    else moduleManagerWindow.Close();
+                    if (toggle) {
+                        moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
+                    } else {
+                        moduleManagerWindow?.Close();
+                        moduleManagerWindow = null;
+                    }
                 });
         }
 
         void Update() {
             if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.K) && ConfigAdapter.Instance.HotKeyEnabled &&
                 !InvalidStates.Contains(Game.GlobalGameState.GetState())) {
-                moduleManagerWindow.Toggle();
+                if (moduleManagerWindow != null) moduleManagerWindow.Close();
+                else moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
             }
-        }
-
-        /// <summary>
-        /// Submits an expression to be evaluated in the console window.
-        /// </summary>
-        /// <param name="expression">The expression to evaluate.</param>
-        /// <returns>An object containing the result or an Exception.</returns>
-        public Result<object, Exception> Submit(string expression) {
-            return moduleManagerWindow.Submit(expression);
         }
     }
 }

@@ -4,7 +4,7 @@ using KontrolSystem.TO2.Generator;
 using KontrolSystem.TO2.Runtime;
 
 namespace KontrolSystem.TO2.AST {
-    public abstract partial class BuiltinType {
+    public abstract partial class BuiltinType : RealizedType {
         public static readonly OperatorCollection NoOperators = new OperatorCollection();
 
         public static readonly Dictionary<string, IMethodInvokeFactory> NoMethods =
@@ -29,7 +29,7 @@ namespace KontrolSystem.TO2.AST {
                 {
                     Operator.AddAssign,
                     new StaticMethodOperatorEmitter(() => new GenericParameter("T"), () => BuiltinType.ArrayBuilder,
-                        typeof(ArrayBuilderOps).GetMethod("AddTo"), new OpCode[0])
+                        typeof(ArrayBuilderOps).GetMethod("AddTo"))
                 }
             },
             new List<(string name, IMethodInvokeFactory invoker)> {

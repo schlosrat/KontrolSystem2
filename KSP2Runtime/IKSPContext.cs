@@ -5,11 +5,10 @@ using KontrolSystem.KSP.Runtime.KSPGame;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.KSP.Runtime.KSPResource;
 using KontrolSystem.KSP.Runtime.KSPTelemetry;
-using KontrolSystem.TO2.Binding;
+using KontrolSystem.KSP.Runtime.KSPUI;
 using KSP.Game;
 using KSP.Sim.impl;
 using KSP.Sim.State;
-using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime {
     public interface IMarker {
@@ -50,6 +49,8 @@ namespace KontrolSystem.KSP.Runtime {
 
         void AddResourceTransfer(KSPResourceModule.ResourceTransfer resourceTransfer);
 
+        void AddWindow(KSPUIModule.Window window);
+
         bool TryFindAutopilot<T>(VesselComponent vessel, out T autopilot) where T : IKSPAutopilot;
 
         void HookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
@@ -57,6 +58,12 @@ namespace KontrolSystem.KSP.Runtime {
         void UnhookAutopilot(VesselComponent vessel, IKSPAutopilot autopilot);
 
         void UnhookAllAutopilots(VesselComponent vessel);
+
+        OptionalAddons OptionalAddons { get; }
+    }
+
+    public class OptionalAddons {
+        public (object instance, Version version) FlightPlan { get; set; }
     }
 
     public class KSPContext {

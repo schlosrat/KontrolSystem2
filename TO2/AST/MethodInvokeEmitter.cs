@@ -27,6 +27,8 @@ namespace KontrolSystem.TO2.AST {
     }
 
     public interface IMethodInvokeFactory {
+        bool IsAsync { get; }
+
         bool IsConst { get; }
 
         TypeHint ReturnHint { get; }
@@ -61,6 +63,8 @@ namespace KontrolSystem.TO2.AST {
             this.methodCall = methodCall;
             this.opCodes = opCodes;
         }
+
+        public bool IsAsync => false;
 
         public TypeHint ReturnHint => _ => resultType();
 
@@ -133,6 +137,8 @@ namespace KontrolSystem.TO2.AST {
             this.targetTypeArguments = targetTypeArguments;
             this.constrained = constrained;
         }
+
+        public bool IsAsync => isAsync;
 
         public TypeHint ReturnHint => _ => resultType();
 

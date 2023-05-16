@@ -11,12 +11,9 @@ namespace KontrolSystem.KSP.Runtime {
 
             var (vesselTypes, vesselConstants) = KSPVessel.KSPVesselModule.DirectBindings();
             var (resourceTypes, resourceConstants) = KSPResource.KSPResourceModule.DirectBindings();
+            var (uiTypes, ruiConstants) = KSPUI.KSPUIModule.DirectBindings();
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPConsole.KSPConsoleModule)));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPGame.KSPGameModule)));
-            registry.RegisterModule(
-                BindingGenerator.BindModule(typeof(KSPGame.KSPGameWarpModule)));
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPOrbit.KSPOrbitModule)));
             registry.RegisterModule(
@@ -26,14 +23,16 @@ namespace KontrolSystem.KSP.Runtime {
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPVessel.KSPVesselModule), vesselTypes, vesselConstants));
             registry.RegisterModule(
+                BindingGenerator.BindModule(typeof(KSPGame.KSPGameModule)));
+            registry.RegisterModule(
+                BindingGenerator.BindModule(typeof(KSPGame.KSPGameWarpModule)));
+            registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPDebug.KSPDebugModule)));
             registry.RegisterModule(
                 BindingGenerator.BindModule(typeof(KSPTelemetry.KSPTelemetryModule)));
-            /*            registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPUI.KSPUIModule)));
-                        
-                        registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPAddons.KSPAddonsModule)));
-                        registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPGame.KSPAlarmClockModule)));
-                        */
+            registry.RegisterModule(
+                BindingGenerator.BindModule(typeof(KSPAddons.KSPAddonsModule)));
+            registry.RegisterModule(BindingGenerator.BindModule(typeof(KSPUI.KSPUIModule), uiTypes, ruiConstants));
             registry.RegisterModule(BindingGenerator.BindModule(typeof(Testing.KSPTesting)));
 
             return registry;

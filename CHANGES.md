@@ -1,5 +1,53 @@
 # Changes
 
+## 0.4.1 -> 0.4.1.1
+
+* Add `get_vessels_in_range()` and `get_all_owned_vessels()` functions to `ksp::vessel`
+* Add `Vessel.make_active()`
+
+## ß.3.6 -> 0.4.1
+
+* UI overhaul
+* Add `ksp::ui` to create UI via scripts
+
+## 0.3.5 -> 0.3.6
+
+* Binding for FlightPlan mod
+
+## 0.3.4 -> 0.3.5
+
+* Ensure that `Vec3.to_direction()` and `GlobalVector.to_direction()` also work for "Up"
+* Fix `vessel.available_thrust` to calculate the thrust in the current situation (i.e. atmosphere/vacuum)
+* Support `+` and `+=` operators for array (append and concat)
+* Add binding for control surfaces (e.g. `vessel.control_surfaces`)
+* Support docking port target
+
+## 0.3.3.3 -> 0.3.4
+
+* Fix `vessel.global_facing` for space plane
+  * Also ensure stable reference (internal) frame
+* Add `time_of_ascending_node` and `time_of_decending_node` helper to orbit
+* Improve docking port API:
+  * Add `DockingState` enum
+  * Get node type information
+* Experimental additions:
+  * Add `std::rendezvous::lib` for a simple orbital rendezvous maneuver
+  * Add `std::rendezvous::dock` for simple docking (needs lots of tweaking/optimization)
+* Add improved launch sequence (thanks to RobertoBiundo)
+* Extend the resource transfer API to support transfer of specific resources (and specific number of units)
+* Fix NPE in type checking
+* Fix broken error reporting (issue #78)
+* Fix invalid IL code exception (issue #79)
+
+## 0.3.3.2 -> 0.3.3.3
+
+* Fixed visible columns of console view
+* Fix `vessel.angular_moment`
+* Added helpers for steering:
+  * `vessel.global_toment_of_inertia`
+  * `vessel.total_torque`
+* Add `std::control::steering` module to control a vessel without relying on the SAS system.
+
 ## 0.3.3.1 -> 0.3.3.2
 
 * Fix inaccessible `..ctor()` exception (issue #70)

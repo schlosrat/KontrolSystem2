@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Experiments {
+    [DisallowMultipleComponent]
     public class UGUIDragHandler : MonoBehaviour, IDragHandler, IPointerDownHandler {
         public delegate void HandlePointerDown();
         public delegate void HandleDrag(Vector2 delta);
