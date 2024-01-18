@@ -18,6 +18,9 @@
         <Reference Include="System">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
         </Reference>
+        <Reference Include="System.Core">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.Core.dll</HintPath>
+        </Reference>
         <Reference Include="mscorlib">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
         </Reference>
@@ -41,6 +44,9 @@
         </Reference>
         <Reference Include="UnityEngine.TextRenderingModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.TextCoreFontEngineModule">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
         </Reference>
         <Reference Include="Unity.TextMeshPro">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Unity.TextMeshPro.dll</HintPath>

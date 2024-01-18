@@ -1,17 +1,20 @@
 import { Expression, Node, ValidationError } from ".";
 import { BUILTIN_BOOL, RealizedType, TO2Type } from "./to2-type";
 import { Operator } from "./operator";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { DefinitionRef } from "./definition-ref";
 
 export class VariableAssign extends Expression {
+  public reference?: { sourceRange: InputRange; definition: DefinitionRef };
+
   constructor(
     public readonly name: WithPosition<string>,
     public readonly op: Operator,
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -22,21 +25,30 @@ export class VariableAssign extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
 
   public validateBlock(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    const variableType = context.findVariable(
-      [this.name.value],
-      this.expression.resultType(context, typeHint).realizedType(context.module)
-    );
+    const { definition, value: variableType } =
+      context.findVariable(
+        [this.name.value],
+        this.expression
+          .resultType(context, typeHint)
+          .realizedType(context.module),
+      ) ?? {};
+    if (definition) {
+      this.reference = {
+        sourceRange: this.name.range,
+        definition,
+      };
+    }
 
     if (!variableType) {
       errors.push({
@@ -47,7 +59,7 @@ export class VariableAssign extends Expression {
     } else {
       this.documentation = [
         this.name.range.with(
-          `Variable \`${this.name.value} : ${variableType.name}\``
+          `Variable \`${this.name.value} : ${variableType.name}\``,
         ),
       ];
     }
@@ -55,8 +67,8 @@ export class VariableAssign extends Expression {
     errors.push(
       ...this.expression.validateBlock(
         context,
-        variableType?.realizedType(context.module)
-      )
+        variableType?.realizedType(context.module),
+      ),
     );
 
     return errors;
@@ -64,7 +76,7 @@ export class VariableAssign extends Expression {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push(
-      this.name.range.semanticToken("variable", "modification")
+      this.name.range.semanticToken("variable", "modification"),
     );
     this.expression.collectSemanticTokens(semanticTokens);
   }

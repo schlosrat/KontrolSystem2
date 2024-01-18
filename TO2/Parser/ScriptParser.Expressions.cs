@@ -164,13 +164,20 @@ namespace KontrolSystem.TO2.Parser {
             TermWithSuffixOps
         );
 
+        private static readonly Parser<Operator> PowBinaryOp = Alt(
+            Tag("**").To(Operator.Pow)
+        ).Between(WhiteSpaces0, WhiteSpaces0);
+
+        private static readonly Parser<Expression> PowExpr = Chain(UnaryPrefixExpr, PowBinaryOp,
+            (left, op, right, start, end) => new Binary(left, op, right, start, end));
+
         private static readonly Parser<Operator> MulDivBinaryOp = Alt(
             Char('*').To(Operator.Mul),
             Char('/').To(Operator.Div),
             Char('%').To(Operator.Mod)
         ).Between(WhiteSpaces0, WhiteSpaces0);
 
-        private static readonly Parser<Expression> MulDivBinaryExpr = Chain(UnaryPrefixExpr, MulDivBinaryOp,
+        private static readonly Parser<Expression> MulDivBinaryExpr = Chain(PowExpr, MulDivBinaryOp,
             (left, op, right, start, end) => new Binary(left, op, right, start, end));
 
         private static readonly Parser<Operator> AddSubBinaryOp = Alt(
@@ -249,7 +256,8 @@ namespace KontrolSystem.TO2.Parser {
             Tag("%=").To(Operator.ModAssign),
             Tag("|=").To(Operator.BitOrAssign),
             Tag("&=").To(Operator.BitAndAssign),
-            Tag("^=").To(Operator.BitXorAssign)
+            Tag("&=").To(Operator.BitXorAssign),
+            Tag("**=").To(Operator.PowAssign)
         ).Between(WhiteSpaces0, WhiteSpaces0);
 
         private static readonly Parser<IAssignSuffixOperation> AssignSuffixOps = Alt(

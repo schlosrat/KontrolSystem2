@@ -2,7 +2,7 @@
   "name": "to2-syntax",
   "displayName": "to2-syntax",
   "description": "",
-  "version": "0.0.5",
+  "version": "0.0.13",
   "license": "MIT",
   "engines": {
     "vscode": "^1.76.0"
@@ -23,6 +23,12 @@
       "type": "object",
       "title": "TO2 configuration",
       "properties": {
+        "to2LspServer.libraryPath": {
+          "scope": "window",
+          "type": "string",
+          "default": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Kerbal Space Program 2\\BepInEx\\plugins\\KontrolSystem2\\to2",
+          "description": "TO2 library folder"
+        },
         "to2LspServer.maxNumberOfProblems": {
           "scope": "resource",
           "type": "number",
@@ -64,16 +70,17 @@
     ]
   },
   "scripts": {
-    "bundle": "cd client && npm run bundle && cd ../server && npm run bundle",
+    "clean": "cd client && npm run clean && cd ../server && npm run clean",
+    "bundle": "cd client && npm run bundle && cd ../server && npm run bundle && cd .. && vsce package",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
     "format": "prettier --write .",
     "postinstall": "cd client && npm install && cd ../server && npm install"
   },
   "devDependencies": {
-    "@types/node": "18.16.3",
-    "@vscode/vsce": "2.19.0",
-    "prettier": "2.8.8",
-    "typescript": "^5.0.4"
+    "@types/node": "20.10.5",
+    "@vscode/vsce": "2.22.0",
+    "prettier": "3.1.1",
+    "typescript": "^5.3.3"
   }
 }

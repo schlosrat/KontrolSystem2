@@ -7,17 +7,19 @@ import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
+import { InlayHint } from "vscode-languageserver";
 
 export class TupleDeconstructDeclaration implements Node, BlockItem {
   public documentation?: WithPosition<string>[];
   public readonly range: InputRange;
+  public inlayHints: InlayHint[] | undefined;
 
   constructor(
     private readonly constLetKeyword: WithPosition<"let" | "const">,
     public readonly declarations: DeclarationParameterOrPlaceholder[],
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
@@ -28,7 +30,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
@@ -38,6 +40,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
 
     const resultType = this.resultType(context).realizedType(context.module);
     this.documentation = [];
+    this.inlayHints = [];
     for (let i = 0; i < this.declarations.length; i++) {
       const declaration = this.declarations[i];
       if (isDeclarationParameter(declaration)) {
@@ -52,11 +55,25 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
             declaration.type?.value ??
             declaration.extractedType(resultType, i) ??
             UNKNOWN_TYPE;
-          context.localVariables.set(declaration.target.value, variableType);
+
+          if (variableType !== UNKNOWN_TYPE) {
+            this.inlayHints.push({
+              position: declaration.target.range.end,
+              label: `: ${variableType.localName}`,
+              paddingLeft: true,
+            });
+          }
+          context.localVariables.set(declaration.target.value, {
+            definition: {
+              moduleName: context.module.moduleName,
+              range: declaration.target.range,
+            },
+            value: variableType,
+          });
           this.documentation.push(
             declaration.target.range.with(
-              `Variable declaration \`${declaration.target.value} : ${variableType.name}\``
-            )
+              `Variable declaration \`${declaration.target.value} : ${variableType.name}\``,
+            ),
           );
         }
       }
@@ -71,7 +88,7 @@ export class TupleDeconstructDeclaration implements Node, BlockItem {
     for (const declaration of this.declarations) {
       if (isDeclarationParameter(declaration)) {
         semanticTokens.push(
-          declaration.target.range.semanticToken("variable", "declaration")
+          declaration.target.range.semanticToken("variable", "declaration"),
         );
       }
     }

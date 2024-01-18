@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 using KontrolSystem.KSP.Runtime;
 using KontrolSystem.TO2;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Generator;
-using KSP.Modding;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 
 namespace KontrolSystem.GenRefs {
     class MainClass {
@@ -129,7 +126,7 @@ namespace KontrolSystem.GenRefs {
             else if (type is OptionType) {
                 GenericParameters = new[] { "T" };
             } else {
-                GenericParameters = type.GenericParameters.Length > 0 ? type.GenericParameters : null;
+                GenericParameters = type.GenericParameters.Length > 0 ? type.GenericParameters.Select(t => t.Name).ToArray() : null;
             }
 
             AssignableFromAny = type == BuiltinType.Unit;
@@ -202,7 +199,7 @@ namespace KontrolSystem.GenRefs {
             Name = field.Key;
             Description = field.Value.Description;
             ReadOnly = !field.Value.CanStore;
-            Type = new TypeRef(moduleContext, field.Value.DeclaredType);
+            Type = new TypeRef(moduleContext, field.Value.DeclaredType.UnderlyingType(moduleContext));
         }
 
         [JsonProperty("name")] public string Name { get; }
@@ -234,6 +231,8 @@ namespace KontrolSystem.GenRefs {
                 Operator.BitAndAssign => "&=",
                 Operator.BitXor => "^",
                 Operator.BitXorAssign => "^=",
+                Operator.Pow => "**",
+                Operator.PowAssign => "**=",
                 Operator.Eq => "==",
                 Operator.NotEq => "!=",
                 Operator.Lt => "<",
@@ -248,9 +247,9 @@ namespace KontrolSystem.GenRefs {
                 Operator.Unwrap => "?",
             };
             OtherType = operatorEmitter.OtherType != null
-                ? new TypeRef(moduleContext, operatorEmitter.OtherType)
+                ? new TypeRef(moduleContext, operatorEmitter.OtherType.UnderlyingType(moduleContext))
                 : null;
-            ResultType = new TypeRef(moduleContext, operatorEmitter.ResultType);
+            ResultType = new TypeRef(moduleContext, operatorEmitter.ResultType.UnderlyingType(moduleContext));
         }
 
         [JsonProperty("op")] public string Op { get; }
@@ -265,7 +264,7 @@ namespace KontrolSystem.GenRefs {
         public ConstantReference(ModuleContext moduleContext, IKontrolConstant constant) {
             Name = constant.Name;
             Description = constant.Description;
-            Type = new TypeRef(moduleContext, constant.Type);
+            Type = new TypeRef(moduleContext, constant.Type.UnderlyingType(moduleContext));
         }
 
         [JsonProperty("name")] public string Name { get; }
@@ -288,7 +287,7 @@ namespace KontrolSystem.GenRefs {
             IsAsync = method.Value.IsAsync;
             Name = method.Key;
             Description = method.Value.Description;
-            ReturnType = new TypeRef(moduleContext, method.Value.DeclaredReturn);
+            ReturnType = new TypeRef(moduleContext, method.Value.DeclaredReturn.UnderlyingType(moduleContext));
             Parameters = method.Value.DeclaredParameters
                 .Select(param => new FunctionParameterReference(moduleContext, param))
                 .ToArray();
@@ -314,7 +313,7 @@ namespace KontrolSystem.GenRefs {
 
         public FunctionParameterReference(ModuleContext moduleContext, FunctionParameter parameter) {
             Name = parameter.name;
-            Type = new TypeRef(moduleContext, parameter.type);
+            Type = new TypeRef(moduleContext, parameter.type.UnderlyingType(moduleContext));
             HasDefault = parameter.defaultValue != null;
         }
 
@@ -338,7 +337,7 @@ namespace KontrolSystem.GenRefs {
             Function,
         }
 
-        public TypeRef(ModuleContext moduleContext, TO2Type type) {
+        public TypeRef(ModuleContext moduleContext, RealizedType type) {
             if (type is GenericParameter) {
                 Kind = TypeKind.Generic;
                 Name = type.Name;
@@ -347,24 +346,24 @@ namespace KontrolSystem.GenRefs {
                 Name = type.Name;
             } else if (type is ArrayType arrayType) {
                 Kind = TypeKind.Array;
-                Parameters = new List<TypeRef> { new TypeRef(moduleContext, arrayType.ElementType) };
+                Parameters = new List<TypeRef> { new TypeRef(moduleContext, arrayType.ElementType.UnderlyingType(moduleContext)) };
             } else if (type is OptionType optionType) {
                 Kind = TypeKind.Option;
-                Parameters = new List<TypeRef> { new TypeRef(moduleContext, optionType.elementType) };
+                Parameters = new List<TypeRef> { new TypeRef(moduleContext, optionType.elementType.UnderlyingType(moduleContext)) };
             } else if (type is ResultType resultType) {
                 Kind = TypeKind.Result;
-                Parameters = new List<TypeRef> { new TypeRef(moduleContext, resultType.successType), new TypeRef(moduleContext, resultType.errorType) };
+                Parameters = new List<TypeRef> { new TypeRef(moduleContext, resultType.successType.UnderlyingType(moduleContext)), new TypeRef(moduleContext, resultType.errorType.UnderlyingType(moduleContext)) };
             } else if (type is TupleType tupleType) {
                 Kind = TypeKind.Tuple;
-                Parameters = tupleType.itemTypes.Select(item => new TypeRef(moduleContext, item)).ToList();
+                Parameters = tupleType.itemTypes.Select(item => new TypeRef(moduleContext, item.UnderlyingType(moduleContext))).ToList();
             } else if (type is RecordTupleType recordType) {
                 Kind = TypeKind.Record;
                 Names = recordType.ItemTypes.Select(item => item.Key).ToList();
-                Parameters = recordType.ItemTypes.Select(item => new TypeRef(moduleContext, item.Value)).ToList();
+                Parameters = recordType.ItemTypes.Select(item => new TypeRef(moduleContext, item.Value.UnderlyingType(moduleContext))).ToList();
             } else if (type is FunctionType functionType) {
                 Kind = TypeKind.Function;
-                Parameters = functionType.parameterTypes.Select(item => new TypeRef(moduleContext, item)).ToList();
-                ReturnType = new TypeRef(moduleContext, functionType.returnType);
+                Parameters = functionType.parameterTypes.Select(item => new TypeRef(moduleContext, item.UnderlyingType(moduleContext))).ToList();
+                ReturnType = new TypeRef(moduleContext, functionType.returnType.UnderlyingType(moduleContext));
                 IsAsync = functionType.isAsync;
             } else {
                 Kind = TypeKind.Standard;
@@ -376,6 +375,13 @@ namespace KontrolSystem.GenRefs {
                 } else {
                     Module = type.Name.Substring(0, idx);
                     Name = type.Name.Substring(idx + 2);
+                }
+
+                if (type.GenericParameters.Length > 0) {
+                    idx = Name.IndexOf('<');
+                    if (idx > 0) Name = Name.Substring(0, idx);
+                    Parameters = type.GenericParameters
+                        .Select(t => new TypeRef(moduleContext, t.UnderlyingType(moduleContext))).ToList();
                 }
             }
         }

@@ -12,7 +12,7 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
   constructor(
     public readonly message: string,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
@@ -23,7 +23,7 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -59,6 +59,8 @@ export class ErrorNode implements Node, ModuleItem, BlockItem {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+
+  public setModuleName(moduleName: string) {}
 }
 
 export function isErrorNode(node: Node): node is ErrorNode {

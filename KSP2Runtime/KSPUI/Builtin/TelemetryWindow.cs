@@ -67,6 +67,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
             base.OnDisable();
 
             timeSeriesCollection.changed.RemoveListener(OnTimeSeriesChanged);
+            drawer.Dispose();
         }
 
         public void Update() {
@@ -139,7 +140,7 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
                     10, -50, -40, 60);
 
                 var fileNameInput = UGUIInputField.Create(
-                    Path.Combine(Mainframe.Instance.LocalLibPath, $"TimeSeries-{(long)Game.SpaceSimulation.UniverseModel.UniversalTime}.json"), 120);
+                    Path.Combine(Mainframe.Instance.LocalLibPath, $"TimeSeries-{(long)Game.SpaceSimulation.UniverseModel.UniverseTime}.json"), 120);
                 savePopup.Add(fileNameInput, UGUILayout.Align.Stretch, 1);
 
                 savePopup.Add(UGUIButton.Create("Save", () => {
@@ -154,7 +155,6 @@ namespace KontrolSystem.KSP.Runtime.KSPUI.Builtin {
 
         internal void OnTimeSeriesChanged() {
             timeSeries.Elements = timeSeriesCollection.AllTimeSeries;
-
         }
 
         internal Color NextColor() {

@@ -1,34 +1,44 @@
 import { Expression, Node, ValidationError } from ".";
-import { BUILTIN_UNIT, TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition, WithPosition } from "../../parser";
-import { BlockContext } from "./context";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
+import { BlockContext } from "./context";
+import { DefinitionRef, WithDefinitionRef } from "./definition-ref";
 import { FunctionType, isFunctionType } from "./function-type";
+import { RealizedType, TO2Type, UNKNOWN_TYPE } from "./to2-type";
 
 export class MethodCall extends Expression {
+  public reference?: { sourceRange: InputRange; definition: DefinitionRef };
+
   constructor(
     public readonly target: Expression,
     public readonly methodName: WithPosition<string>,
     public readonly args: Expression[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
 
-  public resultType(context: BlockContext): TO2Type {
-    return this.findMethod(context)?.returnType ?? UNKNOWN_TYPE;
+  public resultType(context: BlockContext, typeHint?: RealizedType): TO2Type {
+    return (
+      this.findMethod(context)?.value.guessReturnType(
+        context.module,
+        this.args.map((arg) => arg.resultType(context)),
+        typeHint,
+      ) ?? UNKNOWN_TYPE
+    );
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.args.reduce(
       (prev, arg) => arg.reduceNode(combine, prev),
-      this.target.reduceNode(combine, combine(initialValue, this))
+      this.target.reduceNode(combine, combine(initialValue, this)),
     );
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
@@ -36,7 +46,14 @@ export class MethodCall extends Expression {
 
     if (errors.length > 0) return errors;
 
-    const methodType = this.findMethod(context);
+    const { definition, value: methodType } = this.findMethod(context) ?? {};
+    if (definition) {
+      this.reference = {
+        sourceRange: this.methodName.range,
+        definition,
+      };
+    }
+
     if (methodType) {
       if (this.args.length > methodType.maxParams) {
         errors.push({
@@ -56,8 +73,8 @@ export class MethodCall extends Expression {
           errors.push(
             ...this.args[i].validateBlock(
               context,
-              methodType.parameterTypes[i][1].realizedType(context.module)
-            )
+              methodType.parameterTypes[i][1].realizedType(context.module),
+            ),
           );
         }
       }
@@ -70,12 +87,12 @@ export class MethodCall extends Expression {
             this.methodName.value
           }(${methodType.parameterTypes
             .map(([name, type]) => `${name} : ${type.name}`)
-            .join(", ")}) -> ${methodType.returnType.name}\``
+            .join(", ")}) -> ${methodType.returnType.name}\``,
         ),
       ];
       if (methodType.description)
         this.documentation.push(
-          this.methodName.range.with(methodType.description)
+          this.methodName.range.with(methodType.description),
         );
     } else {
       errors.push({
@@ -98,7 +115,9 @@ export class MethodCall extends Expression {
     }
   }
 
-  private findMethod(context: BlockContext): FunctionType | undefined {
+  private findMethod(
+    context: BlockContext,
+  ): WithDefinitionRef<FunctionType> | undefined {
     const targetType = this.target
       .resultType(context)
       .realizedType(context.module);
@@ -106,10 +125,12 @@ export class MethodCall extends Expression {
     const method = targetType.findMethod(this.methodName.value);
     if (method) return method;
 
-    const field = targetType
-      .findField(this.methodName.value)
-      ?.realizedType(context.module);
+    const { definition, value: field } =
+      targetType.findField(this.methodName.value) ?? {};
+    const fieldRealized = field?.realizedType(context.module);
 
-    return field && isFunctionType(field) ? field : undefined;
+    return fieldRealized && isFunctionType(fieldRealized)
+      ? { definition, value: fieldRealized }
+      : undefined;
   }
 }

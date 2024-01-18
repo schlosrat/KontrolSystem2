@@ -1,5 +1,7 @@
 import { ModuleContext } from "./context";
+import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
+import { Operator } from "./operator";
 import { ResultType } from "./result-type";
 import {
   BUILTIN_BOOL,
@@ -15,7 +17,7 @@ export class OptionType implements RealizedType {
   public readonly description: string;
 
   constructor(public readonly elementType: TO2Type) {
-    this.name = this.localName = `Option<${elementType}>`;
+    this.name = this.localName = `Option<${elementType.localName}>`;
     this.description = "";
   }
 
@@ -24,23 +26,55 @@ export class OptionType implements RealizedType {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return this;
+    return new OptionType(this.elementType.realizedType(context));
   }
 
-  public findSuffixOperator(): RealizedType | undefined {
-    return undefined;
+  public fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+  ): RealizedType {
+    return new OptionType(
+      this.elementType.realizedType(context).fillGenerics(context, genericMap),
+    );
+  }
+
+  public guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType,
+  ): void {
+    if (isOptionType(realizedType)) {
+      this.elementType
+        .realizedType(context)
+        .guessGeneric(
+          context,
+          genericMap,
+          realizedType.elementType.realizedType(context),
+        );
+    }
+  }
+
+  public findSuffixOperator( 
+    op: Operator,
+    rightType: RealizedType
+): TO2Type | undefined {
+    if (op === "|" && rightType.name === this.elementType.name) {
+      return this.elementType
+    } else {
+      return undefined
+    }
   }
 
   public findPrefixOperator(): RealizedType | undefined {
     return undefined;
   }
 
-  public findField(name: string): TO2Type | undefined {
+  public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     switch (name) {
       case "defined":
-        return BUILTIN_BOOL;
+        return { value: BUILTIN_BOOL };
       case "value":
-        return this.elementType;
+        return { value: this.elementType };
       default:
         return undefined;
     }
@@ -50,14 +84,16 @@ export class OptionType implements RealizedType {
     return ["defined", "value"];
   }
 
-  public findMethod(name: string): FunctionType | undefined {
+  public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
     switch (name) {
       case "ok_or":
-        return new FunctionType(
-          false,
-          [["error", BUILTIN_STRING, false]],
-          new ResultType(this.elementType, BUILTIN_STRING)
-        );
+        return {
+          value: new FunctionType(
+            false,
+            [["error", BUILTIN_STRING, false]],
+            new ResultType(this.elementType, BUILTIN_STRING),
+          ),
+        };
       default:
         return undefined;
     }

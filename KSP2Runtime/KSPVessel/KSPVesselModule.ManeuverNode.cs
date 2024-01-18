@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using KontrolSystem.KSP.Runtime.KSPMath;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Map;
 using KSP.Sim;
 using KSP.Sim.impl;
 using KSP.Sim.Maneuver;
+using UnityEngine;
 
 namespace KontrolSystem.KSP.Runtime.KSPVessel {
     public partial class KSPVesselModule {
@@ -22,32 +25,36 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField]
             public double Time {
                 get => maneuverNode.Time;
-                set => UpdateNode(maneuverNode.BurnVector.x, maneuverNode.BurnVector.y, maneuverNode.BurnVector.z, value);
+                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode, value, 
+                    FakeGizmoData());
             }
 
             [KSField]
             public double Prograde {
                 get => maneuverNode.BurnVector.z;
-                set => UpdateNode(maneuverNode.BurnVector.x, maneuverNode.BurnVector.y, value, maneuverNode.Time);
+                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, 0, value - maneuverNode.BurnVector.z), 
+                    FakeGizmoData());
             }
 
             [KSField]
             public double Normal {
                 get => maneuverNode.BurnVector.y;
-                set => UpdateNode(maneuverNode.BurnVector.x, value, maneuverNode.BurnVector.z, maneuverNode.Time);
+                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(0, value - maneuverNode.BurnVector.y, 0), 
+                    FakeGizmoData());
             }
 
             [KSField]
             public double RadialOut {
                 get => maneuverNode.BurnVector.x;
-                set => UpdateNode(value, maneuverNode.BurnVector.y, maneuverNode.BurnVector.z, maneuverNode.Time);
+                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(value - maneuverNode.BurnVector.x, 0, 0), 
+                    FakeGizmoData());
             }
 
             [KSField("ETA")]
             public double Eta {
                 get => maneuverNode.Time - vesselAdapter.context.UniversalTime;
-                set => UpdateNode(maneuverNode.BurnVector.x, maneuverNode.BurnVector.y, maneuverNode.BurnVector.z,
-                    value + vesselAdapter.context.UniversalTime);
+                set => vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateTimeOnNode(maneuverNode,
+                    value + vesselAdapter.context.UniversalTime, FakeGizmoData());
             }
 
             [KSField]
@@ -63,11 +70,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 }
                 set {
                     KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
-                    UpdateNode(
-                        Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), value),
-                        Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), value),
-                        Vector3d.Dot(orbit.Prograde(maneuverNode.Time), value),
-                        maneuverNode.Time);
+                    vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(
+                        Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), value) - maneuverNode.BurnVector.x,
+                        Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), value) - maneuverNode.BurnVector.y,
+                        Vector3d.Dot(orbit.Prograde(maneuverNode.Time), value) - maneuverNode.BurnVector.z
+                    ), FakeGizmoData());
                 }
             }
 
@@ -82,11 +89,11 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 set {
                     KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(maneuverNode.Time) ?? vesselAdapter.vessel.Orbit);
                     var local = orbit.ReferenceBody.CelestialFrame.motionFrame.ToLocalVelocity(value.velocity, value.position);
-                    UpdateNode(
-                        Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), local),
-                        Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), local),
-                        Vector3d.Dot(orbit.Prograde(maneuverNode.Time), local),
-                        maneuverNode.Time);
+                    vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.UpdateChangeOnNode(maneuverNode, new Vector3d(
+                        Vector3d.Dot(orbit.RadialPlus(maneuverNode.Time), local) - maneuverNode.BurnVector.x,
+                        Vector3d.Dot(orbit.NormalPlus(maneuverNode.Time), local) - maneuverNode.BurnVector.y,
+                        Vector3d.Dot(orbit.Prograde(maneuverNode.Time), local) - maneuverNode.BurnVector.z
+                        ), FakeGizmoData());
                 }
             }
 
@@ -110,10 +117,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 //                vesselAdapter.vessel.SimulationObject.ManeuverPlan.RemoveNode(maneuverNode, false);
             }
 
-            private void UpdateNode(double radialOut, double normal, double prograde, double ut) {
-                maneuverNode.Time = ut;
-                maneuverNode.BurnVector = new Vector3d(radialOut, normal, prograde);
-                vesselAdapter.vessel.SimulationObject.ManeuverPlan.UpdateNodeDetails(maneuverNode);
+            private Dictionary<Guid, GizmoData>.ValueCollection FakeGizmoData() {
+                var fakeGizmos = new Dictionary<Guid, GizmoData>();
+                foreach (var node in vesselAdapter.vessel.SimulationObject.ManeuverPlan.GetNodes()) {
+                    fakeGizmos.Add(Guid.NewGuid(), new GizmoData(node, null));
+                }
+                return new Dictionary<Guid, GizmoData>.ValueCollection(fakeGizmos);
             }
         }
     }

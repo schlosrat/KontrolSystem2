@@ -11,28 +11,36 @@ export class IfThen extends Expression {
     public readonly condition: Expression,
     public readonly thenExpression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
+
   public resultType(context: BlockContext): TO2Type {
-    return new OptionType(this.thenExpression.resultType(context));
+    const thenContext = new BlockContext(context.module, context);
+
+    this.condition.validateBlock(thenContext);
+
+    return new OptionType(this.thenExpression.resultType(thenContext));
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.thenExpression.reduceNode(
       combine,
-      this.condition.reduceNode(combine, combine(initialValue, this))
+      this.condition.reduceNode(combine, combine(initialValue, this)),
     );
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    errors.push(...this.condition.validateBlock(context));
-    errors.push(...this.thenExpression.validateBlock(context));
+    const thenContext = new BlockContext(context.module, context);
+
+    errors.push(...this.condition.validateBlock(thenContext));
+    errors.push(...this.thenExpression.validateBlock(thenContext));
 
     return errors;
   }
@@ -51,12 +59,16 @@ export class IfThenElse extends Expression {
     public readonly thenExpression: Expression,
     public readonly elseExpression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
   public resultType(context: BlockContext): TO2Type {
-    const thenType = this.thenExpression.resultType(context);
+    const thenContext = new BlockContext(context.module, context);
+
+    this.condition.validateBlock(thenContext);
+
+    const thenType = this.thenExpression.resultType(thenContext);
     return thenType === UNKNOWN_TYPE
       ? this.elseExpression.resultType(context)
       : thenType;
@@ -64,16 +76,17 @@ export class IfThenElse extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.elseExpression.reduceNode(
       combine,
       this.thenExpression.reduceNode(
         combine,
-        this.condition.reduceNode(combine, combine(initialValue, this))
-      )
+        this.condition.reduceNode(combine, combine(initialValue, this)),
+      ),
     );
   }
+
   public validateBlock(context: BlockContext): ValidationError[] {
     const errors: ValidationError[] = [];
 

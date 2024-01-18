@@ -15,14 +15,14 @@ export class ConstDeclaration implements Node, ModuleItem {
     public readonly type: WithPosition<TO2Type>,
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
@@ -37,7 +37,10 @@ export class ConstDeclaration implements Node, ModuleItem {
         range: this.range,
       });
     } else {
-      context.mappedConstants.set(this.name.value, this.type.value);
+      context.mappedConstants.set(this.name.value, {
+        definition: { moduleName: context.moduleName, range: this.name.range },
+        value: this.type.value,
+      });
     }
 
     return errors;
@@ -49,6 +52,10 @@ export class ConstDeclaration implements Node, ModuleItem {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     this.expression.collectSemanticTokens(semanticTokens);
+  }
+
+  public setModuleName(moduleName: string) {
+    this.type.value.setModuleName?.(moduleName);
   }
 }
 

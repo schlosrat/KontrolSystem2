@@ -1,5 +1,5 @@
 import { Expression, ModuleItem, Node, ValidationError } from ".";
-import { TO2Type } from "./to2-type";
+import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { FunctionContext, ModuleContext, isImplModuleContext } from "./context";
@@ -16,14 +16,26 @@ export class MethodDeclaration implements Node, ModuleItem {
     public readonly declaredReturn: TO2Type,
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
 
+  functionType(): FunctionType {
+    return new FunctionType(
+      this.isAsync,
+      this.parameters.map((p) => [
+        p.name.value,
+        p.type?.value ?? UNKNOWN_TYPE,
+        p.defaultValue !== undefined,
+      ]),
+      this.declaredReturn,
+    );
+  }
+
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
@@ -42,18 +54,21 @@ export class MethodDeclaration implements Node, ModuleItem {
     } else {
       const blockContext = new FunctionContext(context, this.declaredReturn);
 
-      context.structType.methods.set(
-        this.name.value,
-        new FunctionType(
+      context.structType.methods.set(this.name.value, {
+        definition: {
+          moduleName: context.moduleName,
+          range: this.name.range,
+        },
+        value: new FunctionType(
           this.isAsync,
           this.parameters.map((param) => [
             param.name.value,
-            param.resultType(blockContext),
+            param.resultType(blockContext).realizedType(context),
             param.defaultValue !== undefined,
           ]),
-          this.declaredReturn
-        )
-      );
+          this.declaredReturn.realizedType(context),
+        ),
+      });
     }
 
     return [];
@@ -66,7 +81,10 @@ export class MethodDeclaration implements Node, ModuleItem {
 
     const blockContext = new FunctionContext(context, this.declaredReturn);
 
-    blockContext.localVariables.set("self", context.structType);
+    blockContext.localVariables.set("self", {
+      definition: { moduleName: context.moduleName, range: this.name.range },
+      value: context.structType,
+    });
     for (const parameter of this.parameters) {
       errors.push(...parameter.validateBlock(blockContext));
       if (blockContext.localVariables.has(parameter.name.value)) {
@@ -76,10 +94,13 @@ export class MethodDeclaration implements Node, ModuleItem {
           range: parameter.name.range,
         });
       } else {
-        blockContext.localVariables.set(
-          parameter.name.value,
-          parameter.resultType(blockContext)
-        );
+        blockContext.localVariables.set(parameter.name.value, {
+          definition: {
+            moduleName: context.moduleName,
+            range: parameter.name.range,
+          },
+          value: parameter.resultType(blockContext),
+        });
       }
     }
 
@@ -92,11 +113,13 @@ export class MethodDeclaration implements Node, ModuleItem {
     semanticTokens.push(
       this.isAsync
         ? this.name.range.semanticToken("method", "async", "declaration")
-        : this.name.range.semanticToken("method", "declaration")
+        : this.name.range.semanticToken("method", "declaration"),
     );
     for (const parameter of this.parameters) {
       parameter.collectSemanticTokens(semanticTokens);
     }
     this.expression.collectSemanticTokens(semanticTokens);
   }
+
+  public setModuleName(moduleName: string) {}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KontrolSystem.TO2.AST;
 using KontrolSystem.TO2.Binding;
 
@@ -79,6 +80,21 @@ namespace KontrolSystem.TO2.Runtime {
         public static Random Random() => new Random();
 
         public static Random RandomFromSeed(long seed) => new Random((int)seed);
+
+        public static long IntPow(long bas, long exp) {
+            if (exp < 0) return 0;
+            if (exp == 0) return 1;
+            if (exp == 1) return bas;
+            if (exp == 2) return bas * bas;
+            if (exp == 3) return bas * bas * bas;
+            int n = 63;
+            while ((exp <<= 1) >= 0) n--;
+
+            long tmp = bas;
+            while (--n > 0)
+                tmp = tmp * tmp * (((exp <<= 1) < 0) ? bas : 1);
+            return tmp;
+        }
 
         public static IKontrolModule Module {
             get {

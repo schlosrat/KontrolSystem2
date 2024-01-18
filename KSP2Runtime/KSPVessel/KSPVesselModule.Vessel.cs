@@ -80,6 +80,12 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField(Description = "Current orbit or orbit patch of the vessel.")]
             public KSPOrbitModule.IOrbit Orbit => new OrbitWrapper(context, vessel.Orbit);
 
+            [KSField(Description = "Get the entire trajectory of the vessel containing all orbit patches.")]
+            public KSPOrbitModule.IOrbit[] Trajectory => vessel.Orbiter.PatchedConicSolver.CurrentTrajectory
+                .Where(patch => patch.ActivePatch)
+                .Select(patch => (KSPOrbitModule.IOrbit)new OrbitWrapper(context, patch))
+                .ToArray();
+
             [KSField(Description = "The celestial/non-rotating reference frame of the vessel.")]
             public ITransformFrame CelestialFrame => vessel.transform.celestialFrame;
 
@@ -91,8 +97,8 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
 
             [KSField(Description = "Reference frame for the horizon at the current position of the vessel.")]
             public ITransformFrame HorizonFrame => vessel.SimulationObject.Telemetry.HorizonFrame;
-            
-            [KSField(Description = "Coordinate position of the vessel in the celestial frame of the main body.")] 
+
+            [KSField(Description = "Coordinate position of the vessel in the celestial frame of the main body.")]
             public Vector3d Position =>
                 vessel.mainBody.coordinateSystem.ToLocalPosition(vessel.SimulationObject.Position);
 
@@ -327,7 +333,6 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         if (vessel != null) return new Option<IKSPTargetable>(new VesselAdapter(context, vessel));
                         if (body != null) return new Option<IKSPTargetable>(new BodyWrapper(context, body));
                         if (part != null && part.IsPartDockingPort(out var dockingPort)) {
-                            UnityEngine.Debug.Log($"Vessel: {part.PartOwner.SimulationObject.Vessel} {part} {dockingPort}");
                             return new Option<IKSPTargetable>(
                                 new ModuleDockingNodeAdapter(
                                     new VesselAdapter(KSPContext.CurrentContext, part.PartOwner.SimulationObject.Vessel), part,

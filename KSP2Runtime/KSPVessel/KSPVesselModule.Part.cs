@@ -28,7 +28,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             public Vector3d Position =>
                 vesselAdapter.vessel.mainBody.coordinateSystem.ToLocalPosition(part.SimulationObject.Position);
 
-            [KSField(Description = "Get coordinate independent position of the part.")] 
+            [KSField(Description = "Get coordinate independent position of the part.")]
             public Position GlobalPosition => part.SimulationObject.Position;
 
             [KSField] public RotationWrapper GlobalRotation => new RotationWrapper(new Rotation(part.SimulationObject.transform.bodyFrame, ControlFacingRotation));
@@ -38,6 +38,31 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSField] public long ActivationStage => part.ActivationStage;
 
             [KSField] public long DecoupleStage => part.DecoupleStage;
+
+            [KSField(Description = "Indicate if the part has splashed")]
+            public bool Splashed => part.Splashed;
+
+            [KSField(Description = "Dry mass of the part")] public double DryMass => part.DryMass;
+
+            [KSField(Description = "Resource mass of the part")] public double ResourceMass => part.ResourceMass;
+
+            [KSField(Description = "Green mass (Kerbals) of the part")]
+            public double GreenMass => part.GreenMass;
+
+            [KSField(Description = "Total mass of the part")]
+            public double TotalMass => part.TotalMass;
+
+            [KSField(Description = "Temperature of the part")]
+            public double Temperature => part.Temperature;
+
+            [KSField(Description = "Maximum temperature of the part")]
+            public double MaxTemperature => part.MaxTemp;
+
+            [KSField]
+            public double ThermalMass => part.ThermalMass;
+
+            [KSField]
+            public double ResourceThermalMass => part.ResourceThermalMass;
 
             [KSField]
             public KSPResourceModule.ResourceContainerAdapter Resources => new KSPResourceModule.ResourceContainerAdapter(part);
@@ -94,6 +119,22 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                     }
 
                     return new Option<ModuleCommandAdapter>();
+                }
+            }
+
+            [KSField]
+            public bool IsScienceExperiment =>
+                part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(out var _);
+
+            [KSField]
+            public Option<ModuleScienceExperimentAdapter> ScienceExperiment {
+                get {
+                    if (part.TryGetModuleData<PartComponentModule_ScienceExperiment, Data_ScienceExperiment>(
+                            out Data_ScienceExperiment data)) {
+                        return new Option<ModuleScienceExperimentAdapter>(new ModuleScienceExperimentAdapter(part, data));
+                    }
+
+                    return new Option<ModuleScienceExperimentAdapter>();
                 }
             }
 

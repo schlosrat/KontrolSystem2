@@ -2,7 +2,7 @@
   "name": "to2-lsp-client",
   "description": "VSCode part of a language server",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.8",
   "publisher": "kontrolsystem2",
   "repository": {
     "type": "git",
@@ -12,15 +12,16 @@
     "vscode": "^1.75.0"
   },
   "dependencies": {
-    "vscode-languageclient": "^8.1.0"
+    "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
-    "@types/vscode": "^1.77.0",
-    "@vscode/test-electron": "^2.3.0",
-    "esbuild": "0.17.18",
-    "rimraf": "5.0.0"
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-electron": "^2.3.8",
+    "esbuild": "0.19.10",
+    "rimraf": "5.0.5"
   },
   "scripts": {
+    "clean": "rimraf out",
     "bundle": "tsc --noEmit && rimraf out && esbuild src/extension.ts --external:vscode --bundle --sourcemap --outdir=out --platform=node"
   }
 }

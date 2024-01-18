@@ -1,5 +1,6 @@
 import { WithPosition } from "../../parser";
 import { ModuleContext } from "./context";
+import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { RealizedType, TO2Type } from "./to2-type";
 
@@ -8,14 +9,21 @@ export class RecordType implements RealizedType {
   public name: string;
   public localName: string;
   public description: string;
-  public methods: Map<string, FunctionType>;
+  public methods: Map<string, WithDefinitionRef<FunctionType>>;
 
-  constructor(public readonly itemTypes: [string, WithPosition<TO2Type>][]) {
-    this.name = this.localName = `(${itemTypes
-      .map((item) => `${item[0]} : ${item[1].value.name}`)
-      .join(", ")})`;
+  constructor(
+    public readonly itemTypes: [WithPosition<string>, TO2Type][],
+    methods?: Map<string, WithDefinitionRef<FunctionType>>,
+    public readonly structName?: string,
+    private moduleName: string = "<unknown>",
+  ) {
+    this.name = this.localName =
+      structName ??
+      `(${itemTypes
+        .map((item) => `${item[0].value} : ${item[1].localName}`)
+        .join(", ")})`;
     this.description = "";
-    this.methods = new Map();
+    this.methods = methods ?? new Map();
   }
 
   public isAssignableFrom(otherType: RealizedType): boolean {
@@ -23,7 +31,49 @@ export class RecordType implements RealizedType {
   }
 
   public realizedType(context: ModuleContext): RealizedType {
-    return this;
+    return new RecordType(
+      this.itemTypes.map(([name, type]) => [name, type.realizedType(context)]),
+      this.methods,
+      this.structName,
+      this.moduleName,
+    );
+  }
+
+  public fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+  ): RealizedType {
+    return new RecordType(
+      this.itemTypes.map(([name, type]) => [
+        name,
+        type.realizedType(context).fillGenerics(context, genericMap),
+      ]),
+      this.methods,
+      this.structName,
+      this.moduleName,
+    );
+  }
+
+  public guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType,
+  ): void {
+    if (isRecordType(realizedType)) {
+      for (
+        let i = 0;
+        i < this.itemTypes.length && i < realizedType.itemTypes.length;
+        i++
+      ) {
+        this.itemTypes[i][1]
+          .realizedType(context)
+          .guessGeneric(
+            context,
+            genericMap,
+            realizedType.itemTypes[i][1].realizedType(context),
+          );
+      }
+    }
   }
 
   public findSuffixOperator(): RealizedType | undefined {
@@ -34,15 +84,22 @@ export class RecordType implements RealizedType {
     return undefined;
   }
 
-  public findField(name: string): TO2Type | undefined {
-    return this.itemTypes.find((item) => item[0] === name)?.[1].value;
+  public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
+    const field = this.itemTypes.find((item) => item[0].value === name);
+
+    if (!field) return undefined;
+
+    return {
+      definition: { moduleName: this.moduleName, range: field[0].range },
+      value: field[1],
+    };
   }
 
   public allFieldNames(): string[] {
-    return this.itemTypes.map((item) => item[0]);
+    return this.itemTypes.map((item) => item[0].value);
   }
 
-  public findMethod(name: string): FunctionType | undefined {
+  public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
     return this.methods.get(name);
   }
 
@@ -52,6 +109,10 @@ export class RecordType implements RealizedType {
 
   public forInSource(): TO2Type | undefined {
     return undefined;
+  }
+
+  public setModuleName(moduleName: string): void {
+    this.moduleName = moduleName;
   }
 }
 

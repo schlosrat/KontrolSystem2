@@ -19,19 +19,19 @@ export class StructField implements Node {
   public readonly range: InputRange;
 
   constructor(
-    public readonly name: string,
+    public readonly name: WithPosition<string>,
     public readonly type: WithPosition<TO2Type>,
     public readonly description: string,
     public readonly initializer: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.initializer.reduceNode(combine, combine(initialValue, this));
   }
@@ -48,8 +48,9 @@ export class StructDeclaration implements Node, TypeDeclaration {
   public readonly isTypeDecl: true = true;
 
   public readonly range: InputRange;
-  public readonly name: string;
+  public readonly name: WithPosition<string>;
   public readonly type: TO2Type;
+  public readonly constructorType: FunctionType;
 
   constructor(
     public readonly pubKeyword: WithPosition<"pub"> | undefined,
@@ -59,62 +60,68 @@ export class StructDeclaration implements Node, TypeDeclaration {
     public readonly constructorParameters: FunctionParameter[],
     public readonly fields: (LineComment | StructField)[],
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
-    this.name = this.structName.value;
+    this.name = this.structName;
     this.type = new RecordType(
       this.fields.flatMap((field) => {
         if (isLineComment(field)) return [];
-        return [[field.name, field.type]];
-      })
+        return [[field.name, field.type.value]];
+      }),
+      undefined,
+      this.name.value,
+    );
+    this.constructorType = new FunctionType(
+      false,
+      this.constructorParameters.map((param) => [
+        param.name.value,
+        param.type?.value ?? UNKNOWN_TYPE,
+        param.defaultValue !== undefined,
+      ]),
+      this.type,
     );
   }
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.fields.reduce(
       (prev, field) => field.reduceNode(combine, prev),
       this.constructorParameters.reduce(
         (prev, param) => param.reduceNode(combine, prev),
-        combine(initialValue, this)
-      )
+        combine(initialValue, this),
+      ),
     );
   }
 
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (context.typeAliases.has(this.name)) {
+    if (context.typeAliases.has(this.name.value)) {
       errors.push({
         status: "error",
         message: `Duplicate type name ${this.name}`,
         range: this.structName.range,
       });
     } else {
-      context.typeAliases.set(this.name, this.type.realizedType(context));
+      context.typeAliases.set(this.name.value, this.type.realizedType(context));
     }
-    if (context.mappedFunctions.has(this.name)) {
+    if (context.mappedFunctions.has(this.name.value)) {
       errors.push({
         status: "error",
         message: `Duplicate function name ${this.name}`,
         range: this.structName.range,
       });
     } else {
-      context.mappedFunctions.set(
-        this.structName.value,
-        new FunctionType(
-          false,
-          this.constructorParameters.map((param) => [
-            param.name.value,
-            param.type?.value ?? UNKNOWN_TYPE,
-            param.defaultValue !== undefined,
-          ]),
-          this.type
-        )
-      );
+      context.mappedFunctions.set(this.structName.value, {
+        definition: {
+          moduleName: context.moduleName,
+          range: this.structName.range,
+        },
+        value: this.constructorType,
+      });
     }
 
     return errors;
@@ -132,7 +139,11 @@ export class StructDeclaration implements Node, TypeDeclaration {
     }
     semanticTokens.push(this.structKeyword.range.semanticToken("keyword"));
     semanticTokens.push(
-      this.structName.range.semanticToken("struct", "declaration")
+      this.structName.range.semanticToken("struct", "declaration"),
     );
+  }
+
+  public setModuleName(moduleName: string) {
+    this.type.setModuleName?.(moduleName);
   }
 }

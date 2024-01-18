@@ -1,5 +1,97 @@
 # Changes
 
+## 0.5.2 -> 0.5.2.2
+
+* Fix update for maneuver node data in map-view (#111)
+
+## 0.5.1.2 -> 0.5.2
+
+* Improve `vessel.maneuver.add` and `vessel.maneuver.add_burn_vector` to use the
+  correct orbit patch in case multiple maneuvers are planed ahead.
+* Add `vessel.maneuver.remove_all()` helper to remove all maneuver nodes at once
+* Add `vessel.trajectory` field containing all the orbit patches of the current
+  trajectory of the vessel (i.e. where the vessel will end up if it stays on its
+  current course without intervention).
+* Add `vessel.maneuver.trajectory` field containing all the orbit patches if all
+  maneuvers are successfully executed.
+  * This list will always start after the first maneuver node. I.e. if there are
+    no planed maneuvers it will be empty.
+* Add `orbit.start_transition` and `orbit.end_transition` fields representing the
+  patch transition at the start and end.
+* Add `orbit.previous_patch` and `orbit.next_patch` fields (both `Option<Orbit>`)
+  to get the previous/next patch if available.
+
+## 0.5.1.1 -> 0.5.1.2
+
+* Fix `vessel.maneuver.add` (#108)
+
+## 0.5.1 -> 0.5.1.1
+
+* Improve vscode extension/lsp-server
+* Improve type inference in structs (#104)
+* Improve handling of if ... else if ... (#105)
+
+## 0.5.0.1 -> 0.5.1
+
+* Tweak SteeringManager to also control grid fins (#101)
+  * ... might require some further tweaking
+* Improve binding for science experiments
+  * Also allowing science experiments to be run via script
+
+## 0.5.0 -> 0.5.0.1
+
+* Fix part resources fields (#99)
+* Fix exception in maneuver node creation (#100)
+* Basic bindings for science parts
+
+## 0.4.4 -> 0.5.0
+
+* Compatibility with v0.2.0.0
+
+## 0.4.3 -> 0.4.4
+
+* Compatibility with v0.1.4.0
+
+## 0.4.2.4 -> 0.4.3
+
+* Cleanup ambiguity of the the `^` operator
+  * `^` is now bitwise xor and only defined for integers with the same precedence as `&` and `|`
+  * For float and integer there is a new `**` operator which is a shorthand for `pow` and has a higher precedence than
+    `*` and `/`
+
+## 0.4.2.3 -> 0.4.2.4
+
+* Fix blurry labels in telemetry display (addresses #98) 
+
+## 0.4.2.2 -> 0.4.2.3
+
+* Fix `ksp::telemetry::add_time_series` (telemetry)
+
+## 0.4.2.1 -> 0.4.2.2
+
+* Ensure that logging backend is only invoked in main thread
+  * This prevents dead-lock if logging from backend thread
+* `^` operator now behaves like `pow` instead of bit-xor. Also has higher precedence over `*` and `/` (addresses #95)
+* Fix minimum dependency to spacewarp
+
+## 0.4.2.1
+
+Bug fixes:
+* Further improve type-inference (#91)
+* Fix match_inclination detla-v calculation (#94)
+
+## 0.4.2
+
+* Compatibility with 0.1.3.0
+
+## 0.4.1.2 -> 0.4.1.3
+
+* Add additional part information
+  * `splashed`, `temperature`, `max_temperature`, `dry_mass`, `resource_mass`, `total_mass`
+* Fix function type aliases (#91)
+* Fix usage of constants in default parameters (#92)
+* Support inlay hints in LSP server
+
 ## 0.4.1.1 -> 0.4.1.2
 
 * Fix parsing issue with line commends in if-else cases
@@ -11,7 +103,7 @@
 * Add `get_vessels_in_range()` and `get_all_owned_vessels()` functions to `ksp::vessel`
 * Add `Vessel.make_active()`
 
-## ß.3.6 -> 0.4.1
+## 0.3.6 -> 0.4.1
 
 * UI overhaul
 * Add `ksp::ui` to create UI via scripts

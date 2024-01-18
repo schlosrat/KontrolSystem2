@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using KontrolSystem.KSP.Runtime.Core;
 using KontrolSystem.KSP.Runtime.KSPOrbit;
 using KontrolSystem.TO2.Binding;
 using KontrolSystem.TO2.Runtime;
+using KSP.Sim;
 using KSP.Sim.impl;
 using KSP.Sim.Maneuver;
 
@@ -19,8 +19,25 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                 maneuverPlan = this.vesselAdapter.vessel.SimulationObject.ManeuverPlan;
             }
 
+            [KSField(Description = "Get the planed trajectory of the vessel if all maneuvers are successfully executed." +
+                                   "The list of orbit patch will always start after the first maneuvering node." +
+                                   "I.e. if not maneuvers are planed this list will be empty.")]
+            public KSPOrbitModule.IOrbit[] Trajectory {
+                get {
+                    return vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.PatchedConicsList
+                        .Where(patch => patch.ActivePatch)
+                        .Select(patch => (KSPOrbitModule.IOrbit)new OrbitWrapper(vesselAdapter.context, patch))
+                        .ToArray();
+                }
+            }
             [KSField]
             public ManeuverNodeAdapter[] Nodes => maneuverPlan.GetNodes().Select(node => new ManeuverNodeAdapter(vesselAdapter, node)).ToArray();
+
+            [KSMethod(Description = "Remove all maneuver nodes")]
+            public void RemoveAll() {
+                var nodes = maneuverPlan.GetNodes().ToList();
+                vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.RemoveNodesFromVessel(vesselAdapter.vessel.GlobalId, nodes);
+            }
 
             [KSMethod]
             public Result<ManeuverNodeAdapter, string> NextNode() {
@@ -33,12 +50,20 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
             [KSMethod]
             public Future<Result<ManeuverNodeAdapter, string>>
                 Add(double ut, double radialOut, double normal, double prograde) {
-                ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, false, ut);
+                ManeuverPlanSolver maneuverPlanSolver = vesselAdapter.vessel.Orbiter.ManeuverPlanSolver;
+                IPatchedOrbit patch;
+                maneuverPlanSolver.FindPatchContainingUt(ut, maneuverPlanSolver.PatchedConicsList, out patch, out int _);
+
+                ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, patch is PatchedConicsOrbit _, ut);
+                maneuverNodeData.InitializeTransform();
+
+                if (patch is PatchedConicsOrbit) {
+                    maneuverNodeData.ManeuverTrajectoryPatch = (PatchedConicsOrbit)patch;
+                }
 
                 maneuverNodeData.BurnVector = new Vector3d(radialOut, normal, prograde);
 
-                maneuverPlan.AddNode(maneuverNodeData, true);
-                vesselAdapter.vessel.Orbiter.ManeuverPlanSolver.UpdateManeuverTrajectory();
+                vesselAdapter.vessel.Game.SpaceSimulation.Maneuvers.AddNodeToVessel(maneuverNodeData);
 
                 var result =
                     Result.Ok<ManeuverNodeAdapter, string>(new ManeuverNodeAdapter(vesselAdapter, maneuverNodeData));
@@ -48,15 +73,27 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         () => {
                             mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
                         });
-                } 
+                }
                 return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
             }
 
 
             [KSMethod]
             public Future<Result<ManeuverNodeAdapter, string>> AddBurnVector(double ut, Vector3d burnVector) {
-                KSPOrbitModule.IOrbit orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(ut) ?? vesselAdapter.vessel.Orbit);
-                ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, false, ut);
+                ManeuverPlanSolver maneuverPlanSolver = vesselAdapter.vessel.Orbiter.ManeuverPlanSolver;
+                IPatchedOrbit patch;
+                maneuverPlanSolver.FindPatchContainingUt(ut, maneuverPlanSolver.PatchedConicsList, out patch, out int _);
+
+                ManeuverNodeData maneuverNodeData = new ManeuverNodeData(vesselAdapter.vessel.GlobalId, patch is PatchedConicsOrbit _, ut);
+                maneuverNodeData.InitializeTransform();
+
+                KSPOrbitModule.IOrbit orbit;
+                if (patch is PatchedConicsOrbit) {
+                    maneuverNodeData.ManeuverTrajectoryPatch = (PatchedConicsOrbit)patch;
+                    orbit = new OrbitWrapper(vesselAdapter.context, (PatchedConicsOrbit)patch);
+                } else {
+                    orbit = new OrbitWrapper(vesselAdapter.context, vesselAdapter.vessel.Orbiter.PatchedConicSolver.FindPatchContainingUT(ut) ?? vesselAdapter.vessel.Orbit);
+                }
 
                 maneuverNodeData.BurnVector = new Vector3d(
                     Vector3d.Dot(orbit.RadialPlus(ut), burnVector),
@@ -73,7 +110,7 @@ namespace KontrolSystem.KSP.Runtime.KSPVessel {
                         () => {
                             mapCore.map3D.ManeuverManager.CreateGizmoForLocation(maneuverNodeData);
                         });
-                } 
+                }
                 return new Future.Success<Result<ManeuverNodeAdapter, string>>(result);
             }
         }

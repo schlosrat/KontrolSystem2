@@ -2,6 +2,7 @@ import { UNKNOWN_RANGE } from "../../parser";
 import { REFERENCE, TypeRef } from "../../reference";
 import { ArrayType } from "./array-type";
 import { ModuleContext } from "./context";
+import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
 import { OptionType } from "./option-type";
@@ -15,11 +16,14 @@ export interface TO2Type {
   localName: string;
 
   realizedType(context: ModuleContext): RealizedType;
+
+  setModuleName?(moduleName: string): void;
 }
 
 export interface RealizedType extends TO2Type {
   kind:
     | "Unknown"
+    | "Generic"
     | "Standard"
     | "Function"
     | "Array"
@@ -33,47 +37,138 @@ export interface RealizedType extends TO2Type {
 
   findSuffixOperator(
     op: Operator,
-    rightType: RealizedType
+    rightType: RealizedType,
   ): TO2Type | undefined;
 
   findPrefixOperator(op: Operator, leftType: RealizedType): TO2Type | undefined;
 
-  findField(name: string): TO2Type | undefined;
+  findField(name: string): WithDefinitionRef<TO2Type> | undefined;
 
   allFieldNames(): string[];
 
-  findMethod(name: string): FunctionType | undefined;
+  findMethod(name: string): WithDefinitionRef<FunctionType> | undefined;
 
   allMethodNames(): string[];
 
   forInSource(): TO2Type | undefined;
+
+  fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+  ): RealizedType;
+
+  guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType,
+  ): void;
+}
+
+export class GenericParameter implements RealizedType {
+  public readonly kind = "Generic";
+  public readonly description = "";
+  public readonly localName: string;
+
+  constructor(public readonly name: string) {
+    this.localName = name;
+  }
+
+  isAssignableFrom(otherType: RealizedType): boolean {
+    return false;
+  }
+
+  findSuffixOperator(op: Operator): TO2Type | undefined {
+    return undefined;
+  }
+
+  public findPrefixOperator(): RealizedType | undefined {
+    return undefined;
+  }
+
+  findField(name: string): WithDefinitionRef<TO2Type> | undefined {
+    return undefined;
+  }
+
+  allFieldNames(): string[] {
+    return [];
+  }
+
+  findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
+    return undefined;
+  }
+
+  allMethodNames(): string[] {
+    return [];
+  }
+
+  forInSource(): TO2Type | undefined {
+    return undefined;
+  }
+
+  realizedType(context: ModuleContext): RealizedType {
+    return this;
+  }
+
+  fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+  ): RealizedType {
+    return genericMap.hasOwnProperty(this.name) ? genericMap[this.name] : this;
+  }
+
+  guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType,
+  ) {
+    if (realizedType === UNKNOWN_TYPE) return;
+    if (isGenericParameter(realizedType)) {
+      if (genericMap.hasOwnProperty(realizedType.name)) {
+        genericMap[this.name] = genericMap[realizedType.name];
+      }
+    } else {
+      genericMap[this.name] = realizedType;
+    }
+  }
+}
+
+export function isGenericParameter(
+  node: RealizedType | undefined,
+): node is GenericParameter {
+  return node !== undefined && node.kind === "Generic";
 }
 
 const referencedTypes: Record<string, ReferencedType> = [
   ...Object.values(REFERENCE.builtin).map(
-    (typeReference) => new ReferencedType(typeReference)
+    (typeReference) => new ReferencedType(typeReference),
   ),
   ...Object.values(REFERENCE.modules).flatMap((module) =>
     Object.values(module.types).map(
-      (typeReference) => new ReferencedType(typeReference, module.name)
-    )
+      (typeReference) => new ReferencedType(typeReference, module.name),
+    ),
   ),
-].reduce((acc, referencedType) => {
-  acc[referencedType.name] = referencedType;
-  return acc;
-}, {} as Record<string, ReferencedType>);
+].reduce(
+  (acc, referencedType) => {
+    acc[referencedType.name] = referencedType;
+    return acc;
+  },
+  {} as Record<string, ReferencedType>,
+);
 
 const referencedTypeAliases = Object.values(REFERENCE.modules)
   .flatMap((module) =>
     Object.entries(module.typeAliases).map(([name, typeRef]) => ({
       name: `${module.name}::${name}`,
       typeRef,
-    }))
+    })),
   )
-  .reduce((acc, { name, typeRef }) => {
-    acc[name] = typeRef;
-    return acc;
-  }, {} as Record<string, TypeRef>);
+  .reduce(
+    (acc, { name, typeRef }) => {
+      acc[name] = typeRef;
+      return acc;
+    },
+    {} as Record<string, TypeRef>,
+  );
 
 export const UNKNOWN_TYPE: RealizedType = {
   kind: "Unknown",
@@ -116,6 +211,12 @@ export const UNKNOWN_TYPE: RealizedType = {
   forInSource() {
     return undefined;
   },
+
+  fillGenerics() {
+    return this;
+  },
+
+  guessGeneric() {},
 };
 
 export const BUILTIN_UNIT = new ReferencedType(REFERENCE.builtin["Unit"]);
@@ -126,12 +227,12 @@ export const BUILTIN_STRING = new ReferencedType(REFERENCE.builtin["string"]);
 export const BUILTIN_RANGE = new ReferencedType(REFERENCE.builtin["Range"]);
 export const BUILTIN_CELL = new ReferencedType(REFERENCE.builtin["Cell"]);
 export const BUILTIN_ARRAYBUILDER = new ReferencedType(
-  REFERENCE.builtin["ArrayBuilder"]
+  REFERENCE.builtin["ArrayBuilder"],
 );
 
 export function findLibraryTypeOrAlias(
   namePath: string[],
-  typeArguments: RealizedType[]
+  typeArguments: RealizedType[],
 ): RealizedType | undefined {
   const aliased = referencedTypeAliases[namePath.join("::")];
   if (aliased) return resolveTypeRef(aliased);
@@ -140,7 +241,7 @@ export function findLibraryTypeOrAlias(
 
 export function findLibraryType(
   namePath: string[],
-  typeArguments: RealizedType[]
+  typeArguments: RealizedType[],
 ): RealizedType | undefined {
   const fullName = namePath.join("::");
   switch (fullName) {
@@ -151,46 +252,45 @@ export function findLibraryType(
         return new ResultType(typeArguments[0], typeArguments[1]);
   }
 
-  return referencedTypes[fullName]?.fillGenerics(typeArguments);
+  return referencedTypes[fullName]?.fillGenericArguments(typeArguments);
 }
 
 export function resolveTypeRef(
   typeRef: TypeRef,
-  genericMap?: Record<string, RealizedType>
+  genericMap?: Record<string, RealizedType>,
 ): RealizedType | undefined {
   switch (typeRef.kind) {
     case "Builtin":
       return findLibraryType([typeRef.name], []);
     case "Generic":
-      return genericMap?.[typeRef.name] ?? UNKNOWN_TYPE;
+      return genericMap?.[typeRef.name] ?? new GenericParameter(typeRef.name);
     case "Standard":
       return findLibraryType([typeRef.module, typeRef.name], []);
     case "Array":
       return new ArrayType(
-        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE
+        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
       );
     case "Option":
       return new OptionType(
-        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE
+        resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
       );
     case "Result":
       return new ResultType(
         resolveTypeRef(typeRef.parameters[0]) ?? UNKNOWN_TYPE,
-        resolveTypeRef(typeRef.parameters[1]) ?? UNKNOWN_TYPE
+        resolveTypeRef(typeRef.parameters[1]) ?? UNKNOWN_TYPE,
       );
     case "Tuple":
       return new TupleType(
-        typeRef.parameters.map((param) => resolveTypeRef(param) ?? UNKNOWN_TYPE)
+        typeRef.parameters.map(
+          (param) => resolveTypeRef(param) ?? UNKNOWN_TYPE,
+        ),
       );
     case "Record":
       return new RecordType(
         typeRef.parameters.map((param, idx) => [
-          typeRef.names[idx],
-          {
-            range: UNKNOWN_RANGE,
-            value: resolveTypeRef(param) ?? UNKNOWN_TYPE,
-          },
-        ])
+          { range: UNKNOWN_RANGE, value: typeRef.names[idx] },
+          resolveTypeRef(param) ?? UNKNOWN_TYPE,
+        ]),
       );
     case "Function":
       return new FunctionType(
@@ -200,7 +300,7 @@ export function resolveTypeRef(
           resolveTypeRef(param) ?? UNKNOWN_TYPE,
           false,
         ]),
-        resolveTypeRef(typeRef.returnType) ?? UNKNOWN_TYPE
+        resolveTypeRef(typeRef.returnType) ?? UNKNOWN_TYPE,
       );
   }
 }

@@ -30,6 +30,14 @@ namespace KontrolSystem.KSP.Runtime.Testing {
         public double StartUt => 0;
         public double EndUt => 0;
 
+        public PatchTransitionType StartTransition => PatchTransitionType.Initial;
+
+        public PatchTransitionType EndTransition => PatchTransitionType.Final;
+
+        public Option<KSPOrbitModule.IOrbit> PreviousPatch => new Option<KSPOrbitModule.IOrbit>();
+
+        public Option<KSPOrbitModule.IOrbit> NextPatch => new Option<KSPOrbitModule.IOrbit>();
+
         public Option<double> Apoapsis => ApoapsisRadius.Map(apr => apr - body.radius);
         public double Periapsis => PeriapsisRadius - body.radius;
 

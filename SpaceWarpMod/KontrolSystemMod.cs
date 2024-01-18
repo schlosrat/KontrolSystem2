@@ -13,13 +13,13 @@ using KontrolSystem.KSP.Runtime.KSPAddons;
 
 namespace KontrolSystem.SpaceWarpMod {
 
-    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.4.1.2")]
+    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.5.2.2")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
     [BepInDependency(KSPAddonsModule.FlightPlanAdapter.ModGuid, BepInDependency.DependencyFlags.SoftDependency)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
         public const string ModGuid = "com.github.untoldwind.KontrolSystem2";
         public const string ModName = "KontrolSystem2";
-        public const string ModVersion = "0.4.1.2";
+        public const string ModVersion = "0.5.2.2";
 
         private ModuleManagerWindow moduleManagerWindow;
         private UIWindows uiWindows;
@@ -30,14 +30,14 @@ namespace KontrolSystem.SpaceWarpMod {
             { GameState.Invalid, GameState.Flag, GameState.Loading, GameState.PhotoMode, GameState.WarmUpLoading, GameState.MainMenu, GameState.TrainingCenter };
 
         public void Awake() {
-            ConfigAdapter.Init(Info, Config);
+            ConfigAdapter.Init(Info, Config, gameObject.AddComponent<LoggerAdapter>());
         }
 
         public override void OnInitialized() {
             Instance = this;
 
-            LoggerAdapter.Instance.Backend = Logger;
-            LoggerAdapter.Instance.Info("Initialize KontrolSystemMod");
+            ConfigAdapter.Instance.SetLoggerBackend(Logger);
+            ConfigAdapter.Instance.Logger.Info("Initialize KontrolSystemMod");
 
             uiWindows ??= gameObject.AddComponent<UIWindows>();
             uiWindows.Initialize(ConfigAdapter.Instance);

@@ -1,12 +1,15 @@
 import { Expression, Node, ValidationError } from ".";
 import { TO2Type, UNKNOWN_TYPE } from "./to2-type";
-import { InputPosition, WithPosition } from "../../parser";
+import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
 import { Position } from "vscode-languageserver-textdocument";
 import { CompletionItem, CompletionItemKind } from "vscode-languageserver";
+import { DefinitionRef } from "./definition-ref";
 
 export class FieldGet extends Expression {
+  public reference?: { sourceRange: InputRange; definition: DefinitionRef };
+
   private allFieldNames?: string[];
   private allMethodNames?: string[];
 
@@ -14,7 +17,7 @@ export class FieldGet extends Expression {
     public readonly target: Expression,
     public readonly fieldName: WithPosition<string>,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -24,12 +27,12 @@ export class FieldGet extends Expression {
       .resultType(context)
       .realizedType(context.module);
 
-    return targetType.findField(this.fieldName.value) ?? UNKNOWN_TYPE;
+    return targetType.findField(this.fieldName.value)?.value ?? UNKNOWN_TYPE;
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.target.reduceNode(combine, combine(initialValue, this));
   }
@@ -42,10 +45,16 @@ export class FieldGet extends Expression {
     const targetType = this.target
       .resultType(context)
       .realizedType(context.module);
-    const fieldType = targetType
-      .findField(this.fieldName.value)
-      ?.realizedType(context.module);
-    if (!fieldType) {
+    const { definition, value: fieldType } =
+      targetType.findField(this.fieldName.value) ?? {};
+    if (definition) {
+      this.reference = {
+        sourceRange: this.fieldName.range,
+        definition,
+      };
+    }
+    const fieldRealized = fieldType?.realizedType(context.module);
+    if (!fieldRealized) {
       errors.push({
         status:
           this.target.resultType(context) === UNKNOWN_TYPE ? "warn" : "error",
@@ -59,12 +68,12 @@ export class FieldGet extends Expression {
     } else {
       this.documentation = [
         this.fieldName.range.with(
-          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldType.name}\``
+          `Field \`${targetType.name}.${this.fieldName.value} : ${fieldRealized.name}\``,
         ),
       ];
-      if (fieldType.description)
+      if (fieldRealized.description)
         this.documentation.push(
-          this.fieldName.range.with(fieldType.description)
+          this.fieldName.range.with(fieldRealized.description),
         );
     }
 

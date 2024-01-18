@@ -19,7 +19,7 @@ export class FunctionParameter implements Node {
     public readonly type: WithPosition<TO2Type> | undefined,
     public readonly defaultValue: Expression | undefined,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
@@ -32,7 +32,7 @@ export class FunctionParameter implements Node {
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     if (this.defaultValue)
       return this.defaultValue.reduceNode(combine, combine(initialValue, this));
@@ -47,7 +47,7 @@ export class FunctionParameter implements Node {
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push(
-      this.name.range.semanticToken("parameter", "declaration")
+      this.name.range.semanticToken("parameter", "declaration"),
     );
   }
 }
@@ -67,7 +67,7 @@ export class FunctionDeclaration implements Node, ModuleItem {
     public readonly declaredReturn: TO2Type,
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
     this.isAsync = prefix.findIndex((p) => p.value === "sync") < 0;
@@ -75,8 +75,8 @@ export class FunctionDeclaration implements Node, ModuleItem {
       prefix.findIndex((p) => p.value === "pub") >= 0
         ? FunctionModifier.Public
         : prefix.findIndex((p) => p.value === "test") >= 0
-        ? FunctionModifier.Test
-        : FunctionModifier.Private;
+          ? FunctionModifier.Test
+          : FunctionModifier.Private;
     this.functionType = new FunctionType(
       this.isAsync,
       parameters.map((param) => [
@@ -85,20 +85,20 @@ export class FunctionDeclaration implements Node, ModuleItem {
         param.defaultValue !== undefined,
       ]),
       declaredReturn,
-      description
+      description,
     );
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(
       combine,
       this.parameters.reduce(
         (prev, param) => param.reduceNode(combine, prev),
-        combine(initialValue, this)
-      )
+        combine(initialValue, this),
+      ),
     );
   }
 
@@ -114,18 +114,19 @@ export class FunctionDeclaration implements Node, ModuleItem {
     } else {
       const blockContext = new FunctionContext(context, this.declaredReturn);
 
-      context.mappedFunctions.set(
-        this.name.value,
-        new FunctionType(
-          this.isAsync,
-          this.parameters.map((param) => [
-            param.name.value,
-            param.resultType(blockContext),
-            param.defaultValue !== undefined,
-          ]),
-          this.declaredReturn
-        )
+      this.functionType = new FunctionType(
+        this.isAsync,
+        this.parameters.map((param) => [
+          param.name.value,
+          param.resultType(blockContext).realizedType(context),
+          param.defaultValue !== undefined,
+        ]),
+        this.declaredReturn.realizedType(context),
       );
+      context.mappedFunctions.set(this.name.value, {
+        definition: { moduleName: context.moduleName, range: this.name.range },
+        value: this.functionType,
+      });
     }
 
     return errors;
@@ -145,10 +146,13 @@ export class FunctionDeclaration implements Node, ModuleItem {
           range: parameter.name.range,
         });
       } else {
-        blockContext.localVariables.set(
-          parameter.name.value,
-          parameter.resultType(blockContext)
-        );
+        blockContext.localVariables.set(parameter.name.value, {
+          definition: {
+            moduleName: context.moduleName,
+            range: parameter.name.range,
+          },
+          value: parameter.resultType(blockContext),
+        });
       }
     }
     errors.push(...this.expression.validateBlock(blockContext));
@@ -163,17 +167,19 @@ export class FunctionDeclaration implements Node, ModuleItem {
     semanticTokens.push(
       this.isAsync
         ? this.name.range.semanticToken("function", "async", "declaration")
-        : this.name.range.semanticToken("function", "declaration")
+        : this.name.range.semanticToken("function", "declaration"),
     );
     for (const parameter of this.parameters) {
       parameter.collectSemanticTokens(semanticTokens);
     }
     this.expression.collectSemanticTokens(semanticTokens);
   }
+
+  public setModuleName(moduleName: string) {}
 }
 
 export function isFunctionDeclaration(
-  node: ModuleItem
+  node: ModuleItem,
 ): node is FunctionDeclaration {
   return !!node.isFunctionDecl;
 }

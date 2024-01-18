@@ -2,19 +2,22 @@ import { RealizedType, TO2Type } from "./to2-type";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { BlockContext, ModuleContext } from "./context";
 import { SemanticToken } from "../../syntax-token";
-import { CompletionItem } from "vscode-languageserver";
+import { CompletionItem, InlayHint } from "vscode-languageserver";
 import { Position } from "vscode-languageserver-textdocument";
-import { Registry } from "./registry";
+import { DefinitionRef } from "./definition-ref";
+import { FunctionType } from "./function-type";
 
 export interface Node {
   readonly isComment?: boolean;
   readonly isError?: boolean;
   readonly documentation?: WithPosition<string>[];
   readonly range: InputRange;
+  readonly inlayHints?: InlayHint[];
+  readonly reference?: { sourceRange: InputRange; definition: DefinitionRef };
 
   reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T;
 
   collectSemanticTokens(semanticTokens: SemanticToken[]): void;
@@ -27,7 +30,7 @@ export interface BlockItem extends Node {
 
   validateBlock(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): ValidationError[];
 }
 
@@ -39,12 +42,15 @@ export interface ModuleItem extends Node {
   validateModuleFirstPass(context: ModuleContext): ValidationError[];
 
   validateModuleSecondPass(context: ModuleContext): ValidationError[];
+
+  setModuleName(moduleName: string): void;
 }
 
 export interface TypeDeclaration extends ModuleItem {
   isTypeDecl: true;
-  name: string;
+  name: WithPosition<string>;
   type: TO2Type;
+  constructorType?: FunctionType;
 }
 
 export function isTypeDeclaration(item: ModuleItem): item is TypeDeclaration {
@@ -61,17 +67,17 @@ export abstract class Expression implements Node, BlockItem {
 
   public abstract resultType(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): TO2Type;
 
   public abstract reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T;
 
   public abstract validateBlock(
     context: BlockContext,
-    typeHint?: RealizedType
+    typeHint?: RealizedType,
   ): ValidationError[];
 
   public abstract collectSemanticTokens(semanticTokens: SemanticToken[]): void;

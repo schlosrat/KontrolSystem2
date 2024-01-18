@@ -8,7 +8,6 @@ import { ModuleItem, Node, ValidationError } from ".";
 import { InputPosition, InputRange, WithPosition } from "../../parser";
 import { SemanticToken } from "../../syntax-token";
 import { ModuleContext } from "./context";
-import { Registry } from "./registry";
 import { TO2Module } from "./to2-module";
 
 export class UseDeclaration implements Node, ModuleItem {
@@ -24,14 +23,14 @@ export class UseDeclaration implements Node, ModuleItem {
     public readonly fromKeyword: WithPosition<"from"> | undefined,
     public readonly moduleNamePath: WithPosition<string[]>,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -58,7 +57,7 @@ export class UseDeclaration implements Node, ModuleItem {
         } else {
           context.moduleAliases.set(
             this.alias.value,
-            this.moduleNamePath.value
+            this.moduleNamePath.value,
           );
         }
       }
@@ -94,6 +93,7 @@ export class UseDeclaration implements Node, ModuleItem {
                 range: this.range,
               });
             } else {
+              importedFunction.definition?.moduleName;
               context.mappedFunctions.set(name.value, importedFunction);
             }
           }
@@ -107,7 +107,7 @@ export class UseDeclaration implements Node, ModuleItem {
             } else {
               context.typeAliases.set(
                 name.value,
-                importedType.realizedType(context)
+                importedType.value.realizedType(context),
               );
             }
           }
@@ -131,7 +131,10 @@ export class UseDeclaration implements Node, ModuleItem {
         }
         for (const [name, importedType] of this.importedModule.allTypes()) {
           if (!context.typeAliases.has(name)) {
-            context.typeAliases.set(name, importedType.realizedType(context));
+            context.typeAliases.set(
+              name,
+              importedType.value.realizedType(context),
+            );
           }
         }
       }
@@ -143,6 +146,8 @@ export class UseDeclaration implements Node, ModuleItem {
   public validateModuleSecondPass(context: ModuleContext): ValidationError[] {
     return [];
   }
+
+  public setModuleName(moduleName: string) {}
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {
     semanticTokens.push(this.useKeyword.range.semanticToken("keyword"));

@@ -11,7 +11,7 @@ export class Unapply extends Expression {
     public readonly extractNames: string[],
     public readonly expression: Expression,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     super(start, end);
   }
@@ -22,7 +22,7 @@ export class Unapply extends Expression {
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return this.expression.reduceNode(combine, combine(initialValue, this));
   }
@@ -43,10 +43,13 @@ export class Unapply extends Expression {
             range: this.pattern.range,
           });
         } else if (isOptionType(expressionType)) {
-          context.localVariables.set(
-            this.extractNames[0],
-            expressionType.elementType
-          );
+          context.localVariables.set(this.extractNames[0], {
+            definition: {
+              moduleName: context.module.moduleName,
+              range: this.pattern.range,
+            },
+            value: expressionType.elementType,
+          });
         } else {
           errors.push({
             status: "error",

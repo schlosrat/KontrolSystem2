@@ -127,15 +127,15 @@ namespace KontrolSystem.KSP.Runtime.Core {
 
         public GameInstance Game => gameInstance;
 
-        public GameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
+        public KSPGameMode GameMode => GameModeAdapter.GameModeFromState(Game.GlobalGameState.GetState());
 
-        public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniversalTime;
+        public double UniversalTime => Game.SpaceSimulation.UniverseModel.UniverseTime;
 
         public VesselComponent ActiveVessel => gameInstance.ViewController.GetActiveSimVessel(true);
 
         public KSPConsoleBuffer ConsoleBuffer => consoleBuffer;
 
-        public TimeSeriesCollection TimeSeriesCollection { get; }
+        public TimeSeriesCollection TimeSeriesCollection => timeSeriesCollection;
 
         public KSPOrbitModule.IBody FindBody(string name) {
             var body = Game.ViewController.GetBodyByName(name);

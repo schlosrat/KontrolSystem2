@@ -347,6 +347,7 @@ z | float | R/W | Setting for z-translation (-1 - 1)
 Name | Type | Read-only | Description
 --- | --- | --- | ---
 nodes | [ksp::vessel::ManeuverNode](/reference/ksp/vessel.md#maneuvernode)[] | R/O | 
+trajectory | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)[] | R/O | Get the planed trajectory of the vessel if all maneuvers are successfully executed.The list of orbit patch will always start after the first maneuvering node.I.e. if not maneuvers are planed this list will be empty. 
 
 #### Methods
 
@@ -376,6 +377,15 @@ maneuver.add_burn_vector ( ut : float,
 maneuver.next_node ( ) -> Result<ksp::vessel::ManeuverNode, string>
 ```
 
+
+
+##### remove_all
+
+```rust
+maneuver.remove_all ( ) -> Unit
+```
+
+Remove all maneuver nodes
 
 
 ### ManeuverNode
@@ -435,23 +445,34 @@ decouple_stage | int | R/O |
 decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
 deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
 docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
+dry_mass | float | R/O | Dry mass of the part 
 engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
 fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
+green_mass | float | R/O | Green mass (Kerbals) of the part 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
 is_engine | bool | R/O | 
 is_fairing | bool | R/O | 
 is_launch_clamp | bool | R/O | 
 is_parachute | bool | R/O | 
+is_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
+max_temperature | float | R/O | Maximum temperature of the part 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
+resource_mass | float | R/O | Resource mass of the part 
+resource_thermal_mass | float | R/O | 
 resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
+science_experiment | Option&lt;[ksp::vessel::ModuleScienceExperiment](/reference/ksp/vessel.md#modulescienceexperiment)> | R/O | 
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
+splashed | bool | R/O | Indicate if the part has splashed 
+temperature | float | R/O | Temperature of the part 
+thermal_mass | float | R/O | 
+total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
 
 #### Methods
@@ -544,10 +565,12 @@ decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#mo
 deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
 docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
 docking_state | [ksp::vessel::DockingState](/reference/ksp/vessel.md#dockingstate) | R/O | 
+dry_mass | float | R/O | Dry mass of the part 
 engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
 fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
+green_mass | float | R/O | Green mass (Kerbals) of the part 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
 is_deployable_docking_port | bool | R/O | 
@@ -555,14 +578,23 @@ is_engine | bool | R/O |
 is_fairing | bool | R/O | 
 is_launch_clamp | bool | R/O | 
 is_parachute | bool | R/O | 
+is_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
+max_temperature | float | R/O | Maximum temperature of the part 
 node_types | string[] | R/O | 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
+resource_mass | float | R/O | Resource mass of the part 
+resource_thermal_mass | float | R/O | 
 resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
+science_experiment | Option&lt;[ksp::vessel::ModuleScienceExperiment](/reference/ksp/vessel.md#modulescienceexperiment)> | R/O | 
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
+splashed | bool | R/O | Indicate if the part has splashed 
+temperature | float | R/O | Temperature of the part 
+thermal_mass | float | R/O | 
+total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
 
 #### Methods
@@ -694,6 +726,18 @@ moduleparachute.repack ( ) -> bool
 ```
 
 
+
+### ModuleScienceExperiment
+
+
+
+#### Fields
+
+Name | Type | Read-only | Description
+--- | --- | --- | ---
+experiments | [ksp::science::Experiment](/reference/ksp/science.md#experiment)[] | R/O | 
+is_deployed | bool | R/O | 
+part_name | string | R/O | 
 
 ### ModuleSolarPanel
 
@@ -834,23 +878,34 @@ decouple_stage | int | R/O |
 decoupler | Option&lt;[ksp::vessel::ModuleDecoupler](/reference/ksp/vessel.md#moduledecoupler)> | R/O | 
 deployable | Option&lt;[ksp::vessel::ModuleDeployable](/reference/ksp/vessel.md#moduledeployable)> | R/O | 
 docking_node | Option&lt;[ksp::vessel::ModuleDockingNode](/reference/ksp/vessel.md#moduledockingnode)> | R/O | 
+dry_mass | float | R/O | Dry mass of the part 
 engine_module | Option&lt;[ksp::vessel::ModuleEngine](/reference/ksp/vessel.md#moduleengine)> | R/O | 
 fairing | Option&lt;[ksp::vessel::ModuleFairing](/reference/ksp/vessel.md#modulefairing)> | R/O | 
 global_position | [ksp::math::GlobalPosition](/reference/ksp/math.md#globalposition) | R/O | Get coordinate independent position of the part. 
 global_rotation | [ksp::math::GlobalDirection](/reference/ksp/math.md#globaldirection) | R/O | 
+green_mass | float | R/O | Green mass (Kerbals) of the part 
 is_decoupler | bool | R/O | 
 is_deployable | bool | R/O | 
 is_engine | bool | R/O | 
 is_fairing | bool | R/O | 
 is_launch_clamp | bool | R/O | 
 is_parachute | bool | R/O | 
+is_science_experiment | bool | R/O | 
 is_solar_panel | bool | R/O | 
 launch_clamp | Option&lt;[ksp::vessel::ModuleLaunchClamp](/reference/ksp/vessel.md#modulelaunchclamp)> | R/O | 
+max_temperature | float | R/O | Maximum temperature of the part 
 parachute | Option&lt;[ksp::vessel::ModuleParachute](/reference/ksp/vessel.md#moduleparachute)> | R/O | 
 part_name | string | R/O | 
 position | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get position of the part in celestial frame of the main body. 
+resource_mass | float | R/O | Resource mass of the part 
+resource_thermal_mass | float | R/O | 
 resources | [ksp::resource::ResourceContainer](/reference/ksp/resource.md#resourcecontainer) | R/O | 
+science_experiment | Option&lt;[ksp::vessel::ModuleScienceExperiment](/reference/ksp/vessel.md#modulescienceexperiment)> | R/O | 
 solar_panel | Option&lt;[ksp::vessel::ModuleSolarPanel](/reference/ksp/vessel.md#modulesolarpanel)> | R/O | 
+splashed | bool | R/O | Indicate if the part has splashed 
+temperature | float | R/O | Temperature of the part 
+thermal_mass | float | R/O | 
+total_mass | float | R/O | Total mass of the part 
 vessel | [ksp::vessel::Vessel](/reference/ksp/vessel.md#vessel) | R/O | 
 
 ### StageDeltaV
@@ -1023,6 +1078,7 @@ static_pressure_kpa | float | R/O |
 surface_velocity | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Surface velocity of the vessel relative to the main body. This is equivalent of expressing the `global_velocity` in the body frame of the main body. 
 target | Option&lt;[ksp::vessel::Targetable](/reference/ksp/vessel.md#targetable)> | R/W | Get the currently selected target of the vessel, if there is one. 
 total_torque | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the available torque of relative to its control frame. 
+trajectory | [ksp::orbit::Orbit](/reference/ksp/orbit.md#orbit)[] | R/O | Get the entire trajectory of the vessel containing all orbit patches. 
 up | [ksp::math::Vec3](/reference/ksp/math.md#vec3) | R/O | Get the horizon up vector in the celestial frame of the main body. 
 vertical_speed | float | R/O | Get the vertical speed of the vessel. 
 vertical_surface_speed | float | R/O | 

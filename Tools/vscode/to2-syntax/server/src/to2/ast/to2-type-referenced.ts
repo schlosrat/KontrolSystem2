@@ -1,4 +1,6 @@
 import { TypeReference } from "../../reference";
+import { ModuleContext } from "./context";
+import { WithDefinitionRef } from "./definition-ref";
 import { FunctionType } from "./function-type";
 import { Operator } from "./operator";
 import {
@@ -18,12 +20,17 @@ export class ReferencedType implements RealizedType {
   constructor(
     private readonly typeReference: TypeReference,
     private readonly moduleName?: string,
-    private readonly genericMap?: Record<string, RealizedType>
+    private readonly genericMap?: Record<string, RealizedType>,
   ) {
     this.localName = typeReference.name;
     this.name = moduleName
       ? `${moduleName}::${typeReference.name}`
       : typeReference.name;
+    if (typeReference.genericParameters) {
+      this.localName += `<${typeReference.genericParameters
+        .map((p) => genericMap?.[p]?.localName ?? p)
+        .join(", ")}>`;
+    }
     this.description = typeReference.description || "";
   }
 
@@ -43,12 +50,13 @@ export class ReferencedType implements RealizedType {
 
   public findSuffixOperator(
     op: Operator,
-    rightType: RealizedType
+    rightType: RealizedType,
   ): TO2Type | undefined {
-    const opRef = this.typeReference.suffixOperators?.[op]?.find((opRef) =>
-      resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
-        rightType
-      )
+    const opRef = this.typeReference.suffixOperators?.[op]?.find(
+      (opRef) =>
+        resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
+          rightType,
+        ),
     );
 
     return opRef
@@ -58,12 +66,13 @@ export class ReferencedType implements RealizedType {
 
   public findPrefixOperator(
     op: Operator,
-    leftType: RealizedType
+    leftType: RealizedType,
   ): TO2Type | undefined {
-    const opRef = this.typeReference.prefixOperators?.[op]?.find((opRef) =>
-      resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
-        leftType
-      )
+    const opRef = this.typeReference.prefixOperators?.[op]?.find(
+      (opRef) =>
+        resolveTypeRef(opRef.otherType, this.genericMap)?.isAssignableFrom(
+          leftType,
+        ),
     );
 
     return opRef
@@ -71,32 +80,35 @@ export class ReferencedType implements RealizedType {
       : undefined;
   }
 
-  public findField(name: string): TO2Type | undefined {
+  public findField(name: string): WithDefinitionRef<TO2Type> | undefined {
     const fieldReference = this.typeReference.fields[name];
     if (!fieldReference) return undefined;
 
-    return resolveTypeRef(fieldReference.type, this.genericMap);
+    const resolved = resolveTypeRef(fieldReference.type, this.genericMap);
+    return resolved ? { value: resolved } : undefined;
   }
 
   public allFieldNames(): string[] {
     return Object.keys(this.typeReference.fields);
   }
 
-  public findMethod(name: string): FunctionType | undefined {
+  public findMethod(name: string): WithDefinitionRef<FunctionType> | undefined {
     const methodReference = this.typeReference.methods[name];
     if (!methodReference) return undefined;
 
-    return new FunctionType(
-      methodReference.isAsync,
-      methodReference.parameters.map((paramRef) => [
-        paramRef.name,
-        resolveTypeRef(paramRef.type, this.genericMap) ?? UNKNOWN_TYPE,
-        paramRef.hasDefault,
-      ]),
-      resolveTypeRef(methodReference.returnType, this.genericMap) ??
-        UNKNOWN_TYPE,
-      methodReference.description
-    );
+    return {
+      value: new FunctionType(
+        methodReference.isAsync,
+        methodReference.parameters.map((paramRef) => [
+          paramRef.name,
+          resolveTypeRef(paramRef.type, this.genericMap) ?? UNKNOWN_TYPE,
+          paramRef.hasDefault,
+        ]),
+        resolveTypeRef(methodReference.returnType, this.genericMap) ??
+          UNKNOWN_TYPE,
+        methodReference.description,
+      ),
+    };
   }
 
   public allMethodNames(): string[] {
@@ -107,7 +119,17 @@ export class ReferencedType implements RealizedType {
     return this.name === "Range" ? BUILTIN_INT : undefined;
   }
 
-  fillGenerics(typeParameters: RealizedType[]): RealizedType {
+  public fillGenerics(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+  ): RealizedType {
+    return new ReferencedType(this.typeReference, this.moduleName, {
+      ...this.genericMap,
+      ...genericMap,
+    });
+  }
+
+  public fillGenericArguments(typeParameters: RealizedType[]): RealizedType {
     if (
       !this.typeReference.genericParameters ||
       this.typeReference.genericParameters.length !== typeParameters.length
@@ -120,4 +142,10 @@ export class ReferencedType implements RealizedType {
     }
     return new ReferencedType(this.typeReference, this.moduleName, genericMap);
   }
+
+  public guessGeneric(
+    context: ModuleContext,
+    genericMap: Record<string, RealizedType>,
+    realizedType: RealizedType,
+  ): void {}
 }

@@ -392,6 +392,32 @@
             }
           }
         ],
+        "**": [
+          {
+            "op": "**",
+            "otherType": {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            "resultType": {
+              "kind": "Builtin",
+              "name": "int"
+            }
+          }
+        ],
+        "**=": [
+          {
+            "op": "**=",
+            "otherType": {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            "resultType": {
+              "kind": "Builtin",
+              "name": "int"
+            }
+          }
+        ],
         "==": [
           {
             "op": "==",
@@ -838,9 +864,22 @@
             }
           }
         ],
-        "^": [
+        "**": [
           {
-            "op": "^",
+            "op": "**",
+            "otherType": {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            "resultType": {
+              "kind": "Builtin",
+              "name": "float"
+            }
+          }
+        ],
+        "**=": [
+          {
+            "op": "**=",
             "otherType": {
               "kind": "Builtin",
               "name": "float"
@@ -1207,7 +1246,13 @@
           "returnType": {
             "kind": "Standard",
             "module": "",
-            "name": "ArrayBuilder<T>"
+            "name": "ArrayBuilder",
+            "parameters": [
+              {
+                "kind": "Generic",
+                "name": "T"
+              }
+            ]
           }
         },
         "result": {
@@ -1237,7 +1282,13 @@
             "resultType": {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             }
           }
         ]
@@ -1309,7 +1360,13 @@
           "returnType": {
             "kind": "Standard",
             "module": "",
-            "name": "Cell<T>"
+            "name": "Cell",
+            "parameters": [
+              {
+                "kind": "Generic",
+                "name": "T"
+              }
+            ]
           }
         }
       },
@@ -1498,12 +1555,24 @@
         {
           "kind": "Standard",
           "module": "",
-          "name": "ArrayBuilder<T>"
+          "name": "ArrayBuilder",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Standard",
           "module": "",
-          "name": "Cell<T>"
+          "name": "Cell",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Result",
@@ -1521,7 +1590,13 @@
         {
           "kind": "Standard",
           "module": "core::background",
-          "name": "Task<T>"
+          "name": "Task",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Standard",
@@ -1675,6 +1750,16 @@
         },
         {
           "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "PatchTransitionType"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "PatchTransitionTypeConstants"
+        },
+        {
+          "kind": "Standard",
           "module": "ksp::orbit",
           "name": "Body"
         },
@@ -1722,6 +1807,51 @@
           "kind": "Standard",
           "module": "ksp::resource",
           "name": "ResourceTransferEntry"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceExperimentType"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceExperimentTypeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ExperimentState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ExperimentStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceSituation"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceSituationConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "Experiment"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ExperimentDefinition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ResearchLocation"
         },
         {
           "kind": "Standard",
@@ -2027,6 +2157,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleParachute"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleScienceExperiment"
         },
         {
           "kind": "Standard",
@@ -2200,12 +2335,24 @@
         {
           "kind": "Standard",
           "module": "",
-          "name": "ArrayBuilder<T>"
+          "name": "ArrayBuilder",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Standard",
           "module": "",
-          "name": "Cell<T>"
+          "name": "Cell",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Option",
@@ -2219,7 +2366,13 @@
         {
           "kind": "Standard",
           "module": "core::background",
-          "name": "Task<T>"
+          "name": "Task",
+          "parameters": [
+            {
+              "kind": "Generic",
+              "name": "T"
+            }
+          ]
         },
         {
           "kind": "Standard",
@@ -2373,6 +2526,16 @@
         },
         {
           "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "PatchTransitionType"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "PatchTransitionTypeConstants"
+        },
+        {
+          "kind": "Standard",
           "module": "ksp::orbit",
           "name": "Body"
         },
@@ -2420,6 +2583,51 @@
           "kind": "Standard",
           "module": "ksp::resource",
           "name": "ResourceTransferEntry"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceExperimentType"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceExperimentTypeConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ExperimentState"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ExperimentStateConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceSituation"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ScienceSituationConstants"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "Experiment"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ExperimentDefinition"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::science",
+          "name": "ResearchLocation"
         },
         {
           "kind": "Standard",
@@ -2725,6 +2933,11 @@
           "kind": "Standard",
           "module": "ksp::vessel",
           "name": "ModuleParachute"
+        },
+        {
+          "kind": "Standard",
+          "module": "ksp::vessel",
+          "name": "ModuleScienceExperiment"
         },
         {
           "kind": "Standard",
@@ -2917,7 +3130,13 @@
           "returnType": {
             "kind": "Standard",
             "module": "core::background",
-            "name": "Task<T>"
+            "name": "Task",
+            "parameters": [
+              {
+                "kind": "Generic",
+                "name": "T"
+              }
+            ]
           }
         }
       }
@@ -9765,6 +9984,909 @@
     "ksp::orbit": {
       "name": "ksp::orbit",
       "types": {
+        "PatchTransitionType": {
+          "name": "PatchTransitionType",
+          "description": "Transition type at the beginning or end of an orbit patch",
+          "fields": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "description": "String representation of the number",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "suffixOperators": {
+            "==": [
+              {
+                "op": "==",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::vessel",
+                  "name": "PatchTransitionType"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ],
+            "!=": [
+              {
+                "op": "!=",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::vessel",
+                  "name": "PatchTransitionType"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ]
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "PatchTransitionTypeConstants": {
+          "name": "PatchTransitionTypeConstants",
+          "description": "",
+          "fields": {
+            "Initial": {
+              "name": "Initial",
+              "description": "Initial transition (orbit starts here)",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "Final": {
+              "name": "Final",
+              "description": "Final transition (orbit ends here)",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "Encounter": {
+              "name": "Encounter",
+              "description": "Orbit enters a sphere of influence (SOI)",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "Escape": {
+              "name": "Escape",
+              "description": "Orbit leaves a sphere of influence (SOI)",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "Maneuver": {
+              "name": "Maneuver",
+              "description": "Orbit changes due to a planed maneuver",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "Collision": {
+              "name": "Collision",
+              "description": "Orbits collides with a (celestial) object",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "EndThrust": {
+              "name": "EndThrust",
+              "description": "End of thrust of a planed maneuver",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "PartialOutOfFuel": {
+              "name": "PartialOutOfFuel",
+              "description": "Planed maneuver will partially run out of fuel",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "CompletelyOutOfFuel": {
+              "name": "CompletelyOutOfFuel",
+              "description": "Planed maneuver will run out of fuel",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            }
+          },
+          "methods": {
+            "from_string": {
+              "isAsync": false,
+              "name": "from_string",
+              "description": "Parse from string",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "PatchTransitionType"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Option",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Result",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "R"
+                },
+                {
+                  "kind": "Generic",
+                  "name": "E"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "brake_time",
+                "end_latitude",
+                "end_longitude",
+                "end_time",
+                "path"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Array",
+                  "parameters": [
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            }
+          ]
+        },
         "Body": {
           "name": "Body",
           "description": "Represents an in-game celestial body.\n",
@@ -10326,6 +11448,56 @@
               "type": {
                 "kind": "Builtin",
                 "name": "float"
+              }
+            },
+            "start_transition": {
+              "name": "start_transition",
+              "description": "Get transition type at the beginning of the orbit patch\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "end_transition": {
+              "name": "end_transition",
+              "description": "Get transition type at the end of the orbit patch\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::vessel",
+                "name": "PatchTransitionType"
+              }
+            },
+            "previous_patch": {
+              "name": "previous_patch",
+              "description": "Get the previous orbit patch of the trajectory (if available)\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::orbit",
+                    "name": "Orbit"
+                  }
+                ]
+              }
+            },
+            "next_patch": {
+              "name": "next_patch",
+              "description": "Get the next orbit patch of the trajectory (if available)\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::orbit",
+                    "name": "Orbit"
+                  }
+                ]
               }
             },
             "apoapsis": {
@@ -11166,7 +12338,17 @@
         }
       },
       "typeAliases": {},
-      "constants": {},
+      "constants": {
+        "PatchTransitionType": {
+          "name": "PatchTransitionType",
+          "description": "Transition type at the beginning or end of an orbit patch",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::vessel",
+            "name": "PatchTransitionTypeConstants"
+          }
+        }
+      },
       "functions": {
         "find_body": {
           "isAsync": false,
@@ -11345,12 +12527,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -11377,7 +12571,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -11531,6 +12731,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -11573,6 +12783,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -11882,6 +13137,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
             },
             {
@@ -11984,6 +13244,22 @@
                     "name": "ResourceData"
                   }
                 ]
+              }
+            },
+            "stored_total_mass": {
+              "name": "stored_total_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "stored_total_thermal_mass": {
+              "name": "stored_total_thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
               }
             }
           },
@@ -12286,6 +13562,2939 @@
           }
         }
       }
+    },
+    "ksp::science": {
+      "name": "ksp::science",
+      "description": "Collection of types and functions to get information and manipulate in-game science experiments.\n",
+      "types": {
+        "ScienceExperimentType": {
+          "name": "ScienceExperimentType",
+          "description": "Science experiment type",
+          "fields": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "description": "String representation of the number",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "suffixOperators": {
+            "==": [
+              {
+                "op": "==",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::science",
+                  "name": "ScienceExperimentType"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ],
+            "!=": [
+              {
+                "op": "!=",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::science",
+                  "name": "ScienceExperimentType"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ]
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ScienceExperimentTypeConstants": {
+          "name": "ScienceExperimentTypeConstants",
+          "description": "",
+          "fields": {
+            "DataType": {
+              "name": "DataType",
+              "description": "Science experiment producing data",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceExperimentType"
+              }
+            },
+            "SampleType": {
+              "name": "SampleType",
+              "description": "Science experiment producing sample",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceExperimentType"
+              }
+            },
+            "Both": {
+              "name": "Both",
+              "description": "Science experiment producing both sample and data",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceExperimentType"
+              }
+            }
+          },
+          "methods": {
+            "from_string": {
+              "isAsync": false,
+              "name": "from_string",
+              "description": "Parse from string",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "ScienceExperimentType"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Option",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Result",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "R"
+                },
+                {
+                  "kind": "Generic",
+                  "name": "E"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "brake_time",
+                "end_latitude",
+                "end_longitude",
+                "end_time",
+                "path"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Array",
+                  "parameters": [
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            }
+          ]
+        },
+        "ExperimentState": {
+          "name": "ExperimentState",
+          "description": "Science experiment state",
+          "fields": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "description": "String representation of the number",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "suffixOperators": {
+            "==": [
+              {
+                "op": "==",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::science",
+                  "name": "ExperimentState"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ],
+            "!=": [
+              {
+                "op": "!=",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::science",
+                  "name": "ExperimentState"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ]
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ExperimentStateConstants": {
+          "name": "ExperimentStateConstants",
+          "description": "",
+          "fields": {
+            "NONE": {
+              "name": "NONE",
+              "description": "Unknown state",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "INVALIDLOCATION": {
+              "name": "INVALIDLOCATION",
+              "description": "Location not valid",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "READY": {
+              "name": "READY",
+              "description": "Experiment is ready to run",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "RUNNING": {
+              "name": "RUNNING",
+              "description": "Experiment is running",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "PAUSED": {
+              "name": "PAUSED",
+              "description": "Experiment is paused",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "OUTOFRESOURCE": {
+              "name": "OUTOFRESOURCE",
+              "description": "Experiment ran out of resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "LOCATIONCHANGED": {
+              "name": "LOCATIONCHANGED",
+              "description": "Experiment location changed",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "INSUFFICIENTCREW": {
+              "name": "INSUFFICIENTCREW",
+              "description": "Experiment requires more available crew members",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "NOCONTROL": {
+              "name": "NOCONTROL",
+              "description": "Experiment requires control of the vessel",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "INSUFFICIENTSTORAGE": {
+              "name": "INSUFFICIENTSTORAGE",
+              "description": "Not enough storage capacity for experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "ALREADYSTORED": {
+              "name": "ALREADYSTORED",
+              "description": "Experiment has already stored results",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "BLOCKED": {
+              "name": "BLOCKED",
+              "description": "Experiment is blocked",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            }
+          },
+          "methods": {
+            "from_string": {
+              "isAsync": false,
+              "name": "from_string",
+              "description": "Parse from string",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "ExperimentState"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Option",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Result",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "R"
+                },
+                {
+                  "kind": "Generic",
+                  "name": "E"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "brake_time",
+                "end_latitude",
+                "end_longitude",
+                "end_time",
+                "path"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Array",
+                  "parameters": [
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            }
+          ]
+        },
+        "ScienceSituation": {
+          "name": "ScienceSituation",
+          "description": "Situation of a science experiment",
+          "fields": {},
+          "methods": {
+            "to_string": {
+              "isAsync": false,
+              "name": "to_string",
+              "description": "String representation of the number",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            }
+          },
+          "suffixOperators": {
+            "==": [
+              {
+                "op": "==",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::science",
+                  "name": "ScienceSituation"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ],
+            "!=": [
+              {
+                "op": "!=",
+                "otherType": {
+                  "kind": "Standard",
+                  "module": "ksp::science",
+                  "name": "ScienceSituation"
+                },
+                "resultType": {
+                  "kind": "Builtin",
+                  "name": "bool"
+                }
+              }
+            ]
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ScienceSituationConstants": {
+          "name": "ScienceSituationConstants",
+          "description": "",
+          "fields": {
+            "None": {
+              "name": "None",
+              "description": "No specific situation required",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceSituation"
+              }
+            },
+            "HighOrbit": {
+              "name": "HighOrbit",
+              "description": "Experiment in high orbit",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceSituation"
+              }
+            },
+            "LowOrbit": {
+              "name": "LowOrbit",
+              "description": "Experiment in low orbit",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceSituation"
+              }
+            },
+            "Atmosphere": {
+              "name": "Atmosphere",
+              "description": "Experiment inside an atmosphere",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceSituation"
+              }
+            },
+            "Splashed": {
+              "name": "Splashed",
+              "description": "Experiment while splashed",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceSituation"
+              }
+            },
+            "Landed": {
+              "name": "Landed",
+              "description": "Experiment while landed",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceSituation"
+              }
+            }
+          },
+          "methods": {
+            "from_string": {
+              "isAsync": false,
+              "name": "from_string",
+              "description": "Parse from string",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "kind": "Builtin",
+                    "name": "string"
+                  },
+                  "hasDefault": false
+                }
+              ],
+              "returnType": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "ScienceSituation"
+                  }
+                ]
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": [
+            {
+              "kind": "Builtin",
+              "name": "Unit"
+            },
+            {
+              "kind": "Builtin",
+              "name": "bool"
+            },
+            {
+              "kind": "Builtin",
+              "name": "int"
+            },
+            {
+              "kind": "Builtin",
+              "name": "float"
+            },
+            {
+              "kind": "Builtin",
+              "name": "string"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Range"
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "",
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Option",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Result",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "R"
+                },
+                {
+                  "kind": "Generic",
+                  "name": "E"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::background",
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "core::math",
+              "name": "Random"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::addons",
+              "name": "FlightPlan"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "Console"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::console",
+              "name": "RgbaColor"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "MovingAverage"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "PIDLoop"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "RCSTranslateManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "SteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "ThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "TorquePI"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelSteeringManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::control",
+              "name": "WheelThrottleManager"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugBillboard"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "Debug"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "GroundMarker"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugPath"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::debug",
+              "name": "DebugVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Mainframe"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "Process"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::game",
+              "name": "ProcessArgument"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Vec3"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Direction"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "Matrix2x2"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalAngularVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalPosition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "TransformFrame"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVector"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalVelocity"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::math",
+              "name": "GlobalDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Body"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "GeoCoordinates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::orbit",
+              "name": "Orbit"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirection"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "FlowDirectionConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceContainer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceData"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransfer"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::resource",
+              "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::telemetry",
+              "name": "TimeSeries"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "Align"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::up",
+              "name": "AlignConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Button"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Canvas"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Container"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Gradient"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "StringInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "IntInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "FloatInputField"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Label"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Line2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "PixelLine2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Polygon2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rect2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Slider"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Text2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Toggle"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Translate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Scale2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Rotate2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "ValueRaster2D"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::ui",
+              "name": "Window"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "AutopilotModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DeltaVSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteDeployModeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStates"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ParachuteSafeStatesConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "DockingStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "CommandControlStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "FlightCtrlState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ActionGroups"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Autopilot"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "StageDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "EngineMode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Maneuver"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ManeuverNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleAirIntake"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleCommand"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleControlSurface"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDecoupler"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDeployable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleDockingNode"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleEngine"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleFairing"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleLaunchClamp"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleSolarPanel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Part"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Staging"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Targetable"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "Vessel"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "VesselDeltaV"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringController"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::control::steering",
+              "name": "SteeringControl"
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "BodyParameters"
+            },
+            {
+              "kind": "Record",
+              "names": [
+                "brake_time",
+                "end_latitude",
+                "end_longitude",
+                "end_time",
+                "path"
+              ],
+              "parameters": [
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Builtin",
+                  "name": "float"
+                },
+                {
+                  "kind": "Array",
+                  "parameters": [
+                    {
+                      "kind": "Standard",
+                      "module": "ksp::math",
+                      "name": "GlobalPosition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Standard",
+              "module": "std::land::landing_simulation",
+              "name": "ReentrySimulation"
+            }
+          ]
+        },
+        "Experiment": {
+          "name": "Experiment",
+          "description": "Represents an in-game science experiment.\n",
+          "fields": {
+            "definition": {
+              "name": "definition",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentDefinition"
+              }
+            },
+            "crew_required": {
+              "name": "crew_required",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "int"
+              }
+            },
+            "time_to_complete": {
+              "name": "time_to_complete",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "has_enough_resources": {
+              "name": "has_enough_resources",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "current_situation_is_valid": {
+              "name": "current_situation_is_valid",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "current_running_time": {
+              "name": "current_running_time",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "condition_met": {
+              "name": "condition_met",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "current_experiment_state": {
+              "name": "current_experiment_state",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "previous_experiment_state": {
+              "name": "previous_experiment_state",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ExperimentState"
+              }
+            },
+            "valid_locations": {
+              "name": "valid_locations",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "ResearchLocation"
+                  }
+                ]
+              }
+            },
+            "region_required": {
+              "name": "region_required",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "experiment_location": {
+              "name": "experiment_location",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "ResearchLocation"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {
+            "pause_experiment": {
+              "isAsync": false,
+              "name": "pause_experiment",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "cancel_experiment": {
+              "isAsync": false,
+              "name": "cancel_experiment",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "run_experiment": {
+              "isAsync": false,
+              "name": "run_experiment",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ExperimentDefinition": {
+          "name": "ExperimentDefinition",
+          "description": "Represents definition of an in-game science experiment.\n",
+          "fields": {
+            "id": {
+              "name": "id",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "display_name": {
+              "name": "display_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "data_value": {
+              "name": "data_value",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "sample_value": {
+              "name": "sample_value",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "transmission_size": {
+              "name": "transmission_size",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "requires_eva": {
+              "name": "requires_eva",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
+        "ResearchLocation": {
+          "name": "ResearchLocation",
+          "description": "Represents a research location of a science experiment.\n",
+          "fields": {
+            "requires_region": {
+              "name": "requires_region",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "body_name": {
+              "name": "body_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "science_region": {
+              "name": "science_region",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "science_situation": {
+              "name": "science_situation",
+              "readOnly": true,
+              "type": {
+                "kind": "Standard",
+                "module": "ksp::science",
+                "name": "ScienceSituation"
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        }
+      },
+      "typeAliases": {},
+      "constants": {
+        "ScienceExperimentType": {
+          "name": "ScienceExperimentType",
+          "description": "Science experiment type",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::science",
+            "name": "ScienceExperimentTypeConstants"
+          }
+        },
+        "ExperimentState": {
+          "name": "ExperimentState",
+          "description": "Science experiment state",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::science",
+            "name": "ExperimentStateConstants"
+          }
+        },
+        "ScienceSituation": {
+          "name": "ScienceSituation",
+          "description": "Situation of a science experiment",
+          "type": {
+            "kind": "Standard",
+            "module": "ksp::science",
+            "name": "ScienceSituationConstants"
+          }
+        }
+      },
+      "functions": {}
     },
     "ksp::telemetry": {
       "name": "ksp::telemetry",
@@ -12968,12 +17177,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -13000,7 +17221,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -13154,6 +17381,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -13201,6 +17438,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -13501,6 +17783,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -14576,7 +18863,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "string"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -14657,7 +18950,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "int"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -14738,7 +19037,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -14783,7 +19088,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Generic",
+                        "name": "T"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 },
@@ -15016,7 +19327,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "float"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -15164,7 +19481,13 @@
                   "type": {
                     "kind": "Standard",
                     "module": "",
-                    "name": "Cell<T>"
+                    "name": "Cell",
+                    "parameters": [
+                      {
+                        "kind": "Builtin",
+                        "name": "bool"
+                      }
+                    ]
                   },
                   "hasDefault": false
                 }
@@ -17223,12 +21546,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -17255,7 +21590,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -17409,6 +21750,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -17456,6 +21807,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -17760,6 +22156,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
             },
             {
@@ -17988,12 +22389,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -18020,7 +22433,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -18174,6 +22593,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -18221,6 +22650,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -18521,6 +22995,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -18773,12 +23252,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -18805,7 +23296,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -18959,6 +23456,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -19006,6 +23513,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -19310,6 +23862,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
             },
             {
@@ -19538,12 +24095,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -19570,7 +24139,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -19724,6 +24299,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -19771,6 +24356,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -20071,6 +24701,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -20313,12 +24948,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -20345,7 +24992,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -20499,6 +25152,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -20546,6 +25209,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -20846,6 +25554,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -21178,12 +25891,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -21210,7 +25935,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -21364,6 +26095,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -21411,6 +26152,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -21711,6 +26497,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -21993,12 +26784,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -22025,7 +26828,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -22179,6 +26988,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -22226,6 +27045,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -22530,6 +27394,11 @@
             {
               "kind": "Standard",
               "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
               "name": "ModuleSolarPanel"
             },
             {
@@ -22768,12 +27637,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -22800,7 +27681,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -22954,6 +27841,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -23001,6 +27898,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -23301,6 +28243,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -23563,12 +28510,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -23595,7 +28554,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -23749,6 +28714,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -23796,6 +28771,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -24096,6 +29116,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -24368,12 +29393,24 @@
             {
               "kind": "Standard",
               "module": "",
-              "name": "ArrayBuilder<T>"
+              "name": "ArrayBuilder",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
               "module": "",
-              "name": "Cell<T>"
+              "name": "Cell",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Option",
@@ -24400,7 +29437,13 @@
             {
               "kind": "Standard",
               "module": "core::background",
-              "name": "Task<T>"
+              "name": "Task",
+              "parameters": [
+                {
+                  "kind": "Generic",
+                  "name": "T"
+                }
+              ]
             },
             {
               "kind": "Standard",
@@ -24554,6 +29597,16 @@
             },
             {
               "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "PatchTransitionTypeConstants"
+            },
+            {
+              "kind": "Standard",
               "module": "ksp::orbit",
               "name": "Body"
             },
@@ -24601,6 +29654,51 @@
               "kind": "Standard",
               "module": "ksp::resource",
               "name": "ResourceTransferEntry"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentType"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceExperimentTypeConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentState"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentStateConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituation"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ScienceSituationConstants"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "Experiment"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ExperimentDefinition"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::science",
+              "name": "ResearchLocation"
             },
             {
               "kind": "Standard",
@@ -24901,6 +29999,11 @@
               "kind": "Standard",
               "module": "ksp::vessel",
               "name": "ModuleParachute"
+            },
+            {
+              "kind": "Standard",
+              "module": "ksp::vessel",
+              "name": "ModuleScienceExperiment"
             },
             {
               "kind": "Standard",
@@ -25712,6 +30815,21 @@
         "Maneuver": {
           "name": "Maneuver",
           "fields": {
+            "trajectory": {
+              "name": "trajectory",
+              "description": "Get the planed trajectory of the vessel if all maneuvers are successfully executed.The list of orbit patch will always start after the first maneuvering node.I.e. if not maneuvers are planed this list will be empty.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::orbit",
+                    "name": "Orbit"
+                  }
+                ]
+              }
+            },
             "nodes": {
               "name": "nodes",
               "readOnly": true,
@@ -25728,6 +30846,16 @@
             }
           },
           "methods": {
+            "remove_all": {
+              "isAsync": false,
+              "name": "remove_all",
+              "description": "Remove all maneuver nodes\n",
+              "parameters": [],
+              "returnType": {
+                "kind": "Builtin",
+                "name": "Unit"
+              }
+            },
             "next_node": {
               "isAsync": false,
               "name": "next_node",
@@ -26048,6 +31176,85 @@
                 "name": "int"
               }
             },
+            "splashed": {
+              "name": "splashed",
+              "description": "Indicate if the part has splashed\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_mass": {
+              "name": "resource_mass",
+              "description": "Resource mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "green_mass": {
+              "name": "green_mass",
+              "description": "Green mass (Kerbals) of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "temperature": {
+              "name": "temperature",
+              "description": "Temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_temperature": {
+              "name": "max_temperature",
+              "description": "Maximum temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "thermal_mass": {
+              "name": "thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_thermal_mass": {
+              "name": "resource_thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
             "resources": {
               "name": "resources",
               "readOnly": true,
@@ -26123,6 +31330,28 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
+            "is_science_experiment": {
+              "name": "is_science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "science_experiment": {
+              "name": "science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleScienceExperiment"
                   }
                 ]
               }
@@ -26558,6 +31787,85 @@
                 "name": "int"
               }
             },
+            "splashed": {
+              "name": "splashed",
+              "description": "Indicate if the part has splashed\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_mass": {
+              "name": "resource_mass",
+              "description": "Resource mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "green_mass": {
+              "name": "green_mass",
+              "description": "Green mass (Kerbals) of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "temperature": {
+              "name": "temperature",
+              "description": "Temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_temperature": {
+              "name": "max_temperature",
+              "description": "Maximum temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "thermal_mass": {
+              "name": "thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_thermal_mass": {
+              "name": "resource_thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
             "resources": {
               "name": "resources",
               "readOnly": true,
@@ -26633,6 +31941,28 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
+            "is_science_experiment": {
+              "name": "is_science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "science_experiment": {
+              "name": "science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleScienceExperiment"
                   }
                 ]
               }
@@ -27117,6 +32447,44 @@
           "assignableFromAny": false,
           "assignableFrom": []
         },
+        "ModuleScienceExperiment": {
+          "name": "ModuleScienceExperiment",
+          "fields": {
+            "part_name": {
+              "name": "part_name",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "string"
+              }
+            },
+            "is_deployed": {
+              "name": "is_deployed",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "experiments": {
+              "name": "experiments",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::science",
+                    "name": "Experiment"
+                  }
+                ]
+              }
+            }
+          },
+          "methods": {},
+          "assignableFromAny": false,
+          "assignableFrom": []
+        },
         "ModuleSolarPanel": {
           "name": "ModuleSolarPanel",
           "fields": {
@@ -27228,6 +32596,85 @@
                 "name": "int"
               }
             },
+            "splashed": {
+              "name": "splashed",
+              "description": "Indicate if the part has splashed\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "dry_mass": {
+              "name": "dry_mass",
+              "description": "Dry mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_mass": {
+              "name": "resource_mass",
+              "description": "Resource mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "green_mass": {
+              "name": "green_mass",
+              "description": "Green mass (Kerbals) of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "total_mass": {
+              "name": "total_mass",
+              "description": "Total mass of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "temperature": {
+              "name": "temperature",
+              "description": "Temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "max_temperature": {
+              "name": "max_temperature",
+              "description": "Maximum temperature of the part\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "thermal_mass": {
+              "name": "thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
+            "resource_thermal_mass": {
+              "name": "resource_thermal_mass",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "float"
+              }
+            },
             "resources": {
               "name": "resources",
               "readOnly": true,
@@ -27303,6 +32750,28 @@
                     "kind": "Standard",
                     "module": "ksp::vessel",
                     "name": "ModuleCommand"
+                  }
+                ]
+              }
+            },
+            "is_science_experiment": {
+              "name": "is_science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Builtin",
+                "name": "bool"
+              }
+            },
+            "science_experiment": {
+              "name": "science_experiment",
+              "readOnly": true,
+              "type": {
+                "kind": "Option",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::vessel",
+                    "name": "ModuleScienceExperiment"
                   }
                 ]
               }
@@ -27744,6 +33213,21 @@
                 "kind": "Standard",
                 "module": "ksp::orbit",
                 "name": "Orbit"
+              }
+            },
+            "trajectory": {
+              "name": "trajectory",
+              "description": "Get the entire trajectory of the vessel containing all orbit patches.\n",
+              "readOnly": true,
+              "type": {
+                "kind": "Array",
+                "parameters": [
+                  {
+                    "kind": "Standard",
+                    "module": "ksp::orbit",
+                    "name": "Orbit"
+                  }
+                ]
               }
             },
             "celestial_frame": {

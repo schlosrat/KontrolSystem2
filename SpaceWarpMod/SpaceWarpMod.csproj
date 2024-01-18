@@ -18,6 +18,9 @@
         <Reference Include="System">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
         </Reference>
+        <Reference Include="System.Core">
+            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.Core.dll</HintPath>
+        </Reference>
         <Reference Include="netstandard">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\netstandard.dll</HintPath>
         </Reference>
@@ -61,8 +64,11 @@
         <Reference Include="BepInEx">
             <HintPath>$(KSP2_BASE_DIR)\BepInEx\core\BepInEx.dll</HintPath>
         </Reference>
-        <Reference Include="SpaceWarp">
-            <HintPath>$(KSP2_BASE_DIR)\BepInEx\plugins\SpaceWarp\SpaceWarp.dll</HintPath>
+        <Reference Include="SpaceWarp.Core">
+            <HintPath>$(KSP2_BASE_DIR)\BepInEx\plugins\SpaceWarp\SpaceWarp.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="SpaceWarp.UI">
+            <HintPath>$(KSP2_BASE_DIR)\BepInEx\plugins\SpaceWarp\modules\SpaceWarp.UI.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>

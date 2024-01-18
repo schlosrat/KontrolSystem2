@@ -9,7 +9,7 @@ export class TypeAlias implements Node, TypeDeclaration {
 
   public readonly range: InputRange;
 
-  public readonly name: string;
+  public readonly name: WithPosition<string>;
 
   constructor(
     public readonly exported: boolean,
@@ -17,15 +17,15 @@ export class TypeAlias implements Node, TypeDeclaration {
     public readonly description: string,
     public readonly type: TO2Type,
     start: InputPosition,
-    end: InputPosition
+    end: InputPosition,
   ) {
     this.range = new InputRange(start, end);
-    this.name = alias.value;
+    this.name = alias;
   }
 
   public reduceNode<T>(
     combine: (previousValue: T, node: Node) => T,
-    initialValue: T
+    initialValue: T,
   ): T {
     return combine(initialValue, this);
   }
@@ -33,14 +33,14 @@ export class TypeAlias implements Node, TypeDeclaration {
   public validateModuleFirstPass(context: ModuleContext): ValidationError[] {
     const errors: ValidationError[] = [];
 
-    if (context.typeAliases.has(this.name)) {
+    if (context.typeAliases.has(this.name.value)) {
       errors.push({
         status: "error",
         message: `Duplicate type name ${this.name}`,
         range: this.alias.range,
       });
     } else {
-      context.typeAliases.set(this.name, this.type.realizedType(context));
+      context.typeAliases.set(this.name.value, this.type.realizedType(context));
     }
 
     return errors;
@@ -53,4 +53,8 @@ export class TypeAlias implements Node, TypeDeclaration {
   }
 
   public collectSemanticTokens(semanticTokens: SemanticToken[]): void {}
+
+  public setModuleName(moduleName: string) {
+    this.type.setModuleName?.(moduleName);
+  }
 }
