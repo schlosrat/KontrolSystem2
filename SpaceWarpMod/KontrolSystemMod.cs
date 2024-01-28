@@ -10,6 +10,7 @@ using SpaceWarp.API.UI.Appbar;
 using UniLinq;
 using UnityEngine;
 using KontrolSystem.KSP.Runtime.KSPAddons;
+using KSP.UI.Flight;
 
 namespace KontrolSystem.SpaceWarpMod {
 
@@ -46,6 +47,16 @@ namespace KontrolSystem.SpaceWarpMod {
             mainframe.Initialize(ConfigAdapter.Instance);
 
             Appbar.RegisterAppButton("Kontrol System 2", "BTN-KontrolSystem", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
+                toggle => {
+                    if (toggle) {
+                        moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
+                    } else {
+                        moduleManagerWindow?.Close();
+                        moduleManagerWindow = null;
+                    }
+                });
+
+            Appbar.RegisterOABAppButton("Kontrol System 2", "BTN-KontrolSystem-VAB", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
                 toggle => {
                     if (toggle) {
                         moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
