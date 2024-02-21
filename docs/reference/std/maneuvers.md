@@ -11,15 +11,19 @@
 pub sync fn bi_impulsive_transfer ( start : ksp::orbit::Orbit,
                                     target : ksp::orbit::Orbit,
                                     min_UT : float,
-                                    max_UT : float ) -> Result<(delta_v : ksp::math::Vec3, TT : float, UT : float), string>
+                                    max_UT : float ) -> Result<(TT : float, UT : float, delta_v : ksp::math::Vec3), string>
 ```
 
-Calculate delta-v to intercept a `target` orbit starting after `min_UT`.
-Actual starting and transfer time will be optimized for a minimal delta-v for
-acceleration and deacceleration.
 
-Will result in an error if maneuver nodes cannot be created
-(e.g. because command or tracking facility has not been sufficiently upgraded)
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+target | ksp::orbit::Orbit |  | 
+min_UT | float |  | 
+max_UT | float | x | 
 
 ### bi_impulsive_transfer_body
 
@@ -27,10 +31,19 @@ Will result in an error if maneuver nodes cannot be created
 pub sync fn bi_impulsive_transfer_body ( start : ksp::orbit::Orbit,
                                          target : ksp::orbit::Body,
                                          min_UT : float,
-                                         target_periapsis : float ) -> Result<(delta_v : ksp::math::Vec3, TT : float, UT : float), string>
+                                         target_periapsis : float ) -> Result<(TT : float, UT : float, delta_v : ksp::math::Vec3), string>
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+target | ksp::orbit::Body |  | 
+min_UT | float |  | 
+target_periapsis | float |  | 
 
 ### bi_impulsive_transfer_near
 
@@ -38,12 +51,19 @@ pub sync fn bi_impulsive_transfer_body ( start : ksp::orbit::Orbit,
 pub sync fn bi_impulsive_transfer_near ( start : ksp::orbit::Orbit,
                                          target : ksp::orbit::Orbit,
                                          UT : float,
-                                         TT : float ) -> Result<(delta_v : ksp::math::Vec3, TT : float, UT : float), string>
+                                         TT : float ) -> Result<(TT : float, UT : float, delta_v : ksp::math::Vec3), string>
 ```
 
-Calculate delta-v to intercept a `target` orbit starting nearly at time `UT` with
-a nearly transfer time of `TT`. `UT` and `TT` will be optimized for a minimal delta-v for
-acceleration and deacceleration.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+target | ksp::orbit::Orbit |  | 
+UT | float |  | 
+TT | float |  | 
 
 ### change_apoapsis
 
@@ -53,8 +73,15 @@ pub sync fn change_apoapsis ( orbit : ksp::orbit::Orbit,
                               apoapsis_radius : float ) -> Result<ksp::math::Vec3, string>
 ```
 
-Calculate the required delta-v to change the apoapsis of an `orbit`
-to `apoapsis_radius` at time `UT`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+orbit | ksp::orbit::Orbit |  | 
+UT | float |  | 
+apoapsis_radius | float |  | 
 
 ### change_periapsis
 
@@ -64,28 +91,49 @@ pub sync fn change_periapsis ( orbit : ksp::orbit::Orbit,
                                periapsis_radius : float ) -> Result<ksp::math::Vec3, string>
 ```
 
-Calculate the required delta-v to change the periapsis of an `orbit`
-to `periapsis_radius` at time `UT`
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+orbit | ksp::orbit::Orbit |  | 
+UT | float |  | 
+periapsis_radius | float |  | 
 
 ### cheapest_course_correction
 
 ```rust
 pub sync fn cheapest_course_correction ( orbit : ksp::orbit::Orbit,
                                          min_UT : float,
-                                         target : ksp::orbit::Orbit ) -> (delta_v : ksp::math::Vec3, UT : float)
+                                         target : ksp::orbit::Orbit ) -> (UT : float, delta_v : ksp::math::Vec3)
 ```
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+orbit | ksp::orbit::Orbit |  | 
+min_UT | float |  | 
+target | ksp::orbit::Orbit |  | 
+
 ### circularize_orbit
 
 ```rust
-pub sync fn circularize_orbit ( orbit : ksp::orbit::Orbit ) -> Result<(delta_v : ksp::math::Vec3, UT : float), string>
+pub sync fn circularize_orbit ( orbit : ksp::orbit::Orbit ) -> Result<(UT : float, delta_v : ksp::math::Vec3), string>
 ```
 
 Calculate the required delta-v and time to change the given `orbit`
 to a (mostly) circular orbit at the next apoapsis (if `orbit` is elliplic)
 or periapsis (if `orbit` is hyperbolic).
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+orbit | ksp::orbit::Orbit |  | 
 
 ### circularize_orbit_at
 
@@ -94,17 +142,28 @@ pub sync fn circularize_orbit_at ( orbit : ksp::orbit::Orbit,
                                    UT : float ) -> ksp::math::Vec3
 ```
 
-Calculate the required delta-v to change the given `orbit`
-to a (mostly) circular orbit at a given universal time `UT`.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+orbit | ksp::orbit::Orbit |  | 
+UT | float |  | 
 
 ### circularize_orbit_pe
 
 ```rust
-pub sync fn circularize_orbit_pe ( orbit : ksp::orbit::Orbit ) -> Result<(delta_v : ksp::math::Vec3, UT : float), string>
+pub sync fn circularize_orbit_pe ( orbit : ksp::orbit::Orbit ) -> Result<(UT : float, delta_v : ksp::math::Vec3), string>
 ```
 
-Calculate the required delta-v and time to change the given `orbit`
-to a (mostly) circular orbit at the next periapsis
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+orbit | ksp::orbit::Orbit |  | 
 
 ### course_correction_body
 
@@ -117,6 +176,15 @@ pub sync fn course_correction_body ( start : ksp::orbit::Orbit,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+target | ksp::orbit::Body |  | 
+UT | float |  | 
+target_periapsis | float |  | 
+
 ### ellipticize
 
 ```rust
@@ -126,8 +194,16 @@ pub sync fn ellipticize ( orbit : ksp::orbit::Orbit,
                           apoapsis : float ) -> ksp::math::Vec3
 ```
 
-Calculate the required delta-v to change the `apoapsis` and `periapsis` of the given `orbit`
-at time `UT`.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+orbit | ksp::orbit::Orbit |  | 
+UT | float |  | 
+periapsis | float |  | 
+apoapsis | float |  | 
 
 ### ideal_ejection
 
@@ -139,8 +215,17 @@ pub sync fn ideal_ejection ( body : ksp::orbit::Body,
                              exit_velocity : ksp::math::Vec3 ) -> ksp::orbit::Orbit
 ```
 
-Calculate the ideal ejection from a (nearly) circular orbit around a given `body`, `radius` and `normal` vector.
-The resulting orbit is choosen so that the vessel will have a given `exit_velocity` on the SOI radius at time `UT`.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+body | ksp::orbit::Body |  | 
+UT | float |  | 
+radius | float |  | 
+normal | ksp::math::Vec3 |  | 
+exit_velocity | ksp::math::Vec3 |  | 
 
 ### intercept_at
 
@@ -152,44 +237,81 @@ pub sync fn intercept_at ( start : ksp::orbit::Orbit,
                            offset_distance : float ) -> (start_velocity : ksp::math::Vec3, target_velocity : ksp::math::Vec3)
 ```
 
-Calculate required delta-v to intercept `target` orbit at time `target_UT` from `start` orbit at time `start_UT`.
-`offset_distance` may be used to define a desired distance to the target.
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+start_UT | float |  | 
+target | ksp::orbit::Orbit |  | 
+target_UT | float |  | 
+offset_distance | float | x | 
 
 ### match_apoapsis
 
 ```rust
 pub sync fn match_apoapsis ( start : ksp::orbit::Orbit,
-                             target : ksp::orbit::Orbit ) -> Result<(delta_v : ksp::math::Vec3, UT : float), string>
+                             target : ksp::orbit::Orbit ) -> Result<(UT : float, delta_v : ksp::math::Vec3), string>
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+target | ksp::orbit::Orbit |  | 
 
 ### match_inclination
 
 ```rust
 pub sync fn match_inclination ( start : ksp::orbit::Orbit,
-                                target : ksp::orbit::Orbit ) -> (delta_v : ksp::math::Vec3, UT : float)
+                                target : ksp::orbit::Orbit ) -> (UT : float, delta_v : ksp::math::Vec3)
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+target | ksp::orbit::Orbit |  | 
 
 ### match_periapsis
 
 ```rust
 pub sync fn match_periapsis ( start : ksp::orbit::Orbit,
-                              target : ksp::orbit::Orbit ) -> (delta_v : ksp::math::Vec3, UT : float)
+                              target : ksp::orbit::Orbit ) -> (UT : float, delta_v : ksp::math::Vec3)
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+target | ksp::orbit::Orbit |  | 
 
 ### match_velocities
 
 ```rust
 pub sync fn match_velocities ( start : ksp::orbit::Orbit,
-                               target : ksp::orbit::Orbit ) -> (delta_v : ksp::math::Vec3, UT : float)
+                               target : ksp::orbit::Orbit ) -> (UT : float, delta_v : ksp::math::Vec3)
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+target | ksp::orbit::Orbit |  | 
 
 ### next_closest_approach_time
 
@@ -200,3 +322,11 @@ pub sync fn next_closest_approach_time ( start : ksp::orbit::Orbit,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::orbit::Orbit |  | 
+target | ksp::orbit::Orbit |  | 
+UT | float |  | 

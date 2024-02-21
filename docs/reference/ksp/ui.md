@@ -27,20 +27,26 @@ String representation of the number
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-Center | [ksp::up::Align](/reference/ksp/up.md#align) | R/O | Align the element to the center of the container.
-End | [ksp::up::Align](/reference/ksp/up.md#align) | R/O | Align the element to end of container (right/bottom).
-Start | [ksp::up::Align](/reference/ksp/up.md#align) | R/O | Align the element to start of container (left/top).
-Stretch | [ksp::up::Align](/reference/ksp/up.md#align) | R/O | Strech the element to full size of container
+Center | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Align the element to the center of the container.
+End | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Align the element to end of container (right/bottom).
+Start | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Align the element to start of container (left/top).
+Stretch | [ksp::ui::Align](/reference/ksp/ui.md#align) | R/O | Strech the element to full size of container
 
 #### Methods
 
 ##### from_string
 
 ```rust
-alignconstants.from_string ( value : string ) -> Option<ksp::up::Align>
+alignconstants.from_string ( value : string ) -> Option<ksp::ui::Align>
 ```
 
 Parse from string
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | string |  | Enum value to lookup
 
 ### Button
 
@@ -50,9 +56,9 @@ Parse from string
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-enabled | bool | R/W | 
-font_size | float | R/W | 
-label | string | R/W | 
+enabled | bool | R/W | Enable/disable the button 
+font_size | float | R/W | Font size of the button label 
+label | string | R/W | Button label 
 
 #### Methods
 
@@ -62,7 +68,14 @@ label | string | R/W |
 button.on_click ( onClick : sync fn() -> Unit ) -> Unit
 ```
 
+Function to be called if button is clicked
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+onClick | sync fn() -> Unit |  | 
 
 ### Canvas
 
@@ -72,9 +85,9 @@ button.on_click ( onClick : sync fn() -> Unit ) -> Unit
 
 Name | Type | Read-only | Description
 --- | --- | --- | ---
-height | float | R/O | 
-min_size | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/W | 
-width | float | R/O | 
+height | float | R/O | Current height of the canvas (determined by the surrounding container) 
+min_size | [ksp::math::Vec2](/reference/ksp/math.md#vec2) | R/W | Minimum size of the canvas. 
+width | float | R/O | Current width of the canvas (determined by the surrounding container) 
 
 #### Methods
 
@@ -89,6 +102,15 @@ canvas.add_line ( points : ksp::math::Vec2[],
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+strokeColor | ksp::console::RgbaColor |  | 
+closed | bool | x | 
+thickness | float | x | 
+
 ##### add_pixel_line
 
 ```rust
@@ -99,6 +121,14 @@ canvas.add_pixel_line ( points : ksp::math::Vec2[],
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+strokeColor | ksp::console::RgbaColor |  | 
+closed | bool | x | 
+
 ##### add_polygon
 
 ```rust
@@ -107,6 +137,13 @@ canvas.add_polygon ( points : ksp::math::Vec2[],
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+fillColor | ksp::console::RgbaColor |  | 
 
 ##### add_rect
 
@@ -118,6 +155,14 @@ canvas.add_rect ( point1 : ksp::math::Vec2,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+point1 | ksp::math::Vec2 |  | 
+point2 | ksp::math::Vec2 |  | 
+fillColor | ksp::console::RgbaColor |  | 
+
 ##### add_rotate
 
 ```rust
@@ -126,6 +171,12 @@ canvas.add_rotate ( degrees : float ) -> ksp::ui::Rotate2D
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+degrees | float |  | 
+
 ##### add_scale
 
 ```rust
@@ -133,6 +184,12 @@ canvas.add_scale ( scale : ksp::math::Vec2 ) -> ksp::ui::Scale2D
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+scale | ksp::math::Vec2 |  | 
 
 ##### add_text
 
@@ -147,6 +204,17 @@ canvas.add_text ( position : ksp::math::Vec2,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+position | ksp::math::Vec2 |  | 
+text | string |  | 
+fontSize | float |  | 
+color | ksp::console::RgbaColor |  | 
+degrees | float | x | 
+pivot | ksp::math::Vec2 | x | 
+
 ##### add_translate
 
 ```rust
@@ -154,6 +222,12 @@ canvas.add_translate ( translate : ksp::math::Vec2 ) -> ksp::ui::Translate2D
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+translate | ksp::math::Vec2 |  | 
 
 ##### add_value_raster
 
@@ -167,6 +241,17 @@ canvas.add_value_raster ( point1 : ksp::math::Vec2,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+point1 | ksp::math::Vec2 |  | 
+point2 | ksp::math::Vec2 |  | 
+values | float[] |  | 
+width | int |  | 
+height | int |  | 
+gradientWrapper | ksp::ui::Gradient |  | 
 
 ##### clear
 
@@ -186,120 +271,244 @@ canvas.clear ( ) -> Unit
 
 ```rust
 container.add_button ( label : string,
-                       align : ksp::up::Align,
+                       align : ksp::ui::Align,
                        stretch : float ) -> ksp::ui::Button
 ```
 
+Add button to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+label | string |  | 
+align | ksp::ui::Align | x | Alignment of the button in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_canvas
 
 ```rust
 container.add_canvas ( minWidth : float,
                        minHeight : float,
-                       align : ksp::up::Align,
+                       align : ksp::ui::Align,
                        stretch : float ) -> ksp::ui::Canvas
 ```
 
+Add canvas to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+minWidth | float |  | Minimum width of the canvas
+minHeight | float |  | Minimum height of the canvas
+align | ksp::ui::Align | x | Alignment of the canvas in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_float_input
 
 ```rust
-container.add_float_input ( align : ksp::up::Align,
+container.add_float_input ( align : ksp::ui::Align,
                             stretch : float ) -> ksp::ui::FloatInputField
 ```
 
+Add float input field to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal
 
 ```rust
 container.add_horizontal ( gap : float,
-                           align : ksp::up::Align,
+                           align : ksp::ui::Align,
                            stretch : float ) -> ksp::ui::Container
 ```
 
+Add sub container with horizontal layout to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+gap | float | x | Gap between each element of the container
+align | ksp::ui::Align | x | Alignment of the sub container in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal_panel
 
 ```rust
 container.add_horizontal_panel ( gap : float,
-                                 align : ksp::up::Align,
+                                 align : ksp::ui::Align,
                                  stretch : float ) -> ksp::ui::Container
 ```
 
+Add sub panel with horizontal layout to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+gap | float | x | Gap between each element of the panel
+align | ksp::ui::Align | x | Alignment of the panel in its parent container
+stretch | float | x | 
 
 ##### add_horizontal_slider
 
 ```rust
 container.add_horizontal_slider ( min : float,
                                   max : float,
-                                  align : ksp::up::Align,
+                                  align : ksp::ui::Align,
                                   stretch : float ) -> ksp::ui::Slider
 ```
 
+Add horizontal slider to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+min | float |  | Minimum value of the slider
+max | float |  | Maximum value of the slider
+align | ksp::ui::Align | x | Alignment of the slider in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_int_input
 
 ```rust
-container.add_int_input ( align : ksp::up::Align,
+container.add_int_input ( align : ksp::ui::Align,
                           stretch : float ) -> ksp::ui::IntInputField
 ```
 
+Add integer input field to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_label
 
 ```rust
 container.add_label ( label : string,
-                      align : ksp::up::Align,
+                      align : ksp::ui::Align,
                       stretch : float ) -> ksp::ui::Label
 ```
 
+Add label to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+label | string |  | 
+align | ksp::ui::Align | x | Alignment of the label in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
+
+##### add_spacer
+
+```rust
+container.add_spacer ( size : float,
+                       stretch : float ) -> Unit
+```
+
+Add empty space between elements
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+size | float |  | Minimum amount of space between elements
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_string_input
 
 ```rust
-container.add_string_input ( align : ksp::up::Align,
+container.add_string_input ( align : ksp::ui::Align,
                              stretch : float ) -> ksp::ui::StringInputField
 ```
 
+Add string input field to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_toggle
 
 ```rust
 container.add_toggle ( label : string,
-                       align : ksp::up::Align,
+                       align : ksp::ui::Align,
                        stretch : float ) -> ksp::ui::Toggle
 ```
 
+Add toggle to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+label | string |  | 
+align | ksp::ui::Align | x | Alignment of the toggle in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical
 
 ```rust
 container.add_vertical ( gap : float,
-                         align : ksp::up::Align,
+                         align : ksp::ui::Align,
                          stretch : float ) -> ksp::ui::Container
 ```
 
+Add sub container with vertical layout to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+gap | float | x | Gap between each element of the container
+align | ksp::ui::Align | x | Alignment of the sub container in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical_panel
 
 ```rust
 container.add_vertical_panel ( gap : float,
-                               align : ksp::up::Align,
+                               align : ksp::ui::Align,
                                stretch : float ) -> ksp::ui::Container
 ```
 
+Add sub panel with vertical layout to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+gap | float | x | Gap between each element of the panel
+align | ksp::ui::Align | x | Alignment of the panel in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ### FloatInputField
 
@@ -323,6 +532,12 @@ floatinputfield.bind ( boundValue : Cell<T> ) -> ksp::ui::FloatInputField
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+boundValue | Cell<T> |  | 
+
 ##### on_change
 
 ```rust
@@ -330,6 +545,12 @@ floatinputfield.on_change ( onChange : sync fn(float) -> Unit ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+onChange | sync fn(float) -> Unit |  | 
 
 ### Gradient
 
@@ -345,6 +566,13 @@ gradient.add_color ( value : float,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+value | float |  | 
+color | ksp::console::RgbaColor |  | 
 
 ### IntInputField
 
@@ -368,6 +596,12 @@ intinputfield.bind ( boundValue : Cell<T> ) -> ksp::ui::IntInputField
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+boundValue | Cell<T> |  | 
+
 ##### on_change
 
 ```rust
@@ -375,6 +609,12 @@ intinputfield.on_change ( onChange : sync fn(float) -> Unit ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+onChange | sync fn(float) -> Unit |  | 
 
 ### Label
 
@@ -397,6 +637,13 @@ label.bind ( boundValue : Cell<T>,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+boundValue | Cell<T> |  | 
+format | string | x | 
 
 ### Line2D
 
@@ -470,6 +717,15 @@ rotate2d.add_line ( points : ksp::math::Vec2[],
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+strokeColor | ksp::console::RgbaColor |  | 
+closed | bool | x | 
+thickness | float | x | 
+
 ##### add_pixel_line
 
 ```rust
@@ -480,6 +736,14 @@ rotate2d.add_pixel_line ( points : ksp::math::Vec2[],
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+strokeColor | ksp::console::RgbaColor |  | 
+closed | bool | x | 
+
 ##### add_polygon
 
 ```rust
@@ -488,6 +752,13 @@ rotate2d.add_polygon ( points : ksp::math::Vec2[],
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+fillColor | ksp::console::RgbaColor |  | 
 
 ##### add_rect
 
@@ -499,6 +770,14 @@ rotate2d.add_rect ( point1 : ksp::math::Vec2,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+point1 | ksp::math::Vec2 |  | 
+point2 | ksp::math::Vec2 |  | 
+fillColor | ksp::console::RgbaColor |  | 
+
 ##### add_rotate
 
 ```rust
@@ -507,6 +786,12 @@ rotate2d.add_rotate ( degrees : float ) -> ksp::ui::Rotate2D
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+degrees | float |  | 
+
 ##### add_scale
 
 ```rust
@@ -514,6 +799,12 @@ rotate2d.add_scale ( scale : ksp::math::Vec2 ) -> ksp::ui::Scale2D
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+scale | ksp::math::Vec2 |  | 
 
 ##### add_text
 
@@ -528,6 +819,17 @@ rotate2d.add_text ( position : ksp::math::Vec2,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+position | ksp::math::Vec2 |  | 
+text | string |  | 
+fontSize | float |  | 
+color | ksp::console::RgbaColor |  | 
+degrees | float | x | 
+pivot | ksp::math::Vec2 | x | 
+
 ##### add_translate
 
 ```rust
@@ -535,6 +837,12 @@ rotate2d.add_translate ( translate : ksp::math::Vec2 ) -> ksp::ui::Translate2D
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+translate | ksp::math::Vec2 |  | 
 
 ##### add_value_raster
 
@@ -548,6 +856,17 @@ rotate2d.add_value_raster ( point1 : ksp::math::Vec2,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+point1 | ksp::math::Vec2 |  | 
+point2 | ksp::math::Vec2 |  | 
+values | float[] |  | 
+width | int |  | 
+height | int |  | 
+gradientWrapper | ksp::ui::Gradient |  | 
 
 ##### clear
 
@@ -581,6 +900,15 @@ scale2d.add_line ( points : ksp::math::Vec2[],
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+strokeColor | ksp::console::RgbaColor |  | 
+closed | bool | x | 
+thickness | float | x | 
+
 ##### add_pixel_line
 
 ```rust
@@ -591,6 +919,14 @@ scale2d.add_pixel_line ( points : ksp::math::Vec2[],
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+strokeColor | ksp::console::RgbaColor |  | 
+closed | bool | x | 
+
 ##### add_polygon
 
 ```rust
@@ -599,6 +935,13 @@ scale2d.add_polygon ( points : ksp::math::Vec2[],
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+fillColor | ksp::console::RgbaColor |  | 
 
 ##### add_rect
 
@@ -610,6 +953,14 @@ scale2d.add_rect ( point1 : ksp::math::Vec2,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+point1 | ksp::math::Vec2 |  | 
+point2 | ksp::math::Vec2 |  | 
+fillColor | ksp::console::RgbaColor |  | 
+
 ##### add_rotate
 
 ```rust
@@ -618,6 +969,12 @@ scale2d.add_rotate ( degrees : float ) -> ksp::ui::Rotate2D
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+degrees | float |  | 
+
 ##### add_scale
 
 ```rust
@@ -625,6 +982,12 @@ scale2d.add_scale ( scale : ksp::math::Vec2 ) -> ksp::ui::Scale2D
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+scale | ksp::math::Vec2 |  | 
 
 ##### add_text
 
@@ -639,6 +1002,17 @@ scale2d.add_text ( position : ksp::math::Vec2,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+position | ksp::math::Vec2 |  | 
+text | string |  | 
+fontSize | float |  | 
+color | ksp::console::RgbaColor |  | 
+degrees | float | x | 
+pivot | ksp::math::Vec2 | x | 
+
 ##### add_translate
 
 ```rust
@@ -646,6 +1020,12 @@ scale2d.add_translate ( translate : ksp::math::Vec2 ) -> ksp::ui::Translate2D
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+translate | ksp::math::Vec2 |  | 
 
 ##### add_value_raster
 
@@ -659,6 +1039,17 @@ scale2d.add_value_raster ( point1 : ksp::math::Vec2,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+point1 | ksp::math::Vec2 |  | 
+point2 | ksp::math::Vec2 |  | 
+values | float[] |  | 
+width | int |  | 
+height | int |  | 
+gradientWrapper | ksp::ui::Gradient |  | 
 
 ##### clear
 
@@ -689,6 +1080,12 @@ slider.bind ( boundValue : Cell<T> ) -> ksp::ui::Slider
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+boundValue | Cell<T> |  | 
+
 ##### on_change
 
 ```rust
@@ -696,6 +1093,12 @@ slider.on_change ( onChange : sync fn(float) -> Unit ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+onChange | sync fn(float) -> Unit |  | 
 
 ### StringInputField
 
@@ -719,6 +1122,12 @@ stringinputfield.bind ( boundValue : Cell<T> ) -> ksp::ui::StringInputField
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+boundValue | Cell<T> |  | 
+
 ##### on_change
 
 ```rust
@@ -726,6 +1135,12 @@ stringinputfield.on_change ( onChange : sync fn(string) -> Unit ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+onChange | sync fn(string) -> Unit |  | 
 
 ### Text2D
 
@@ -765,6 +1180,12 @@ toggle.bind ( boundValue : Cell<T> ) -> ksp::ui::Toggle
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+boundValue | Cell<T> |  | 
+
 ##### on_change
 
 ```rust
@@ -772,6 +1193,12 @@ toggle.on_change ( onChange : sync fn(bool) -> Unit ) -> Unit
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+onChange | sync fn(bool) -> Unit |  | 
 
 ### Translate2D
 
@@ -796,6 +1223,15 @@ translate2d.add_line ( points : ksp::math::Vec2[],
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+strokeColor | ksp::console::RgbaColor |  | 
+closed | bool | x | 
+thickness | float | x | 
+
 ##### add_pixel_line
 
 ```rust
@@ -806,6 +1242,14 @@ translate2d.add_pixel_line ( points : ksp::math::Vec2[],
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+strokeColor | ksp::console::RgbaColor |  | 
+closed | bool | x | 
+
 ##### add_polygon
 
 ```rust
@@ -814,6 +1258,13 @@ translate2d.add_polygon ( points : ksp::math::Vec2[],
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+points | ksp::math::Vec2[] |  | 
+fillColor | ksp::console::RgbaColor |  | 
 
 ##### add_rect
 
@@ -825,6 +1276,14 @@ translate2d.add_rect ( point1 : ksp::math::Vec2,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+point1 | ksp::math::Vec2 |  | 
+point2 | ksp::math::Vec2 |  | 
+fillColor | ksp::console::RgbaColor |  | 
+
 ##### add_rotate
 
 ```rust
@@ -833,6 +1292,12 @@ translate2d.add_rotate ( degrees : float ) -> ksp::ui::Rotate2D
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+degrees | float |  | 
+
 ##### add_scale
 
 ```rust
@@ -840,6 +1305,12 @@ translate2d.add_scale ( scale : ksp::math::Vec2 ) -> ksp::ui::Scale2D
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+scale | ksp::math::Vec2 |  | 
 
 ##### add_text
 
@@ -854,6 +1325,17 @@ translate2d.add_text ( position : ksp::math::Vec2,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+position | ksp::math::Vec2 |  | 
+text | string |  | 
+fontSize | float |  | 
+color | ksp::console::RgbaColor |  | 
+degrees | float | x | 
+pivot | ksp::math::Vec2 | x | 
+
 ##### add_translate
 
 ```rust
@@ -861,6 +1343,12 @@ translate2d.add_translate ( translate : ksp::math::Vec2 ) -> ksp::ui::Translate2
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+translate | ksp::math::Vec2 |  | 
 
 ##### add_value_raster
 
@@ -874,6 +1362,17 @@ translate2d.add_value_raster ( point1 : ksp::math::Vec2,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+point1 | ksp::math::Vec2 |  | 
+point2 | ksp::math::Vec2 |  | 
+values | float[] |  | 
+width | int |  | 
+height | int |  | 
+gradientWrapper | ksp::ui::Gradient |  | 
 
 ##### clear
 
@@ -914,120 +1413,244 @@ is_closed | bool | R/O |
 
 ```rust
 window.add_button ( label : string,
-                    align : ksp::up::Align,
+                    align : ksp::ui::Align,
                     stretch : float ) -> ksp::ui::Button
 ```
 
+Add button to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+label | string |  | 
+align | ksp::ui::Align | x | Alignment of the button in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_canvas
 
 ```rust
 window.add_canvas ( minWidth : float,
                     minHeight : float,
-                    align : ksp::up::Align,
+                    align : ksp::ui::Align,
                     stretch : float ) -> ksp::ui::Canvas
 ```
 
+Add canvas to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+minWidth | float |  | Minimum width of the canvas
+minHeight | float |  | Minimum height of the canvas
+align | ksp::ui::Align | x | Alignment of the canvas in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_float_input
 
 ```rust
-window.add_float_input ( align : ksp::up::Align,
+window.add_float_input ( align : ksp::ui::Align,
                          stretch : float ) -> ksp::ui::FloatInputField
 ```
 
+Add float input field to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal
 
 ```rust
 window.add_horizontal ( gap : float,
-                        align : ksp::up::Align,
+                        align : ksp::ui::Align,
                         stretch : float ) -> ksp::ui::Container
 ```
 
+Add sub container with horizontal layout to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+gap | float | x | Gap between each element of the container
+align | ksp::ui::Align | x | Alignment of the sub container in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_horizontal_panel
 
 ```rust
 window.add_horizontal_panel ( gap : float,
-                              align : ksp::up::Align,
+                              align : ksp::ui::Align,
                               stretch : float ) -> ksp::ui::Container
 ```
 
+Add sub panel with horizontal layout to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+gap | float | x | Gap between each element of the panel
+align | ksp::ui::Align | x | Alignment of the panel in its parent container
+stretch | float | x | 
 
 ##### add_horizontal_slider
 
 ```rust
 window.add_horizontal_slider ( min : float,
                                max : float,
-                               align : ksp::up::Align,
+                               align : ksp::ui::Align,
                                stretch : float ) -> ksp::ui::Slider
 ```
 
+Add horizontal slider to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+min | float |  | Minimum value of the slider
+max | float |  | Maximum value of the slider
+align | ksp::ui::Align | x | Alignment of the slider in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_int_input
 
 ```rust
-window.add_int_input ( align : ksp::up::Align,
+window.add_int_input ( align : ksp::ui::Align,
                        stretch : float ) -> ksp::ui::IntInputField
 ```
 
+Add integer input field to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_label
 
 ```rust
 window.add_label ( label : string,
-                   align : ksp::up::Align,
+                   align : ksp::ui::Align,
                    stretch : float ) -> ksp::ui::Label
 ```
 
+Add label to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+label | string |  | 
+align | ksp::ui::Align | x | Alignment of the label in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
+
+##### add_spacer
+
+```rust
+window.add_spacer ( size : float,
+                    stretch : float ) -> Unit
+```
+
+Add empty space between elements
+
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+size | float |  | Minimum amount of space between elements
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_string_input
 
 ```rust
-window.add_string_input ( align : ksp::up::Align,
+window.add_string_input ( align : ksp::ui::Align,
                           stretch : float ) -> ksp::ui::StringInputField
 ```
 
+Add string input field to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+align | ksp::ui::Align | x | Alignment of the input field in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_toggle
 
 ```rust
 window.add_toggle ( label : string,
-                    align : ksp::up::Align,
+                    align : ksp::ui::Align,
                     stretch : float ) -> ksp::ui::Toggle
 ```
 
+Add toggle to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+label | string |  | 
+align | ksp::ui::Align | x | Alignment of the toggle in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical
 
 ```rust
 window.add_vertical ( gap : float,
-                      align : ksp::up::Align,
+                      align : ksp::ui::Align,
                       stretch : float ) -> ksp::ui::Container
 ```
 
+Add sub container with vertical layout to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+gap | float | x | Gap between each element of the container
+align | ksp::ui::Align | x | Alignment of the sub container in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### add_vertical_panel
 
 ```rust
 window.add_vertical_panel ( gap : float,
-                            align : ksp::up::Align,
+                            align : ksp::ui::Align,
                             stretch : float ) -> ksp::ui::Container
 ```
 
+Add sub panel with vertical layout to the container
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+gap | float | x | Gap between each element of the panel
+align | ksp::ui::Align | x | Alignment of the panel in its parent container
+stretch | float | x | Relative amount of available space to acquire (beyond minimal space)
 
 ##### close
 
@@ -1041,7 +1664,7 @@ window.close ( ) -> Unit
 
 Name | Type | Description
 --- | --- | ---
-Align | ksp::up::AlignConstants | Alignment of the element in off direction (horizontal for vertical container and vice versa)
+Align | ksp::ui::AlignConstants | Alignment of the element in off direction (horizontal for vertical container and vice versa)
 
 
 ## Functions
@@ -1056,6 +1679,13 @@ pub sync fn gradient ( start : ksp::console::RgbaColor,
 
 
 
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+start | ksp::console::RgbaColor |  | 
+end | ksp::console::RgbaColor |  | 
+
 ### open_centered_window
 
 ```rust
@@ -1065,6 +1695,14 @@ pub sync fn open_centered_window ( title : string,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+title | string |  | 
+width | float |  | 
+height | float |  | 
 
 ### open_window
 
@@ -1077,6 +1715,16 @@ pub sync fn open_window ( title : string,
 ```
 
 
+
+Parameters
+
+Name | Type | Optional | Description
+--- | --- | --- | ---
+title | string |  | 
+x | float |  | 
+y | float |  | 
+width | float |  | 
+height | float |  | 
 
 ### screen_size
 

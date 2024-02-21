@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{B19D88C6-94C6-446C-A3BE-E1BA5FF4B643}</ProjectGuid>
+        <TargetFramework>net8.0</TargetFramework>
         <OutputType>Exe</OutputType>
         <RootNamespace>KontrolSystem.GenDocs</RootNamespace>
         <AssemblyName>KontrolSystemGenDocs</AssemblyName>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <TargetFramework>net472</TargetFramework>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <NoStdLib>true</NoStdLib>
-        <LangVersion>8</LangVersion>
         <BaseOutputPath>../../bin</BaseOutputPath>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
-        <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
-    </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
-        </Reference>
-        <Reference Include="mscorlib">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
-        </Reference>
         <Reference Include="Assembly-CSharp">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
         </Reference>
@@ -33,15 +20,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\TO2\KontrolSystemTO2.csproj">
-            <Project>{228541DA-6909-4899-9966-1CA2BF16B830}</Project>
-            <Name>KontrolSystemTO2</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\..\KSP2Runtime\KSP2Runtime.csproj">
-            <Project>{A2AACC87-5749-4E7E-9CF1-311AE2406092}</Project>
-            <Name>KontrolSystemKSP2Runtime</Name>
-        </ProjectReference>
+        <ProjectReference Include="..\..\TO2\KontrolSystemTO2.csproj"/>
+        <ProjectReference Include="..\..\KSP2Runtime\KSP2Runtime.csproj"/>
     </ItemGroup>
-    <Target Name="Test">
-    </Target>
 </Project>

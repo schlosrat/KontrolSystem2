@@ -47,7 +47,7 @@ namespace KontrolSystem.GenDocs {
                 output.WriteLine();
 
                 foreach (string typeName in module.AllTypeNames.OrderBy(name => name)) {
-                    RealizedType type = module.FindType(typeName)?.UnderlyingType(moduleContext);
+                    RealizedType type = module.FindType(typeName)!.UnderlyingType(moduleContext);
 
                     output.WriteLine();
                     output.WriteLine($"### {typeName}");
@@ -82,6 +82,20 @@ namespace KontrolSystem.GenDocs {
                             output.WriteLine("```");
                             output.WriteLine();
                             output.WriteLine(method.Description);
+
+
+                            if (method.DeclaredParameters.Count > 0) {
+                                output.WriteLine();
+                                output.WriteLine("Parameters");
+                                output.WriteLine();
+                                output.WriteLine("Name | Type | Optional | Description");
+                                output.WriteLine("--- | --- | --- | ---");
+
+                                foreach (FunctionParameter parameter in method.DeclaredParameters) {
+                                    string optional = parameter.HasDefault ? "x" : "";
+                                    output.WriteLine($"{parameter.name} | {parameter.type} | {optional} | {parameter.description}");
+                                }
+                            }
                         }
                     }
                 }
@@ -95,7 +109,7 @@ namespace KontrolSystem.GenDocs {
                 output.WriteLine("Name | Type | Description");
                 output.WriteLine("--- | --- | ---");
                 foreach (string constantName in module.AllConstantNames.OrderBy(name => name)) {
-                    IKontrolConstant constant = module.FindConstant(constantName);
+                    IKontrolConstant constant = module.FindConstant(constantName)!;
 
                     output.WriteLine($"{constantName} | {constant.Type} | {constant.Description?.Replace("\n", " ")}");
                 }
@@ -109,7 +123,7 @@ namespace KontrolSystem.GenDocs {
                 output.WriteLine();
 
                 foreach (string functionName in module.AllFunctionNames.OrderBy(name => name)) {
-                    IKontrolFunction function = module.FindFunction(functionName);
+                    IKontrolFunction function = module.FindFunction(functionName)!;
 
                     output.WriteLine();
                     output.WriteLine($"### {functionName}");
@@ -119,6 +133,19 @@ namespace KontrolSystem.GenDocs {
                     output.WriteLine("```");
                     output.WriteLine();
                     output.WriteLine(function.Description);
+
+                    if (function.Parameters.Count > 0) {
+                        output.WriteLine();
+                        output.WriteLine("Parameters");
+                        output.WriteLine();
+                        output.WriteLine("Name | Type | Optional | Description");
+                        output.WriteLine("--- | --- | --- | ---");
+
+                        foreach (RealizedParameter parameter in function.Parameters) {
+                            string optional = parameter.HasDefault ? "x" : "";
+                            output.WriteLine($"{parameter.name} | {parameter.type} | {optional} | {parameter.description}");
+                        }
+                    }
                 }
             }
         }
@@ -130,13 +157,13 @@ namespace KontrolSystem.GenDocs {
             }
 
             if (typeName.StartsWith("Record<")) {
-                idx = typeName.IndexOf(",");
+                idx = typeName.IndexOf(",", StringComparison.InvariantCulture);
                 if (idx > 0) {
                     return $"Record&lt;{LinkType(typeName.Substring(7, idx - 7))}{typeName.Substring(idx)}";
                 }
             }
             if (typeName.StartsWith("Option<")) {
-                idx = typeName.IndexOf(">");
+                idx = typeName.IndexOf(">", StringComparison.InvariantCulture);
                 if (idx > 0) {
                     return $"Option&lt;{LinkType(typeName.Substring(7, idx - 7))}{typeName.Substring(idx)}";
                 }
@@ -146,7 +173,7 @@ namespace KontrolSystem.GenDocs {
         }
 
         public static string LinkTypeInner(string typeName) {
-            var idx = typeName.LastIndexOf("::");
+            var idx = typeName.LastIndexOf("::", StringComparison.InvariantCulture);
 
             if (idx > 0) {
                 var moduleName = typeName.Substring(0, idx);

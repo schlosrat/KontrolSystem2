@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{582C6412-9B9D-48F0-B5AC-70C6A68E610A}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.Parsing</RootNamespace>
         <AssemblyName>KontrolSystemParsing</AssemblyName>
-        <TargetFramework>net472</TargetFramework>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <NoStdLib>true</NoStdLib>
-        <LangVersion>8</LangVersion>
         <BaseOutputPath>../bin</BaseOutputPath>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
-        <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="System">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
-        </Reference>
-        <Reference Include="mscorlib">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
-        </Reference>
-    </ItemGroup>
     <Target Name="CopyFiles" AfterTargets="Build">
-        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemParsing.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
-    </Target>
-    <Target Name="Test">
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemParsing.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
     </Target>
 </Project>

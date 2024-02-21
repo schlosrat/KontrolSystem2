@@ -1,4 +1,5 @@
 use * from core::testing
+use { TestStruct2 } from lib_test::structs
 
 test sync fn test_basic_array() -> Unit = {
     let bool_arr : bool[] = [ true, false, true ]
@@ -184,4 +185,62 @@ test sync fn test_array_concat_mut() -> Unit = {
       assert_int(i, int_arr[2 * i])
       assert_int(i + 10 * i, int_arr[2 * i + 1])
     }
+}
+
+test sync fn test_array_sort() -> Unit = {
+    const int_arr = [ 17, 11, 3, 7, 5, 13 ]
+    const str_arr = [ "bla", "abc", "zuzu", "test" ]
+
+    const sorted_int_arr = int_arr.sort()
+    const sorted_str_arr = str_arr.sort()
+    
+    assert_string("[3, 5, 7, 11, 13, 17]", sorted_int_arr.to_string())
+    assert_string("[abc, bla, test, zuzu]", sorted_str_arr.to_string())
+}
+
+test sync fn test_array_reduce() -> Unit = {
+    const int_arr = [ 17, 11, 3, 7, 5, 13 ]
+    
+    const sum = int_arr.reduce(0, fn(sum : int, item: int) -> sum + item)
+    
+    assert_int(56, sum)
+}
+
+test sync fn test_array_slice() -> Unit = {
+    const int_arr : int[] = [ 0, 11, 22, 33, 44, 55, 66, 77, 88 ]
+
+    const slice1 = int_arr.slice(3)
+    const slice2 = int_arr.slice(4, 7)
+    
+    assert_string("[0, 11, 22, 33, 44, 55, 66, 77, 88]", int_arr.to_string())
+    assert_string("[33, 44, 55, 66, 77, 88]", slice1.to_string())
+    assert_string("[44, 55, 66]", slice2.to_string())
+}
+
+test sync fn test_array_sort_by() -> Unit = {
+    const struct_arr : TestStruct2[] = [
+        TestStruct2(1),
+        TestStruct2(-6),
+        TestStruct2(2),
+        TestStruct2(10),
+        TestStruct2(-4),
+    ]
+    const sorted = struct_arr.sort_by(fn(t) -> t.field1)
+    
+    assert_string("[2, 18, 4, 20, 12]", struct_arr.map(fn(t) -> t.field1).to_string())
+    assert_string("[2, 4, 12, 18, 20]", sorted.map(fn(t) -> t.field1).to_string())
+}
+
+test sync fn test_array_sort_with() -> Unit = {
+    const struct_arr : TestStruct2[] = [
+        TestStruct2(1),
+        TestStruct2(-6),
+        TestStruct2(2),
+        TestStruct2(10),
+        TestStruct2(-4),
+    ]
+    const sorted = struct_arr.sort_with(fn(a, b) -> if(a.field1 > b.field1) -1 else if(a.field1 == a.field2) 0 else 1)
+    
+    assert_string("[2, 18, 4, 20, 12]", struct_arr.map(fn(t) -> t.field1).to_string())
+    assert_string("[20, 18, 12, 4, 2]", sorted.map(fn(t) -> t.field1).to_string())    
 }

@@ -14,18 +14,18 @@ using KSP.UI.Flight;
 
 namespace KontrolSystem.SpaceWarpMod {
 
-    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.5.2.2")]
+    [BepInPlugin("com.github.untoldwind.KontrolSystem2", "KontrolSystem2", "0.5.3.0")]
     [BepInDependency(SpaceWarpPlugin.ModGuid, SpaceWarpPlugin.ModVer)]
     [BepInDependency(KSPAddonsModule.FlightPlanAdapter.ModGuid, BepInDependency.DependencyFlags.SoftDependency)]
     public class KontrolSystemMod : BaseSpaceWarpPlugin {
         public const string ModGuid = "com.github.untoldwind.KontrolSystem2";
         public const string ModName = "KontrolSystem2";
-        public const string ModVersion = "0.5.2.2";
+        public const string ModVersion = "0.5.3.0";
 
-        private ModuleManagerWindow moduleManagerWindow;
-        private UIWindows uiWindows;
+        private ModuleManagerWindow? moduleManagerWindow;
+        private UIWindows? uiWindows;
 
-        public static KontrolSystemMod Instance { get; set; }
+        public static KontrolSystemMod? Instance { get; set; }
 
         private static GameState[] InvalidStates = new GameState[]
             { GameState.Invalid, GameState.Flag, GameState.Loading, GameState.PhotoMode, GameState.WarmUpLoading, GameState.MainMenu, GameState.TrainingCenter };
@@ -37,7 +37,7 @@ namespace KontrolSystem.SpaceWarpMod {
         public override void OnInitialized() {
             Instance = this;
 
-            ConfigAdapter.Instance.SetLoggerBackend(Logger);
+            ConfigAdapter.Instance!.SetLoggerBackend(Logger);
             ConfigAdapter.Instance.Logger.Info("Initialize KontrolSystemMod");
 
             uiWindows ??= gameObject.AddComponent<UIWindows>();
@@ -56,10 +56,11 @@ namespace KontrolSystem.SpaceWarpMod {
                     }
                 });
 
+            // VAB Button
             Appbar.RegisterOABAppButton("Kontrol System 2", "BTN-KontrolSystem-VAB", AssetManager.GetAsset<Texture2D>($"{SpaceWarpMetadata.ModID}/images/icon.png"),
                 toggle => {
                     if (toggle) {
-                        moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
+                        moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem-VAB")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
                     } else {
                         moduleManagerWindow?.Close();
                         moduleManagerWindow = null;
@@ -68,10 +69,10 @@ namespace KontrolSystem.SpaceWarpMod {
         }
 
         void Update() {
-            if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.K) && ConfigAdapter.Instance.HotKeyEnabled &&
+            if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.K) && ConfigAdapter.Instance!.HotKeyEnabled &&
                 !InvalidStates.Contains(Game.GlobalGameState.GetState())) {
                 if (moduleManagerWindow != null) moduleManagerWindow.Close();
-                else moduleManagerWindow = uiWindows.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
+                else moduleManagerWindow = uiWindows!.OpenModuleManager(() => GameObject.Find("BTN-KontrolSystem")?.GetComponent<UIValue_WriteBool_Toggle>()?.SetValue(false));
             }
         }
     }

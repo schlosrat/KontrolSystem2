@@ -1,32 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{AA662164-EC1F-4268-8DF0-9C222D6CAF52}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.SpaceWarpMod</RootNamespace>
         <AssemblyName>KontrolSystemSpaceWarpMod</AssemblyName>
-        <TargetFramework>net472</TargetFramework>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <NoStdLib>true</NoStdLib>
-        <LangVersion>8</LangVersion>
         <BaseOutputPath>../bin</BaseOutputPath>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
-        <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
-    </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Core">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.Core.dll</HintPath>
-        </Reference>
-        <Reference Include="netstandard">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\netstandard.dll</HintPath>
-        </Reference>
-        <Reference Include="mscorlib">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
-        </Reference>
         <Reference Include="Assembly-CSharp">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
         </Reference>
@@ -72,36 +52,28 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-      <Content Include="swinfo.json" />
+        <Content Include="swinfo.json"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\KSP2Runtime\KSP2Runtime.csproj">
-        <Project>{a2aacc87-5749-4e7e-9cf1-311ae2406092}</Project>
-        <Name>KSP2Runtime</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj">
-        <Project>{582c6412-9b9d-48f0-b5ac-70c6a68e610a}</Project>
-        <Name>KontrolSystemParsing</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj">
-        <Project>{228541da-6909-4899-9966-1ca2bf16b830}</Project>
-        <Name>KontrolSystemTO2</Name>
-      </ProjectReference>
+        <ProjectReference Include="..\KSP2Runtime\KSP2Runtime.csproj"/>
+        <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj"/>
+        <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj"/>
     </ItemGroup>
     <ItemGroup>
-        <AssetFiles Include="Assets\**\*.bundle" />
-        <GFXFiles Include="GFX\**\*.png" />
+        <AssetFiles Include="Assets\**\*.bundle"/>
+        <GFXFiles Include="GFX\**\*.png"/>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Assets" />
+        <Folder Include="Assets"/>
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="SpaceWarpMod.csproj.DotSettings.user" />
     </ItemGroup>
     <Target Name="CopyFiles" AfterTargets="Build">
-        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
-        <Copy SourceFiles="icon.png" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />
-        <Copy SourceFiles="swinfo.json" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
-        <Copy SourceFiles="@(AssetFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/bundles" />
-        <Copy SourceFiles="@(GFXFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images" />
-    </Target>
-    <Target Name="Test">
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemSpaceWarpMod.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
+        <Copy SourceFiles="icon.png" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images"/>
+        <Copy SourceFiles="swinfo.json" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
+        <Copy SourceFiles="@(AssetFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/bundles"/>
+        <Copy SourceFiles="@(GFXFiles)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/assets/images"/>
     </Target>
 </Project>

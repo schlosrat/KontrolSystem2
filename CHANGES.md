@@ -1,5 +1,70 @@
 # Changes
 
+## 0.5.2.8 ->
+
+* Internal updates
+  * Migrate code to netstandard2.1 (except unit tests)
+  * Update C# version and enable nullable feature (improving overall code quality)
+* Add methods to manipulate window position/size after creation
+  * `window.position` property (writable) to get current position of window or move it
+  * `window.size` property (writable) to get current size of window or resize it
+  * `window.min_size` property (read-only) to get minimum size of window 
+  * `window.compact()` resize window to its minimum size
+  * `window.center()` center window on screen
+* Fix an issue when trying to display empty telemetry timeseries
+
+## 0.5.2.7 -> 0.5.2.8
+
+* Improve error handling in struct field initializers (#119)
+* Improve docutmation of function/method parameters (#126)
+* Fix size calculation in UI vertical layout (#126)
+* Add `add_spacer` to UI layout containers (#126)
+
+## 0.5.2.6 -> 0.5.2.7
+
+* Fix type generation of structs in generic parameters (#76)
+* Improve error reporting of missing variables (#119)
+* Fix bug in if-case (#119)
+* Add binding for science action group
+* Fix default values in user-struct methods (#119)
+* Remove `condition_met` from experiment (for now?) as it seems to have a different meaning
+* Add `vessel.research_location` that can be compared with `experiment.experiment_location` (#125)
+* Add `vessel.science_storage` to access science storage/resource inventory (#125)
+
+## 0.5.2.5 -> 0.5.2.6
+
+* Improve error handling on missing imports (#119)
+* Add button to VAB (#121)
+  * Note: Most binding are still untested for VAB
+* Fix: Handle line comments in record creation (#113)
+* Add helper methods to string (#123):
+  * `index_of`: `"abcdefgh".index_of("g") == 6` or `"abcdefghabcdefgh".index_of("g", 7) == 14`
+  * `slice`: `"abcdefgh".slice(3) == "defgh"` or `"abcdefgh".slice(3, 5) == "de"`
+  * `replace`: `"abcdefgh".replace("de", "en") == "abcenfgh"`
+  * `split`: `"a,b,c,de,fgh".split(",") == ["a", "b", "c", "de", "fgh"]`
+
+## 0.5.2.4 -> 0.5.2.5
+
+* Add `body.parent_body` and `body.orbiting_bodies` fields
+* Add `reduce` and `reverse` method to ranges (#114)
+* Fix `orbit.global_velocity` to use correct frame of reference (#116)
+* Fix internal type comparison/generation of structs (#118)
+* Add `.sort_by` and `.sort_with` to array
+
+## 0.5.2.2 -> 0.5.2.4
+
+* Fix/tweak update of maneuver node data (#111)
+* Add `.sort` method for array (#114). Example: `[10,6,5].sort() == [5,6,10]`
+* Add `.slice` method for array (#114). Examples:
+    * `[00, 11, 22, 33, 44].slice(2) == [22,33,44]`
+    * `[00, 11, 22, 33, 44].slice(1, 3) == [11,22]`
+* Add `.reduce` method for array (#114): Example: `[1,2,3,4].reduce(0, fn(a, e) -> a + e) == 10`
+* Fix handling of comments in chained method calls (#113)
+* Fix type resolution for imported constants (#107)
+* Ensure that non-global coordinates are in the celestial frame of the main body (addresses #117)
+* Breaking change: Fix take motion of parent body into account for `orbit.global_position(ut)` (#116)
+  * If you have used `orbit.global_position(ut)` before you might want to use `orbit.global_relative_position` instead
+
 ## 0.5.2 -> 0.5.2.2
 
 * Fix update for maneuver node data in map-view (#111)

@@ -1,29 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{A2AACC87-5749-4E7E-9CF1-311AE2406092}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>KontrolSystem.KSP.Runtime</RootNamespace>
         <AssemblyName>KontrolSystemKSP2Runtime</AssemblyName>
-        <TargetFramework>net472</TargetFramework>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <NoStdLib>true</NoStdLib>
-        <LangVersion>8</LangVersion>
         <BaseOutputPath>../bin</BaseOutputPath>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(KSP2_BASE_DIR)' == ''">
-        <KSP2_BASE_DIR>C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2</KSP2_BASE_DIR>
-    </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Core">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\System.Core.dll</HintPath>
-        </Reference>
-        <Reference Include="mscorlib">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\mscorlib.dll</HintPath>
-        </Reference>
         <Reference Include="Assembly-CSharp">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
         </Reference>
@@ -38,9 +21,6 @@
         </Reference>
         <Reference Include="UnityEngine.UIModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.TextCoreModule">
-            <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.TextRenderingModule">
             <HintPath>$(KSP2_BASE_DIR)\KSP2_x64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
@@ -62,27 +42,19 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj">
-            <Project>{582C6412-9B9D-48F0-B5AC-70C6A68E610A}</Project>
-            <Name>KontrolSystemParsing</Name>
-        </ProjectReference>
-        <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj">
-            <Project>{228541DA-6909-4899-9966-1CA2BF16B830}</Project>
-            <Name>KontrolSystemTO2</Name>
-        </ProjectReference>
+        <ProjectReference Include="..\Parsing\KontrolSystemParsing.csproj"/>
+        <ProjectReference Include="..\TO2\KontrolSystemTO2.csproj"/>
     </ItemGroup>
     <ItemGroup>
-        <TO2Files Include="to2\**\*.to2" />
+        <TO2Files Include="to2\**\*.to2"/>
     </ItemGroup>
     <ItemGroup>
-        <LocalTO2Files Include="to2Local\README" />
-        <LocalTO2Files Include="to2Local\**\*.to2" />
+        <LocalTO2Files Include="to2Local\README"/>
+        <LocalTO2Files Include="to2Local\**\*.to2"/>
     </ItemGroup>
     <Target Name="CopyFiles" AfterTargets="Build">
-        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemKSP2Runtime.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2" />
-        <Copy SourceFiles="@(TO2Files)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/to2/%(RecursiveDir)" />
-        <Copy SourceFiles="@(LocalTO2Files)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/to2Local/%(RecursiveDir)" />
-    </Target>
-    <Target Name="Test">
+        <Copy SourceFiles="../bin/$(Configuration)/KontrolSystemKSP2Runtime.dll" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2"/>
+        <Copy SourceFiles="@(TO2Files)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/to2/%(RecursiveDir)"/>
+        <Copy SourceFiles="@(LocalTO2Files)" DestinationFolder="../dist/BepInEx/plugins/KontrolSystem2/to2Local/%(RecursiveDir)"/>
     </Target>
 </Project>
